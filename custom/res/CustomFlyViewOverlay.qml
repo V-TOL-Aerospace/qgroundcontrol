@@ -41,6 +41,7 @@ Item {
     property string _messageTitle:          ""
     property string _messageText:           ""
     property real   _toolsMargin:           ScreenTools.defaultFontPixelWidth * 0.75
+    property bool   _test_visible:          true
 
     function secondsToHHMMSS(timeS) {
         var sec_num = parseInt(timeS, 10);
@@ -59,18 +60,75 @@ Item {
         rightEdgeBottomInset:   parent.width - compassBackground.x
     }
 
+    // Right Side button controls
+    Rectangle{
+        id:                     rightSideButtonControls_Boarder
+        anchors.top:            _toolsMargin
+        // anchors.rightMargin:    _toolsMargin
+        anchors.right:          parent.right
+        height:                 screen.height
+        width:                  ScreenTools.defaultFontPixelWidth * 10 +  _toolsMargin//screen.width * 0.05
+        color:                  qgcPal.windowShadeDark
+        visible:                _test_visible
+        Rectangle{
+            id:                     rightSideButtonControls
+            anchors.top:            _toolsMargin
+            // anchors.rightMargin:    _toolsMargin
+            anchors.right:          parent.right
+            height:                 screen.height
+            width:                  ScreenTools.defaultFontPixelWidth * 10 //screen.width * 0.05
+            color:                  qgcPal.windowShade
+            visible:                _test_visible
+        }
+    }
+
+    // left Side button controls
+    Rectangle{
+        id:                     leftSideButtonControls_Boarder
+        anchors.top:            _toolsMargin
+        // anchors.rightMargin:    _toolsMargin
+        anchors.left:          parent.left
+        height:                 screen.height
+        width:                  ScreenTools.defaultFontPixelWidth * 10 +  _toolsMargin//screen.width * 0.05
+        color:                  qgcPal.windowShadeDark
+        visible:                _test_visible
+        Rectangle{
+            id:                     leftSideButtonControls
+            anchors.top:            _toolsMargin
+            // anchors.rightMargin:    _toolsMargin
+            anchors.left:          parent.left
+            height:                 screen.height
+            width:                  ScreenTools.defaultFontPixelWidth * 10 //screen.width * 0.05
+            color:                  qgcPal.windowShade
+            visible:                _test_visible
+        }
+    }
+
+    // Flight control rectangle
+    Rectangle{
+        id:                     flightControlRectangle
+        anchors.top:            _toolsMargin
+        // anchors.rightMargin:    _toolsMargin
+        anchors.left:          leftSideButtonControls_Boarder.right
+        height:                 screen.height
+        width:                  screen.width * 0.1
+        color:                  qgcPal.windowShade
+        visible:                _test_visible
+    }
+
     //-------------------------------------------------------------------------
-    //-- Heading Indicator
+    // HEADING INTDICATOR 1 - HORIZONTAL HEADING TAPE
     Rectangle {
         id:                         compassBar
         height:                     ScreenTools.defaultFontPixelHeight * 1.5
-        width:                      ScreenTools.defaultFontPixelWidth  * 50
+        width:                      flightControlRectangle.width - _toolsMargin * 2// ScreenTools.defaultFontPixelWidth  * 50
         color:                      "#DEDEDE"
         radius:                     2
         clip:                       true
-        anchors.top:                headingIndicator.bottom
-        anchors.topMargin:          -headingIndicator.height / 2
-        anchors.horizontalCenter:   parent.horizontalCenter
+        anchors.top:                flightControlRectangle.top
+        anchors.topMargin:          _toolsMargin //-headingIndicator.height / 2
+        // anchors.left:               flightControlRectangle.right
+        anchors.horizontalCenter:   flightControlRectangle.horizontalCenter
         Repeater {
             model: 720
             QGCLabel {
@@ -101,43 +159,66 @@ Item {
                 }
             }
         }
-    }
-    Rectangle {
-        id:                         headingIndicator
-        height:                     ScreenTools.defaultFontPixelHeight
-        width:                      ScreenTools.defaultFontPixelWidth * 4
-        color:                      qgcPal.windowShadeDark
-        anchors.top:                parent.top
-        anchors.topMargin:          _toolsMargin
-        anchors.horizontalCenter:   parent.horizontalCenter
-        QGCLabel {
-            text:                   _heading
-            color:                  qgcPal.text
-            font.pointSize:         ScreenTools.smallFontPointSize
-            anchors.centerIn:       parent
+        Rectangle {
+            id:                         headingIndicator
+            height:                     ScreenTools.defaultFontPixelHeight
+            width:                      ScreenTools.defaultFontPixelWidth * 4
+            color:                      qgcPal.windowShadeDark
+            anchors.bottom:             compassBar.top
+            // anchors.topMargin:          _toolsMargin
+            anchors.horizontalCenter:   compassBar.horizontalCenter
+            QGCLabel {
+                text:                   _heading
+                color:                  qgcPal.text
+                font.pointSize:         ScreenTools.smallFontPointSize
+                anchors.centerIn:       parent
+            }
+        }
+        Image {
+            id:                         compassArrowIndicator
+            height:                     _indicatorsHeight
+            width:                      height
+            source:                     "/custom/img/compass_pointer.svg"
+            fillMode:                   Image.PreserveAspectFit
+            sourceSize.height:          height
+            anchors.top:                compassBar.bottom
+            anchors.topMargin:          -height / 2
+            anchors.horizontalCenter:   compassBar.horizontalCenter
         }
     }
-    Image {
-        id:                         compassArrowIndicator
-        height:                     _indicatorsHeight
-        width:                      height
-        source:                     "/custom/img/compass_pointer.svg"
-        fillMode:                   Image.PreserveAspectFit
-        sourceSize.height:          height
-        anchors.top:                compassBar.bottom
-        anchors.topMargin:          -height / 2
-        anchors.horizontalCenter:   parent.horizontalCenter
+
+    // MAIN FLIGHT ATTITUDE INDICATOR
+    Rectangle {
+        id:                     attitudeIndicator
+        anchors.top:            compassBar.bottom
+        anchors.rightMargin:    _toolsMargin
+        anchors.leftMargin:     _toolsMargin
+        // anchors.bottom:         parent.bottom
+        anchors.horizontalCenter:          flightControlRectangle.horizontalCenter
+        height:                 flightControlRectangle.width // ScreenTools.defaultFontPixelHeight * 6
+        width:                  height
+        // radius:                 height * 0.5
+        color:                  qgcPal.windowShade
+        visible:                _test_visible
+
+        CustomAttitudeWidget {
+            size:               parent.height * 0.95
+            vehicle:            _activeVehicle
+            showHeading:        true
+            anchors.centerIn:   parent
+        }
     }
 
+    // HEADING INDICATOR 2 - RADIAL HEADING INDICATOR
     Rectangle {
         id:                     compassBackground
-        anchors.bottom:         attitudeIndicator.bottom
-        anchors.right:          attitudeIndicator.left
-        anchors.rightMargin:    -attitudeIndicator.width / 2
-        width:                  -anchors.rightMargin + compassBezel.width + (_toolsMargin * 2)
-        height:                 attitudeIndicator.height * 0.75
+        anchors.top:            attitudeIndicator.bottom
+        anchors.topMargin:      _toolsMargin //-attitudeIndicator.width / 2
+        anchors.horizontalCenter:          flightControlRectangle.horizontalCenter
+        width:                  flightControlRectangle.width //-anchors.rightMargin + compassBezel.width + (_toolsMargin * 2)
+        height:                 attitudeIndicator.height
         radius:                 2
-        color:                  qgcPal.window
+        color:                  qgcPal.windowShade //qgcPal.window
 
         Rectangle {
             id:                     compassBezel
@@ -207,22 +288,51 @@ Item {
         }
     }
 
+    // GPS STATUS INDICATOR
     Rectangle {
-        id:                     attitudeIndicator
-        anchors.bottomMargin:   _toolsMargin
-        anchors.rightMargin:    _toolsMargin
-        anchors.bottom:         parent.bottom
-        anchors.right:          parent.right
-        height:                 ScreenTools.defaultFontPixelHeight * 6
-        width:                  height
-        radius:                 height * 0.5
-        color:                  qgcPal.windowShade
+        //copied from GPSIndicator.qml
+        id: gps_info_window
+        anchors.horizontalCenter: flightControlRectangle.horizontalCenter
+        anchors.top: compassBackground.bottom
+        width:  flightControlRectangle.width
+        height: gpsCol.height  + ScreenTools.defaultFontPixelHeight * 2
+        radius: ScreenTools.defaultFontPixelHeight * 0.5
+        color:  qgcPal.window
+        border.color:   qgcPal.text
 
-        CustomAttitudeWidget {
-            size:               parent.height * 0.95
-            vehicle:            _activeVehicle
-            showHeading:        false
+        Column {
+            id:                 gpsCol
+            spacing:            ScreenTools.defaultFontPixelHeight * 0.5
+            width:              Math.max(gpsGrid.width, gpsLabel.width)
+            anchors.margins:    ScreenTools.defaultFontPixelHeight
             anchors.centerIn:   parent
+
+            QGCLabel {
+                id:             gpsLabel
+                text:           (_activeVehicle && _activeVehicle.gps.count.value >= 0) ? qsTr("GPS Status") : qsTr("GPS Data Unavailable")
+                font.family:    ScreenTools.demiboldFontFamily
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+
+            GridLayout {
+                id:                 gpsGrid
+                visible:            (_activeVehicle && _activeVehicle.gps.count.value >= 0)
+                anchors.margins:    ScreenTools.defaultFontPixelHeight
+                columnSpacing:      ScreenTools.defaultFontPixelWidth
+                anchors.horizontalCenter: parent.horizontalCenter
+                columns: 2
+
+                QGCLabel { text: qsTr("GPS Count:") }
+                QGCLabel { text: _activeVehicle ? _activeVehicle.gps.count.valueString : qsTr("N/A", "No data to display") }
+                QGCLabel { text: qsTr("GPS Lock:") }
+                QGCLabel { text: _activeVehicle ? _activeVehicle.gps.lock.enumStringValue : qsTr("N/A", "No data to display") }
+                QGCLabel { text: qsTr("HDOP:") }
+                QGCLabel { text: _activeVehicle ? _activeVehicle.gps.hdop.valueString : qsTr("--.--", "No data to display") }
+                QGCLabel { text: qsTr("VDOP:") }
+                QGCLabel { text: _activeVehicle ? _activeVehicle.gps.vdop.valueString : qsTr("--.--", "No data to display") }
+                //QGCLabel { text: qsTr("Course Over Ground:") }
+                //QGCLabel { text: _activeVehicle ? _activeVehicle.gps.courseOverGround.valueString : qsTr("--.--", "No data to display") }
+            }
         }
     }
 }
