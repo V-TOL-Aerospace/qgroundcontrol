@@ -2,6 +2,7 @@
     <qresource prefix="custom/img">
         <file alias="altitude.svg">res/Images/altitude.svg</file>
         <file alias="attitude_crosshair.svg">res/Images/attitude_crosshair.svg</file>
+        <file alias="attitude_crosshair_v2.svg">res/Images/attitude_crosshair_v2.svg</file>
         <file alias="attitude_dial.svg">res/Images/attitude_dial.svg</file>
         <file alias="attitude_pointer.svg">res/Images/attitude_pointer.svg</file>
         <file alias="chronometer.svg">res/Images/chronometer.svg</file>
