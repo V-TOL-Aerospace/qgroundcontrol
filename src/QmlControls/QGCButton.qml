@@ -52,21 +52,25 @@ Button {
         QGCColoredImage {
             id:                     icon
             source:                 control.iconSource
-            height:                 source === "" ? 0 : text.height
+            height:                 source === "" ? 0 : text.height *2
             width:                  height
             color:                  text.color
             fillMode:               Image.PreserveAspectFit
             sourceSize.height:      height
-            anchors.left:           control.iconLeft ? parent.left : undefined
-            anchors.leftMargin:     control.iconLeft ? ScreenTools.defaultFontPixelWidth : undefined
-            anchors.right:          !control.iconLeft ? parent.right : undefined
-            anchors.rightMargin:    !control.iconLeft ? ScreenTools.defaultFontPixelWidth : undefined
+            anchors.horizontalCenter: parent.horizontalCenter
+            // anchors.left:           control.iconLeft ? parent.left : undefined
+            // anchors.leftMargin:     control.iconLeft ? ScreenTools.defaultFontPixelWidth : undefined
+            // anchors.right:          !control.iconLeft ? parent.right : undefined
+            // anchors.rightMargin:    !control.iconLeft ? ScreenTools.defaultFontPixelWidth : undefined
             anchors.verticalCenter: parent.verticalCenter
         }
 
         Text {
             id:                     text
-            anchors.centerIn:       parent
+            // anchors.centerIn:       parent
+            anchors.bottom:             parent.bottom
+            anchors.bottomMargin:       parent.bottomMargin
+            anchors.horizontalCenter:   parent.horizontalCenter
             antialiasing:           true
             text:                   control.text
             font.pointSize:         pointSize
