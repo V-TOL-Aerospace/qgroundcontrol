@@ -80,6 +80,72 @@ Item {
             width:                  ScreenTools.defaultFontPixelWidth * 10 //screen.width * 0.05
             color:                  qgcPal.windowShade
             visible:                _test_visible
+            QGCButton{
+                id:             right_button_0
+                text:           qsTr("0")
+                height:         screen.height/9 
+                width:          parent.width
+                anchors.top:    parent.top
+                anchors.topMargin: _toolsMargin
+            }
+            QGCButton{
+                id:             right_button_1
+                text:           qsTr("1")
+                height:         screen.height/9 
+                width:          parent.width
+                anchors.top:    right_button_0.bottom
+                anchors.topMargin: _toolsMargin
+            }
+            QGCButton{
+                id:             right_button_2
+                text:           qsTr("2")
+                height:         screen.height/9 
+                width:          parent.width
+                anchors.top:    right_button_1.bottom
+                anchors.topMargin: _toolsMargin
+            }
+            QGCButton{
+                id:             right_button_3
+                text:           qsTr("3")
+                height:         screen.height/9 
+                width:          parent.width
+                anchors.top:    right_button_2.bottom
+                anchors.topMargin: _toolsMargin
+            }
+            QGCButton{
+                id:             right_button_4
+                text:           qsTr("4")
+                height:         screen.height/9 
+                width:          parent.width
+                anchors.top:    right_button_3.bottom
+                anchors.topMargin: _toolsMargin
+            }
+            QGCButton{
+                id:             right_button_5
+                text:           qsTr("5")
+                height:         screen.height/9 
+                width:          parent.width
+                anchors.top:    right_button_4.bottom
+                anchors.topMargin: _toolsMargin
+            }
+            QGCButton{
+                id:             right_button_6
+                text:           qsTr("6")
+                height:         screen.height/9 
+                width:          parent.width
+                anchors.top:    right_button_5.bottom
+                anchors.topMargin: _toolsMargin
+            }
+            QGCButton{
+                id:             right_button_7
+                text:           qsTr("7")
+                height:         screen.height/9 
+                width:          parent.width
+                anchors.top:    right_button_6.bottom
+                // anchors.bottom: parent.bottom
+                anchors.topMargin: _toolsMargin
+                anchors.bottomMargin: _toolsMargin
+            }
         }
     }
 
@@ -92,7 +158,7 @@ Item {
         height:                 screen.height
         width:                  ScreenTools.defaultFontPixelWidth * 10 +  _toolsMargin//screen.width * 0.05
         color:                  qgcPal.windowShadeDark
-        visible:                _test_visible
+        visible:                true
         Rectangle{
             id:                     leftSideButtonControls
             anchors.topMargin:            _toolsMargin
@@ -102,6 +168,76 @@ Item {
             width:                  ScreenTools.defaultFontPixelWidth * 10 //screen.width * 0.05
             color:                  qgcPal.windowShade
             visible:                _test_visible
+            QGCButton{
+                id:             button_0
+                text:           qsTr("Plan")
+                iconSource:     "/qmlimages/Plan.svg"
+                onClicked:      mainWindow.showPlanView()
+                height:         screen.height/9 
+                width:          parent.width
+                anchors.top:    parent.top
+                anchors.topMargin: _toolsMargin
+            }
+            QGCButton{
+                id:             button_1
+                text:           qsTr("Fly View")
+                height:         screen.height/9 
+                width:          parent.width
+                anchors.top:    button_0.bottom
+                anchors.topMargin: _toolsMargin
+                enabled: false
+                color: qgcPal.
+            }
+            QGCButton{
+                id:             button_2
+                text:           qsTr("2")
+                height:         screen.height/9 
+                width:          parent.width
+                anchors.top:    button_1.bottom
+                anchors.topMargin: _toolsMargin
+            }
+            QGCButton{
+                id:             button_3
+                text:           qsTr("3")
+                height:         screen.height/9 
+                width:          parent.width
+                anchors.top:    button_2.bottom
+                anchors.topMargin: _toolsMargin
+            }
+            QGCButton{
+                id:             button_4
+                text:           qsTr("4")
+                height:         screen.height/9 
+                width:          parent.width
+                anchors.top:    button_3.bottom
+                anchors.topMargin: _toolsMargin
+            }
+            QGCButton{
+                id:             button_5
+                text:           qsTr("5")
+                height:         screen.height/9 
+                width:          parent.width
+                anchors.top:    button_4.bottom
+                anchors.topMargin: _toolsMargin
+            }
+            QGCButton{
+                id:             button_6
+                text:           qsTr("6")
+                height:         screen.height/9 
+                width:          parent.width
+                anchors.top:    button_5.bottom
+                anchors.topMargin: _toolsMargin
+            }
+            QGCButton{
+                id:             button_7
+                text:           qsTr("7")
+                height:         screen.height/9 
+                width:          parent.width
+                anchors.top:    button_6.bottom
+                // anchors.bottom: parent.bottom
+                anchors.topMargin: _toolsMargin
+                anchors.bottomMargin: _toolsMargin
+            }
         }
     }
 
