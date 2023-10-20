@@ -21,6 +21,7 @@ import QGroundControl.ScreenTools   1.0
 import Custom.Widgets 1.0
 
 Item {
+    property bool showIndicator: true
     property var parentToolInsets                       // These insets tell you what screen real estate is available for positioning the controls in your overlay
     property var totalToolInsets:   _totalToolInsets    // The insets updated for the custom overlay additions
     property var mapControl
@@ -63,7 +64,7 @@ Item {
     // Right Side button controls
     Rectangle{
         id:                     rightSideButtonControls_Boarder
-        anchors.top:            _toolsMargin
+        anchors.topMargin:            _toolsMargin
         // anchors.rightMargin:    _toolsMargin
         anchors.right:          parent.right
         height:                 screen.height
@@ -72,7 +73,7 @@ Item {
         visible:                _test_visible
         Rectangle{
             id:                     rightSideButtonControls
-            anchors.top:            _toolsMargin
+            anchors.topMargin:            _toolsMargin
             // anchors.rightMargin:    _toolsMargin
             anchors.right:          parent.right
             height:                 screen.height
@@ -85,7 +86,7 @@ Item {
     // left Side button controls
     Rectangle{
         id:                     leftSideButtonControls_Boarder
-        anchors.top:            _toolsMargin
+        anchors.topMargin:            _toolsMargin
         // anchors.rightMargin:    _toolsMargin
         anchors.left:          parent.left
         height:                 screen.height
@@ -94,7 +95,7 @@ Item {
         visible:                _test_visible
         Rectangle{
             id:                     leftSideButtonControls
-            anchors.top:            _toolsMargin
+            anchors.topMargin:            _toolsMargin
             // anchors.rightMargin:    _toolsMargin
             anchors.left:          parent.left
             height:                 screen.height
@@ -107,11 +108,11 @@ Item {
     // Flight control rectangle
     Rectangle{
         id:                     flightControlRectangle
-        anchors.top:            _toolsMargin
+        anchors.topMargin:            _toolsMargin
         // anchors.rightMargin:    _toolsMargin
         anchors.left:          leftSideButtonControls_Boarder.right
         height:                 screen.height
-        width:                  screen.width * 0.1
+        width:                  screen.width * 0.2
         color:                  qgcPal.windowShade
         visible:                _test_visible
     }
@@ -186,7 +187,7 @@ Item {
             anchors.horizontalCenter:   compassBar.horizontalCenter
         }
     }
-
+        
     // MAIN FLIGHT ATTITUDE INDICATOR
     Rectangle {
         id:                     attitudeIndicator
@@ -195,14 +196,16 @@ Item {
         anchors.leftMargin:     _toolsMargin
         // anchors.bottom:         parent.bottom
         anchors.horizontalCenter:          flightControlRectangle.horizontalCenter
-        height:                 flightControlRectangle.width // ScreenTools.defaultFontPixelHeight * 6
-        width:                  height
-        // radius:                 height * 0.5
+        width:                 flightControlRectangle.width // ScreenTools.defaultFontPixelHeight * 6
+        height:                width *0.75
+        // radius:              height * 0.5
         color:                  qgcPal.windowShade
         visible:                _test_visible
 
         CustomAttitudeWidget {
-            size:               parent.height * 0.95
+            // size:               parent.height * 0.95
+            size_width:              parent.width
+            size_height:             parent.height
             vehicle:            _activeVehicle
             showHeading:        true
             anchors.centerIn:   parent
@@ -219,6 +222,7 @@ Item {
         height:                 attitudeIndicator.height
         radius:                 2
         color:                  qgcPal.windowShade //qgcPal.window
+        visible: false
 
         Rectangle {
             id:                     compassBezel
@@ -293,7 +297,7 @@ Item {
         //copied from GPSIndicator.qml
         id: gps_info_window
         anchors.horizontalCenter: flightControlRectangle.horizontalCenter
-        anchors.top: compassBackground.bottom
+        anchors.top: compassBackground.visible ? compassBackground.bottom:attitudeIndicator.bottom
         width:  flightControlRectangle.width
         height: gpsCol.height  + ScreenTools.defaultFontPixelHeight * 2
         radius: ScreenTools.defaultFontPixelHeight * 0.5
