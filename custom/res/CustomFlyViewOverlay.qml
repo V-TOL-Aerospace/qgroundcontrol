@@ -71,6 +71,9 @@ Item {
         width:                  ScreenTools.defaultFontPixelWidth * 10 +  _toolsMargin//screen.width * 0.05
         color:                  qgcPal.windowShadeDark
         visible:                _test_visible
+        MouseArea{
+            anchors.fill: parent
+        }
         Rectangle{
             id:                     rightSideButtonControls
             anchors.topMargin:            _toolsMargin
@@ -159,6 +162,9 @@ Item {
         width:                  ScreenTools.defaultFontPixelWidth * 10 +  _toolsMargin//screen.width * 0.05
         color:                  qgcPal.windowShadeDark
         visible:                true
+        MouseArea{
+            anchors.fill: parent
+        }
         Rectangle{
             id:                     leftSideButtonControls
             anchors.topMargin:            _toolsMargin
@@ -186,7 +192,6 @@ Item {
                 anchors.top:    button_0.bottom
                 anchors.topMargin: _toolsMargin
                 enabled: false
-                color: qgcPal.
             }
             QGCButton{
                 id:             button_2
@@ -241,7 +246,7 @@ Item {
         }
     }
 
-    // Flight control rectangle
+    // FLIGHT CONTROL AREA
     Rectangle{
         id:                     flightControlRectangle
         anchors.topMargin:            _toolsMargin
@@ -251,6 +256,9 @@ Item {
         width:                  screen.width * 0.2
         color:                  qgcPal.windowShade
         visible:                _test_visible
+        MouseArea{
+            anchors.fill: parent
+        }
     }
 
     //-------------------------------------------------------------------------
@@ -348,7 +356,7 @@ Item {
         }
     }
 
-    // HEADING INDICATOR 2 - RADIAL HEADING INDICATOR
+    // HEADING INDICATOR 2 - RADIAL HEADING INDICATOR (VISIBILITY HAS BEEN SET TO FALSE)
     Rectangle {
         id:                     compassBackground
         anchors.top:            attitudeIndicator.bottom
