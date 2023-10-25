@@ -73,33 +73,33 @@ Item {
         bottomEdgeLeftInset:    _pipOverlay.visible ? parent.height - _pipOverlay.y : 0
     }
 
-    FlyViewWidgetLayer {
-        id:                     widgetLayer
-        anchors.top:            parent.top
-        anchors.bottom:         parent.bottom
-        anchors.left:           parent.left
-        anchors.right:          guidedValueSlider.visible ? guidedValueSlider.left : parent.right
-        z:                      _fullItemZorder + 1
-        parentToolInsets:       _toolInsets
-        mapControl:             _mapControl
-        visible:                !QGroundControl.videoManager.fullScreen
-    }
+    // FlyViewWidgetLayer {
+    //     id:                     widgetLayer
+    //     anchors.top:            parent.top
+    //     anchors.bottom:         parent.bottom
+    //     anchors.left:           parent.left
+    //     anchors.right:          guidedValueSlider.visible ? guidedValueSlider.left : parent.right
+    //     z:                      _fullItemZorder + 1
+    //     parentToolInsets:       _toolInsets
+    //     mapControl:             _mapControl
+    //     visible:                !QGroundControl.videoManager.fullScreen
+    // }
 
     FlyViewCustomLayer {
         id:                 customOverlay
-        anchors.fill:       widgetLayer
+        anchors.fill:       parent //widgetLayer
         z:                  _fullItemZorder + 2
-        parentToolInsets:   widgetLayer.totalToolInsets
+        parentToolInsets:   parent //widgetLayer.totalToolInsets
         mapControl:         _mapControl
         visible:            !QGroundControl.videoManager.fullScreen
     }
 
-    GuidedActionsController {
-        id:                 guidedActionsController
-        missionController:  _missionController
-        actionList:         _guidedActionList
-        guidedValueSlider:     _guidedValueSlider
-    }
+    // GuidedActionsController {
+    //     id:                 guidedActionsController
+    //     missionController:  _missionController
+    //     actionList:         _guidedActionList
+    //     guidedValueSlider:     _guidedValueSlider
+    // }
 
     /*GuidedActionConfirm {
         id:                         guidedActionConfirm
@@ -111,28 +111,28 @@ Item {
         guidedValueSlider:             _guidedValueSlider
     }*/
 
-    GuidedActionList {
-        id:                         guidedActionList
-        anchors.margins:            _margins
-        anchors.bottom:             parent.bottom
-        anchors.horizontalCenter:   parent.horizontalCenter
-        z:                          QGroundControl.zOrderTopMost
-        guidedController:           _guidedController
-    }
+    // GuidedActionList {
+    //     id:                         guidedActionList
+    //     anchors.margins:            _margins
+    //     anchors.bottom:             parent.bottom
+    //     anchors.horizontalCenter:   parent.horizontalCenter
+    //     z:                          QGroundControl.zOrderTopMost
+    //     guidedController:           _guidedController
+    // }
 
-    //-- Guided value slider (e.g. altitude)
-    GuidedValueSlider {
-        id:                 guidedValueSlider
-        anchors.margins:    _toolsMargin
-        anchors.right:      parent.right
-        anchors.top:        parent.top
-        anchors.bottom:     parent.bottom
-        z:                  QGroundControl.zOrderTopMost
-        radius:             ScreenTools.defaultFontPixelWidth / 2
-        width:              ScreenTools.defaultFontPixelWidth * 10
-        color:              qgcPal.window
-        visible:            false
-    }
+    // //-- Guided value slider (e.g. altitude)
+    // GuidedValueSlider {
+    //     id:                 guidedValueSlider
+    //     anchors.margins:    _toolsMargin
+    //     anchors.right:      parent.right
+    //     anchors.top:        parent.top
+    //     anchors.bottom:     parent.bottom
+    //     z:                  QGroundControl.zOrderTopMost
+    //     radius:             ScreenTools.defaultFontPixelWidth / 2
+    //     width:              ScreenTools.defaultFontPixelWidth * 10
+    //     color:              qgcPal.window
+    //     visible:            false
+    // }
 
     FlyViewMap {
         id:                     mapControl
