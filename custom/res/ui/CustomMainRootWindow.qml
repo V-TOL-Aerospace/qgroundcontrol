@@ -264,11 +264,12 @@ ApplicationWindow {
     header: MainToolBar {
         id:         toolbar
         height:     ScreenTools.toolbarHeight
-        visible:    !(QGroundControl.videoManager.fullScreen && flightView.visible)
+        width:      Screen.width
+        visible:    false//!(QGroundControl.videoManager.fullScreen && flightView.visible)
     }
 
     footer: LogReplayStatusBar {
-        visible: QGroundControl.settingsManager.flyViewSettings.showLogReplayStatusBar.rawValue
+        visible: false //QGroundControl.settingsManager.flyViewSettings.showLogReplayStatusBar.rawValue
     }
 
     function showToolSelectDialog() {
