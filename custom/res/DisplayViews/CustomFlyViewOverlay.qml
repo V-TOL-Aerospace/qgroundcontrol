@@ -13,6 +13,9 @@ import QtQuick          2.12
 import QtQuick.Controls 2.4
 import QtQuick.Layouts  1.11
 
+import QtPositioning            5.3
+import QtQuick.Window           2.2
+
 import QGroundControl               1.0
 import QGroundControl.Controls      1.0
 import QGroundControl.Palette       1.0
@@ -44,6 +47,8 @@ Item {
     property real   _toolsMargin:           ScreenTools.defaultFontPixelWidth * 0.75
     property bool   _test_visible:          true
 
+    property real   scalable_button_height: Window.height/8 - _toolsMargin
+
     function secondsToHHMMSS(timeS) {
         var sec_num = parseInt(timeS, 10);
         var hours   = Math.floor(sec_num / 3600);
@@ -61,13 +66,29 @@ Item {
         rightEdgeBottomInset:   parent.width - compassBackground.x
     }
 
+    // TOP RECTANGLE AREA
+    Rectangle {
+        id:     topWarningDisplay
+        anchors {
+            top:    parent.top
+            left:   leftSideButtonControls_Boarder.right
+            right:  rightSideButtonControls_Boarder.left
+        }
+        color:      qgcPal.windowShadeDark
+        height:     parent.height * 0.05
+        MouseArea {
+            anchors.fill: parent
+        }
+    }
+
     // Right Side button controls
     Rectangle{
         id:                     rightSideButtonControls_Boarder
-        anchors.topMargin:      _toolsMargin
-        // anchors.rightMargin:    _toolsMargin
-        anchors.right:          parent.right
-        height:                 parent.height
+        anchors {
+            topMargin:      _toolsMargin
+            right:          parent.right
+        }
+        height:                 Screen.height
         width:                  ScreenTools.defaultFontPixelWidth * 10 +  _toolsMargin//screen.width * 0.05
         color:                  qgcPal.windowShadeDark
         visible:                _test_visible
@@ -76,17 +97,17 @@ Item {
         }
         Rectangle{
             id:                     rightSideButtonControls
-            anchors.topMargin:            _toolsMargin
-            // anchors.rightMargin:    _toolsMargin
-            anchors.right:          parent.right
+            anchors {
+                right:              parent.right
+            }
             height:                 parent.height
             width:                  ScreenTools.defaultFontPixelWidth * 10 //screen.width * 0.05
             color:                  qgcPal.windowShade
             visible:                _test_visible
             CustomIconButton{
                 id:             right_button_0
-                text:           qsTr("0")
-                height:         screen.height/9 
+                text:           scalable_button_height.toFixed() //qsTr("0")
+                height:         scalable_button_height 
                 width:          parent.width
                 anchors.top:    parent.top
                 anchors.topMargin: _toolsMargin
@@ -94,7 +115,7 @@ Item {
             CustomIconButton{
                 id:             right_button_1
                 text:           qsTr("1")
-                height:         screen.height/9 
+                height:         scalable_button_height 
                 width:          parent.width
                 anchors.top:    right_button_0.bottom
                 anchors.topMargin: _toolsMargin
@@ -102,7 +123,7 @@ Item {
             CustomIconButton{
                 id:             right_button_2
                 text:           qsTr("2")
-                height:         screen.height/9 
+                height:         scalable_button_height 
                 width:          parent.width
                 anchors.top:    right_button_1.bottom
                 anchors.topMargin: _toolsMargin
@@ -110,7 +131,7 @@ Item {
             CustomIconButton{
                 id:             right_button_3
                 text:           qsTr("3")
-                height:         screen.height/9 
+                height:         scalable_button_height 
                 width:          parent.width
                 anchors.top:    right_button_2.bottom
                 anchors.topMargin: _toolsMargin
@@ -118,7 +139,7 @@ Item {
             CustomIconButton{
                 id:             right_button_4
                 text:           qsTr("4")
-                height:         screen.height/9 
+                height:         scalable_button_height 
                 width:          parent.width
                 anchors.top:    right_button_3.bottom
                 anchors.topMargin: _toolsMargin
@@ -126,7 +147,7 @@ Item {
             CustomIconButton{
                 id:             right_button_5
                 text:           qsTr("5")
-                height:         screen.height/9 
+                height:         scalable_button_height 
                 width:          parent.width
                 anchors.top:    right_button_4.bottom
                 anchors.topMargin: _toolsMargin
@@ -134,7 +155,7 @@ Item {
             CustomIconButton{
                 id:             right_button_6
                 text:           qsTr("6")
-                height:         screen.height/9 
+                height:         scalable_button_height 
                 width:          parent.width
                 anchors.top:    right_button_5.bottom
                 anchors.topMargin: _toolsMargin
@@ -142,7 +163,7 @@ Item {
             CustomIconButton{
                 id:             right_button_7
                 text:           qsTr("7")
-                height:         screen.height/9 
+                height:         scalable_button_height 
                 width:          parent.width
                 anchors.top:    right_button_6.bottom
                 // anchors.bottom: parent.bottom
@@ -155,9 +176,10 @@ Item {
     // left Side button controls
     Rectangle{
         id:                     leftSideButtonControls_Boarder
-        anchors.topMargin:            _toolsMargin
-        // anchors.rightMargin:    _toolsMargin
-        anchors.left:           parent.left
+        anchors {
+            topMargin:          _toolsMargin
+            left:               parent.left
+        }
         height:                 parent.height
         width:                  ScreenTools.defaultFontPixelWidth * 10 +  _toolsMargin//screen.width * 0.05
         color:                  qgcPal.windowShadeDark
@@ -167,9 +189,9 @@ Item {
         }
         Rectangle{
             id:                     leftSideButtonControls
-            anchors.topMargin:            _toolsMargin
-            // anchors.rightMargin:    _toolsMargin
-            anchors.left:           parent.left
+            anchors {
+                left:              parent.left
+            }
             height:                 parent.height
             width:                  ScreenTools.defaultFontPixelWidth * 10 //screen.width * 0.05
             color:                  qgcPal.windowShade
@@ -179,7 +201,7 @@ Item {
                 text:           qsTr("Plan")
                 iconSource:     "/qmlimages/Plan.svg"
                 onClicked:      mainWindow.showPlanView()
-                height:         screen.height/9 
+                height:         scalable_button_height 
                 width:          parent.width
                 anchors.top:    parent.top
                 anchors.topMargin: _toolsMargin
@@ -187,7 +209,7 @@ Item {
             CustomIconButton{
                 id:             button_1
                 text:           qsTr("Fly View")
-                height:         screen.height/9 
+                height:         scalable_button_height 
                 width:          parent.width
                 anchors.top:    button_0.bottom
                 anchors.topMargin: _toolsMargin
@@ -196,7 +218,7 @@ Item {
             CustomIconButton{
                 id:             button_2
                 text:           qsTr("2")
-                height:         screen.height/9 
+                height:         scalable_button_height 
                 width:          parent.width
                 anchors.top:    button_1.bottom
                 anchors.topMargin: _toolsMargin
@@ -204,7 +226,7 @@ Item {
             CustomIconButton{
                 id:             button_3
                 text:           qsTr("3")
-                height:         screen.height/9 
+                height:         scalable_button_height 
                 width:          parent.width
                 anchors.top:    button_2.bottom
                 anchors.topMargin: _toolsMargin
@@ -212,7 +234,7 @@ Item {
             CustomIconButton{
                 id:             button_4
                 text:           qsTr("4")
-                height:         screen.height/9 
+                height:         scalable_button_height 
                 width:          parent.width
                 anchors.top:    button_3.bottom
                 anchors.topMargin: _toolsMargin
@@ -220,7 +242,7 @@ Item {
             CustomIconButton{
                 id:             button_5
                 text:           qsTr("5")
-                height:         screen.height/9 
+                height:         scalable_button_height 
                 width:          parent.width
                 anchors.top:    button_4.bottom
                 anchors.topMargin: _toolsMargin
@@ -228,7 +250,7 @@ Item {
             CustomIconButton{
                 id:             button_6
                 text:           qsTr("6")
-                height:         screen.height/9 
+                height:         scalable_button_height 
                 width:          parent.width
                 anchors.top:    button_5.bottom
                 anchors.topMargin: _toolsMargin
@@ -236,7 +258,7 @@ Item {
             CustomIconButton{
                 id:             button_7
                 text:           qsTr("7")
-                height:         screen.height/9 
+                height:         scalable_button_height 
                 width:          parent.width
                 anchors.top:    button_6.bottom
                 // anchors.bottom: parent.bottom
@@ -249,9 +271,10 @@ Item {
     // FLIGHT CONTROL AREA - PFD AND OTHER FLIGHT CRITICAL INFORMATION ARE ANCHORED TO THIS RECTANGLE
     Rectangle{
         id:                     flightControlRectangle
-        anchors.topMargin:            _toolsMargin
-        // anchors.rightMargin:    _toolsMargin
-        anchors.left:          leftSideButtonControls_Boarder.right
+        anchors {
+            topMargin: _toolsMargin
+            left:      leftSideButtonControls_Boarder.right
+        }
         height:                 screen.height
         width:                  screen.width * 0.2
         color:                  qgcPal.windowShade
