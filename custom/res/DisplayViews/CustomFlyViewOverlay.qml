@@ -48,6 +48,7 @@ Item {
     property bool   _test_visible:          true
 
     property real   scalable_button_height: Window.height/8 - _toolsMargin
+    property real   scalable_warnings_panel_width: topWarningDisplay.width/7 - _toolsMargin
 
     function secondsToHHMMSS(timeS) {
         var sec_num = parseInt(timeS, 10);
@@ -66,23 +67,207 @@ Item {
         rightEdgeBottomInset:   parent.width - compassBackground.x
     }
 
-    // TOP RECTANGLE AREA
+    // TOP RECTANGLE WARNING PANELS AREA
     Rectangle {
-        id:     topWarningDisplay
+        id:     topWarningDisplay_boarder
         anchors {
             top:    parent.top
-            left:   leftSideButtonControls_Boarder.right
+            left:   flightControlRectangle.right
             right:  rightSideButtonControls_Boarder.left
         }
         color:      qgcPal.windowShadeDark
-        height:     parent.height * 0.05
+        height:     parent.height * 0.08
         MouseArea {
             anchors.fill: parent
         }
+        Rectangle {
+            id:                     topWarningDisplay
+            anchors {
+                top:                parent.top
+                horizontalCenter:   parent.horizontalCenter
+            }
+            height:                 parent.height - _toolsMargin
+            width:                  parent.width - _toolsMargin
+            color:                  qgcPal.windowShade
+            CustomIconButton {
+                id:             warning_panel_0
+                anchors {
+                    top:        parent.top
+                    topMargin:  _toolsMargin
+                    left:       parent.left
+                    leftMargin: _toolsMargin
+                }
+                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                height:         parent.height * 0.5 - _toolsMargin
+                width:          scalable_warnings_panel_width
+            }
+            CustomIconButton {
+                id:             warning_panel_1
+                anchors {
+                    top:        warning_panel_0.bottom
+                    topMargin:  _toolsMargin
+                    left:       parent.left
+                    leftMargin: _toolsMargin
+                }
+                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                height:         parent.height * 0.5 - _toolsMargin
+                width:          scalable_warnings_panel_width
+            }
+
+            CustomIconButton {
+                id:             warning_panel_2
+                anchors {
+                    top:        parent.top
+                    topMargin:  _toolsMargin
+                    left:       warning_panel_0.right
+                    leftMargin: _toolsMargin
+                }
+                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                height:         parent.height * 0.5 - _toolsMargin
+                width:          scalable_warnings_panel_width
+            }
+            CustomIconButton {
+                id:             warning_panel_3
+                anchors {
+                    top:        warning_panel_2.bottom
+                    topMargin:  _toolsMargin
+                    left:       warning_panel_1.right
+                    leftMargin: _toolsMargin
+                }
+                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                height:         parent.height * 0.5 - _toolsMargin
+                width:          scalable_warnings_panel_width
+            }
+
+            CustomIconButton {
+                id:             warning_panel_4
+                anchors {
+                    top:        parent.top
+                    topMargin:  _toolsMargin
+                    left:       warning_panel_2.right
+                    leftMargin: _toolsMargin
+                }
+                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                height:         parent.height * 0.5 - _toolsMargin
+                width:          scalable_warnings_panel_width
+            }
+            CustomIconButton {
+                id:             warning_panel_5
+                anchors {
+                    top:        warning_panel_4.bottom
+                    topMargin:  _toolsMargin
+                    left:       warning_panel_2.right
+                    leftMargin: _toolsMargin
+                }
+                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                height:         parent.height * 0.5 - _toolsMargin
+                width:          scalable_warnings_panel_width
+            }
+
+            CustomIconButton {
+                id:             warning_panel_6
+                anchors {
+                    top:        parent.top
+                    topMargin:  _toolsMargin
+                    left:       warning_panel_4.right
+                    leftMargin: _toolsMargin
+                }
+                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                height:         parent.height * 0.5 - _toolsMargin
+                width:          scalable_warnings_panel_width
+            }
+            CustomIconButton {
+                id:             warning_panel_7
+                anchors {
+                    top:        warning_panel_6.bottom
+                    topMargin:  _toolsMargin
+                    left:       warning_panel_4.right
+                    leftMargin: _toolsMargin
+                }
+                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                height:         parent.height * 0.5 - _toolsMargin
+                width:          scalable_warnings_panel_width
+            }
+
+            CustomIconButton {
+                id:             warning_panel_8
+                anchors {
+                    top:        parent.top
+                    topMargin:  _toolsMargin
+                    left:       warning_panel_6.right
+                    leftMargin: _toolsMargin
+                }
+                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                height:         parent.height * 0.5 - _toolsMargin
+                width:          scalable_warnings_panel_width
+            }
+            CustomIconButton {
+                id:             warning_panel_9
+                anchors {
+                    top:        warning_panel_8.bottom
+                    topMargin:  _toolsMargin
+                    left:       warning_panel_6.right
+                    leftMargin: _toolsMargin
+                }
+                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                height:         parent.height * 0.5 - _toolsMargin
+                width:          scalable_warnings_panel_width
+            }
+
+            CustomIconButton {
+                id:             warning_panel_10
+                anchors {
+                    top:        parent.top
+                    topMargin:  _toolsMargin
+                    left:       warning_panel_8.right
+                    leftMargin: _toolsMargin
+                }
+                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                height:         parent.height * 0.5 - _toolsMargin
+                width:          scalable_warnings_panel_width
+            }
+            CustomIconButton {
+                id:             warning_panel_11
+                anchors {
+                    top:        warning_panel_10.bottom
+                    topMargin:  _toolsMargin
+                    left:       warning_panel_8.right
+                    leftMargin: _toolsMargin
+                }
+                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                height:         parent.height * 0.5 - _toolsMargin
+                width:          scalable_warnings_panel_width
+            }
+
+            CustomIconButton {
+                id:             warning_panel_12
+                anchors {
+                    top:        parent.top
+                    topMargin:  _toolsMargin
+                    left:       warning_panel_10.right
+                    leftMargin: _toolsMargin
+                }
+                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                height:         parent.height * 0.5 - _toolsMargin
+                width:          scalable_warnings_panel_width
+            }
+            CustomIconButton {
+                id:             warning_panel_13
+                anchors {
+                    top:        warning_panel_12.bottom
+                    topMargin:  _toolsMargin
+                    left:       warning_panel_10.right
+                    leftMargin: _toolsMargin
+                }
+                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                height:         parent.height * 0.5 - _toolsMargin
+                width:          scalable_warnings_panel_width
+            }
+        }
     }
 
-    // Right Side button controls
-    Rectangle{
+    // RIGHT SIDE BUTTON CONTROLS
+    Rectangle {
         id:                     rightSideButtonControls_Boarder
         anchors {
             topMargin:      _toolsMargin
@@ -92,10 +277,10 @@ Item {
         width:                  ScreenTools.defaultFontPixelWidth * 10 +  _toolsMargin//screen.width * 0.05
         color:                  qgcPal.windowShadeDark
         visible:                _test_visible
-        MouseArea{
+        MouseArea {
             anchors.fill: parent
         }
-        Rectangle{
+        Rectangle {
             id:                     rightSideButtonControls
             anchors {
                 right:              parent.right
@@ -104,7 +289,7 @@ Item {
             width:                  ScreenTools.defaultFontPixelWidth * 10 //screen.width * 0.05
             color:                  qgcPal.windowShade
             visible:                _test_visible
-            CustomIconButton{
+            CustomIconButton {
                 id:             right_button_0
                 text:           scalable_button_height.toFixed() //qsTr("0")
                 height:         scalable_button_height 
@@ -112,7 +297,7 @@ Item {
                 anchors.top:    parent.top
                 anchors.topMargin: _toolsMargin
             }
-            CustomIconButton{
+            CustomIconButton {
                 id:             right_button_1
                 text:           qsTr("1")
                 height:         scalable_button_height 
@@ -120,7 +305,7 @@ Item {
                 anchors.top:    right_button_0.bottom
                 anchors.topMargin: _toolsMargin
             }
-            CustomIconButton{
+            CustomIconButton {
                 id:             right_button_2
                 text:           qsTr("2")
                 height:         scalable_button_height 
@@ -128,7 +313,7 @@ Item {
                 anchors.top:    right_button_1.bottom
                 anchors.topMargin: _toolsMargin
             }
-            CustomIconButton{
+            CustomIconButton {
                 id:             right_button_3
                 text:           qsTr("3")
                 height:         scalable_button_height 
@@ -136,7 +321,7 @@ Item {
                 anchors.top:    right_button_2.bottom
                 anchors.topMargin: _toolsMargin
             }
-            CustomIconButton{
+            CustomIconButton {
                 id:             right_button_4
                 text:           qsTr("4")
                 height:         scalable_button_height 
@@ -144,7 +329,7 @@ Item {
                 anchors.top:    right_button_3.bottom
                 anchors.topMargin: _toolsMargin
             }
-            CustomIconButton{
+            CustomIconButton {
                 id:             right_button_5
                 text:           qsTr("5")
                 height:         scalable_button_height 
@@ -152,7 +337,7 @@ Item {
                 anchors.top:    right_button_4.bottom
                 anchors.topMargin: _toolsMargin
             }
-            CustomIconButton{
+            CustomIconButton {
                 id:             right_button_6
                 text:           qsTr("6")
                 height:         scalable_button_height 
@@ -160,7 +345,7 @@ Item {
                 anchors.top:    right_button_5.bottom
                 anchors.topMargin: _toolsMargin
             }
-            CustomIconButton{
+            CustomIconButton {
                 id:             right_button_7
                 text:           qsTr("7")
                 height:         scalable_button_height 
@@ -173,8 +358,8 @@ Item {
         }
     }
 
-    // left Side button controls
-    Rectangle{
+    // LEFT SIDE BUTTON CONTROLS
+    Rectangle {
         id:                     leftSideButtonControls_Boarder
         anchors {
             topMargin:          _toolsMargin
@@ -184,10 +369,10 @@ Item {
         width:                  ScreenTools.defaultFontPixelWidth * 10 +  _toolsMargin//screen.width * 0.05
         color:                  qgcPal.windowShadeDark
         visible:                true
-        MouseArea{
+        MouseArea {
             anchors.fill: parent
         }
-        Rectangle{
+        Rectangle {
             id:                     leftSideButtonControls
             anchors {
                 left:              parent.left
@@ -196,7 +381,7 @@ Item {
             width:                  ScreenTools.defaultFontPixelWidth * 10 //screen.width * 0.05
             color:                  qgcPal.windowShade
             visible:                _test_visible
-            CustomIconButton{
+            CustomIconButton {
                 id:             button_0
                 text:           qsTr("Plan")
                 iconSource:     "/qmlimages/Plan.svg"
@@ -206,7 +391,7 @@ Item {
                 anchors.top:    parent.top
                 anchors.topMargin: _toolsMargin
             }
-            CustomIconButton{
+            CustomIconButton {
                 id:             button_1
                 text:           qsTr("Fly View")
                 height:         scalable_button_height 
@@ -215,7 +400,7 @@ Item {
                 anchors.topMargin: _toolsMargin
                 enabled: false
             }
-            CustomIconButton{
+            CustomIconButton {
                 id:             button_2
                 text:           qsTr("2")
                 height:         scalable_button_height 
@@ -223,7 +408,7 @@ Item {
                 anchors.top:    button_1.bottom
                 anchors.topMargin: _toolsMargin
             }
-            CustomIconButton{
+            CustomIconButton {
                 id:             button_3
                 text:           qsTr("3")
                 height:         scalable_button_height 
@@ -231,7 +416,7 @@ Item {
                 anchors.top:    button_2.bottom
                 anchors.topMargin: _toolsMargin
             }
-            CustomIconButton{
+            CustomIconButton {
                 id:             button_4
                 text:           qsTr("4")
                 height:         scalable_button_height 
@@ -239,7 +424,7 @@ Item {
                 anchors.top:    button_3.bottom
                 anchors.topMargin: _toolsMargin
             }
-            CustomIconButton{
+            CustomIconButton {
                 id:             button_5
                 text:           qsTr("5")
                 height:         scalable_button_height 
@@ -247,7 +432,7 @@ Item {
                 anchors.top:    button_4.bottom
                 anchors.topMargin: _toolsMargin
             }
-            CustomIconButton{
+            CustomIconButton {
                 id:             button_6
                 text:           qsTr("6")
                 height:         scalable_button_height 
@@ -255,7 +440,7 @@ Item {
                 anchors.top:    button_5.bottom
                 anchors.topMargin: _toolsMargin
             }
-            CustomIconButton{
+            CustomIconButton {
                 id:             button_7
                 text:           qsTr("7")
                 height:         scalable_button_height 
@@ -269,7 +454,7 @@ Item {
     }
 
     // FLIGHT CONTROL AREA - PFD AND OTHER FLIGHT CRITICAL INFORMATION ARE ANCHORED TO THIS RECTANGLE
-    Rectangle{
+    Rectangle {
         id:                     flightControlRectangle
         anchors {
             topMargin: _toolsMargin
@@ -279,7 +464,7 @@ Item {
         width:                  screen.width * 0.2
         color:                  qgcPal.windowShade
         visible:                _test_visible
-        MouseArea{
+        MouseArea {
             anchors.fill: parent
         }
     }
