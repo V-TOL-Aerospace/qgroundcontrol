@@ -291,11 +291,14 @@ Item {
             visible:                _test_visible
             CustomIconButton {
                 id:             right_button_0
-                text:           scalable_button_height.toFixed() //qsTr("0")
+                text:           _activeVehicle ? qsTr("Connect"):qsTr("Disconnect")
                 height:         scalable_button_height 
                 width:          parent.width
                 anchors.top:    parent.top
                 anchors.topMargin: _toolsMargin
+                
+                onClicked:          _activeVehicle.closeVehicle()
+                enabled:            _activeVehicle ? true:false
             }
             CustomIconButton {
                 id:             right_button_1
@@ -442,13 +445,16 @@ Item {
             }
             CustomIconButton {
                 id:             button_7
-                text:           qsTr("7")
                 height:         scalable_button_height 
                 width:          parent.width
                 anchors.top:    button_6.bottom
                 // anchors.bottom: parent.bottom
                 anchors.topMargin: _toolsMargin
                 anchors.bottomMargin: _toolsMargin
+
+                text:           qsTr("Settings")
+                iconSource:     "/res/gear-white.svg"
+                onClicked:      mainWindow.showToolSelectDialog()
             }
         }
     }
@@ -659,7 +665,7 @@ Item {
         Column {
             id:                 gpsCol
             spacing:            ScreenTools.defaultFontPixelHeight * 0.5
-            width:              Math.max(gpsGrid.width, gpsLabel.width)
+            width:              parent.width // Math.max(gpsGrid.width, gpsLabel.width)
             anchors.margins:    ScreenTools.defaultFontPixelHeight
             anchors.centerIn:   parent
 
