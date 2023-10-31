@@ -289,16 +289,19 @@ Item {
             width:                  ScreenTools.defaultFontPixelWidth * 10 //screen.width * 0.05
             color:                  qgcPal.windowShade
             visible:                _test_visible
-            CustomIconButton {
+            CustomStatusIndicator {
                 id:             right_button_0
-                text:           _activeVehicle ? qsTr("Connect"):qsTr("Disconnect")
                 height:         scalable_button_height 
                 width:          parent.width
-                anchors.top:    parent.top
-                anchors.topMargin: _toolsMargin
-                
-                onClicked:          _activeVehicle.closeVehicle()
-                enabled:            _activeVehicle ? true:false
+                anchors {
+                    top:        parent.top
+                    topMargin:  _toolsMargin
+                }
+                text:           _activeVehicle ? qsTr("CONN"):qsTr("DISCONN")
+                iconSource:     _activeVehicle ? "/qmlimages/Connect.svg" : "/qmlimages/Disconnect.svg"
+                // onClicked:      _activeVehicle.closeVehicle()
+                // enabled:        false
+                statusActive:   _activeVehicle 
             }
             CustomIconButton {
                 id:             right_button_1
