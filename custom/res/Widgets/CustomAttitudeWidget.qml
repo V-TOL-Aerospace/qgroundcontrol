@@ -52,10 +52,10 @@ Item {
         CustomArtificialHorizon {
             rollAngle:          _rollAngle
             pitchAngle:         _pitchAngle
-            skyColor1:          "#0a2e50"
-            skyColor2:          "#2f85d4"
-            groundColor1:       "#897459"
-            groundColor2:       "#4b3820"
+            skyColor1:          vehicle ? "#0a2e50" : qgcPal.windowShade
+            skyColor2:          vehicle ? "#2f85d4" : qgcPal.windowShade
+            groundColor1:       vehicle ? "#897459" : qgcPal.windowShadeDark
+            groundColor2:       vehicle ? "#4b3820" : qgcPal.windowShadeDark
             anchors.fill:       parent
         }
         //----------------------------------------------------
