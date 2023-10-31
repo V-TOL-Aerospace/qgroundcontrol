@@ -24,6 +24,7 @@
         <file alias="Custom/Widgets/CustomIconButton.qml">res/Widgets/CustomIconButton.qml</file>
         <file alias="Custom/Widgets/CustomOnOffSwitch.qml">res/Widgets/CustomOnOffSwitch.qml</file>
         <file alias="Custom/Widgets/CustomQuickButton.qml">res/Widgets/CustomQuickButton.qml</file>
+        <file alias="Custom/Widgets/CustomStatusIndicator.qml">res/Widgets/CustomStatusIndicator.qml</file>
         <file alias="Custom/Widgets/CustomSignalStrength.qml">res/Widgets/CustomSignalStrength.qml</file>
         <file alias="Custom/Widgets/CustomToolBarButton.qml">res/Widgets/CustomToolBarButton.qml</file>
         <file alias="Custom/Widgets/CustomVehicleButton.qml">res/Widgets/CustomVehicleButton.qml</file>
