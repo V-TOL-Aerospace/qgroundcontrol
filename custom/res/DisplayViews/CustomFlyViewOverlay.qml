@@ -100,6 +100,7 @@ Item {
                 text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
+                showBorder:     true
             }
             CustomStatusIndicator {
                 id:             warning_panel_1
@@ -112,6 +113,7 @@ Item {
                 text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
+                showBorder:     true
             }
 
             CustomStatusIndicator {
@@ -125,6 +127,7 @@ Item {
                 text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
+                showBorder:     true
             }
             CustomStatusIndicator {
                 id:             warning_panel_3
@@ -137,6 +140,7 @@ Item {
                 text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
+                showBorder:     true
             }
 
             CustomStatusIndicator {
@@ -150,6 +154,7 @@ Item {
                 text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
+                showBorder:     true
             }
             CustomStatusIndicator {
                 id:             warning_panel_5
@@ -162,6 +167,7 @@ Item {
                 text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
+                showBorder:     true
             }
 
             CustomStatusIndicator {
@@ -175,6 +181,7 @@ Item {
                 text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
+                showBorder:     true
             }
             CustomStatusIndicator {
                 id:             warning_panel_7
@@ -187,6 +194,7 @@ Item {
                 text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
+                showBorder:     true
             }
 
             CustomStatusIndicator {
@@ -200,6 +208,7 @@ Item {
                 text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
+                showBorder:     true
             }
             CustomStatusIndicator {
                 id:             warning_panel_9
@@ -212,6 +221,7 @@ Item {
                 text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
+                showBorder:     true
             }
 
             CustomStatusIndicator {
@@ -225,6 +235,7 @@ Item {
                 text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
+                showBorder:     true
             }
             CustomStatusIndicator {
                 id:             warning_panel_11
@@ -237,6 +248,7 @@ Item {
                 text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
+                showBorder:     true
             }
 
             CustomStatusIndicator {
@@ -250,6 +262,7 @@ Item {
                 text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
+                showBorder:     true
             }
             CustomStatusIndicator {
                 id:             warning_panel_13
@@ -262,6 +275,7 @@ Item {
                 text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
+                showBorder:     true
             }
         }
     }
@@ -273,12 +287,12 @@ Item {
             topMargin:      _toolsMargin
             right:          parent.right
         }
-        height:                 Screen.height
-        width:                  ScreenTools.defaultFontPixelWidth * 10 +  _toolsMargin//screen.width * 0.05
-        color:                  qgcPal.windowShadeDark
-        visible:                _test_visible
+        height:             Screen.height
+        width:              ScreenTools.defaultFontPixelWidth * 10 +  _toolsMargin//screen.width * 0.05
+        color:              qgcPal.windowShadeDark
+        visible:            _test_visible
         MouseArea {
-            anchors.fill: parent
+            anchors.fill:   parent
         }
         Rectangle {
             id:                     rightSideButtonControls
@@ -293,6 +307,7 @@ Item {
                 id:             right_button_0
                 height:         scalable_button_height 
                 width:          parent.width
+                showBorder:     true
                 anchors {
                     top:        parent.top
                     topMargin:  _toolsMargin
@@ -305,74 +320,88 @@ Item {
             }
             CustomIconButton {
                 id:             right_button_1
-                text:           qsTr("1")
                 height:         scalable_button_height 
                 width:          parent.width
+                showBorder:     true
                 anchors {
                     top:        right_button_0.bottom
                     topMargin:  _toolsMargin
                 }
+                text:           qsTr("1")
+                enabled:        _activeVehicle
             }
             CustomIconButton {
                 id:             right_button_2
-                text:           qsTr("2")
                 height:         scalable_button_height 
                 width:          parent.width
+                showBorder:     true
                 anchors {
-                    top:    right_button_1.bottom
-                    topMargin: _toolsMargin
+                    top:        right_button_1.bottom
+                    topMargin:  _toolsMargin
                 }
+                text:           qsTr("2")
+                enabled:        _activeVehicle
             }
             CustomIconButton {
                 id:             right_button_3
-                text:           qsTr("3")
                 height:         scalable_button_height 
                 width:          parent.width
+                showBorder:     true
                 anchors {
                     top:        right_button_2.bottom
                     topMargin:  _toolsMargin
                 }
+                text:           qsTr("3")
+                enabled:        _activeVehicle
             }
             CustomIconButton {
                 id:             right_button_4
-                text:           qsTr("4")
                 height:         scalable_button_height 
                 width:          parent.width
+                showBorder:     true
                 anchors {
                     top:        right_button_3.bottom
                     topMargin:  _toolsMargin
                 }
+                text:           qsTr("4")
+                enabled:        _activeVehicle
             }
             CustomIconButton {
                 id:             right_button_5
-                text:           qsTr("5")
                 height:         scalable_button_height 
                 width:          parent.width
+                showBorder:     true
                 anchors { 
-                    top:    right_button_4.bottom
-                    topMargin: _toolsMargin
+                    top:        right_button_4.bottom
+                    topMargin:  _toolsMargin
                 }
+                text:           qsTr("5")
+                enabled:        _activeVehicle
             }
             CustomIconButton {
                 id:             right_button_6
-                text:           qsTr("6")
                 height:         scalable_button_height 
                 width:          parent.width
+                showBorder:     true
                 anchors {
-                    top:    right_button_5.bottom
-                    topMargin: _toolsMargin
+                    top:        right_button_5.bottom
+                    topMargin:  _toolsMargin
                 }
+                text:           qsTr("6")
+                enabled:        _activeVehicle
             }
             CustomIconButton {
                 id:             right_button_7
-                text:           qsTr("7")
                 height:         scalable_button_height 
                 width:          parent.width
+                showBorder:     true
                 anchors {
-                    top:    right_button_6.bottom
-                    topMargin: _toolsMargin
-                    bottomMargin: _toolsMargin
+                    top:            right_button_6.bottom
+                    topMargin:      _toolsMargin
+                    bottomMargin:   _toolsMargin
                 }
+                text:           qsTr("7")
+                enabled:        _activeVehicle
             }
         }
     }
@@ -392,21 +421,22 @@ Item {
             anchors.fill: parent
         }
         Rectangle {
-            id:                     leftSideButtonControls
+            id:                 leftSideButtonControls
             anchors {
-                left:              parent.left
+                left:           parent.left
             }
-            height:                 parent.height
-            width:                  ScreenTools.defaultFontPixelWidth * 10 //screen.width * 0.05
-            color:                  qgcPal.windowShade
-            visible:                _test_visible
+            height:             parent.height
+            width:              ScreenTools.defaultFontPixelWidth * 10 //screen.width * 0.05
+            color:              qgcPal.windowShade
+            visible:            _test_visible
             CustomIconButton {
                 id:             button_0
                 onClicked:      mainWindow.showPlanView()
                 height:         scalable_button_height 
                 width:          parent.width
+                showBorder:     true
                 anchors {
-                    top:        parente.top
+                    top:        parent.top
                     topMargin:  _toolsMargin
                 }
                 text:           qsTr("Plan")
@@ -417,76 +447,97 @@ Item {
                 text:           qsTr("Fly View")
                 height:         scalable_button_height 
                 width:          parent.width
+                showBorder:     true
                 anchors {
-                    top:    button_0.bottom
-                    topMargin: _toolsMargin
+                    top:        button_0.bottom
+                    topMargin:  _toolsMargin
                 }
                 enabled: false
             }
             CustomIconButton {
                 id:             button_2
-                text:           qsTr("2")
                 height:         scalable_button_height 
                 width:          parent.width
+                showBorder:     true
                 anchors {
-                    top:    button_1.bottom
-                    topMargin: _toolsMargin
+                    top:        button_1.bottom
+                    topMargin:  _toolsMargin
                 }
+                text:           qsTr("")
+                enabled:        false
             }
             CustomIconButton {
                 id:             button_3
-                text:           qsTr("3")
                 height:         scalable_button_height 
                 width:          parent.width
+                showBorder:     true
                 anchors {
-                    top:    button_2.bottom
-                    topMargin: _toolsMargin
+                    top:        button_2.bottom
+                    topMargin:  _toolsMargin
                 }
+                text:           qsTr("")
+                enabled:        false
             }
             CustomIconButton {
                 id:             button_4
-                text:           qsTr("4")
                 height:         scalable_button_height 
                 width:          parent.width
+                showBorder:     true
                 anchors {
-                    top:    button_3.bottom
-                    topMargin: _toolsMargin
+                    top:        button_3.bottom
+                    topMargin:  _toolsMargin
                 }
+                text:           qsTr("")
+                enabled:        false
             }
             CustomIconButton {
                 id:             button_5
-                text:           qsTr("5")
                 height:         scalable_button_height 
                 width:          parent.width
+                showBorder:     true
                 anchors {
-                    top:    button_4.bottom
-                    topMargin: _toolsMargin
+                    top:        button_4.bottom
+                    topMargin:  _toolsMargin
                 }
+                text:           qsTr("")
+                enabled:        false
             }
             CustomIconButton {
                 id:             button_6
-                text:           qsTr("6")
                 height:         scalable_button_height 
                 width:          parent.width
+                showBorder:     true
                 anchors {
                     top:    button_5.bottom
                     topMargin: _toolsMargin
+                }
+                
+                text:           qsTr("Vehicle")
+                iconSource:     "/qmlimages/Gears.svg"
+                onClicked: {
+                    if (!mainWindow.preventViewSwitch()) {
+                        mainWindow.showSetupTool()
+                    }
                 }
             }
             CustomIconButton {
                 id:             button_7
                 height:         scalable_button_height 
                 width:          parent.width
+                showBorder:     true
                 anchors {
                     top:    button_6.bottom
-                    // bottom: parent.bottom
                     topMargin: _toolsMargin
                     bottomMargin: _toolsMargin
                 }
 
-                text:           qsTr("Settings")
+                text:           qsTr("App")
                 iconSource:     "/res/gear-white.svg"
-                onClicked:      mainWindow.showToolSelectDialog()
+                onClicked: {
+                    if (!mainWindow.preventViewSwitch()) {
+                        mainWindow.showSettingsTool()
+                    }
+                }     //mainWindow.showToolSelectDialog()
             }
         }
     }
@@ -587,7 +638,7 @@ Item {
         // anchors.bottom:         parent.bottom
         anchors.horizontalCenter:          flightControlRectangle.horizontalCenter
         width:                 flightControlRectangle.width // ScreenTools.defaultFontPixelHeight * 6
-        height:                width *0.75
+        height:                width *0.65
         // radius:              height * 0.5
         color:                  qgcPal.windowShade
         visible:                _test_visible
