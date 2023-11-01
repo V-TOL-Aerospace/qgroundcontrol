@@ -20,6 +20,8 @@ import QGroundControl.ScreenTools   1.0
 import QGroundControl.Palette       1.0
 import QGroundControl.FlightMap     1.0
 
+import Custom.Widgets 1.0
+
 Item {
     id: root
 
@@ -31,11 +33,13 @@ Item {
 
     property bool showHeading:  true
 
-    property real _rollAngle:   vehicle ? vehicle.roll.rawValue  : 0
-    property real _pitchAngle:  vehicle ? vehicle.pitch.rawValue : 0
+    property real _rollAngle:       vehicle ? vehicle.roll.rawValue  : 0
+    property real _pitchAngle:      vehicle ? vehicle.pitch.rawValue : 0
+    property string _flightMode:    vehicle ? vehicle.flightMode : qsTr("N/A")
 
-    property real _altitudeRelative: vehicle ? vehicle.altitudeRelative.rawValue : 0
-    property real _airSpeed: vehicle ? vehicle.airSpeed.rawValue : 0
+    property real _altitudeRelative:vehicle ? vehicle.altitudeRelative.rawValue : 0
+    property real _airSpeed:        vehicle ? vehicle.airSpeed.rawValue : 0
+
     property string _altitudeRelative_string: vehicle ? _altitudeRelative.toFixed(0) + ' ' + QGroundControl.unitsConversion.appSettingsVerticalDistanceUnitsString : "0 " + QGroundControl.unitsConversion.appSettingsVerticalDistanceUnitsString
     property string _airSpeed_string: vehicle ? _airSpeed.toFixed(0) + ' ' + QGroundControl.unitsConversion.appSettingsSpeedUnitsString : "0 " + QGroundControl.unitsConversion.appSettingsSpeedUnitsString
 
@@ -88,7 +92,7 @@ Item {
         }
         //----------------------------------------------------
         //-- Pitch
-        QGCPitchIndicator {
+        CustomQGCPitchIndicator {
             id:                 pitchWidget
             visible:            root.showPitch
             size:               root.size * 0.5
@@ -148,7 +152,31 @@ Item {
                 color: "white"
             }
         }
+        //----------------------------------------------------
+        //-- Indicated Flight Mode
+        Rectangle{
+            id: flightMode_info_rectangle
+            anchors {
+                right:          altitude_info_rectangle.left
+                top:            altitude_info_rectangle.bottom
+                topMargin:      _toolsMargin * 3
+                rightMargin:    _toolsMargin
+            }
+            color:                      qgcPal.windowShadeDark
+            height:                     ScreenTools.defaultFontPixelHeight
+            width:                      ScreenTools.defaultFontPixelWidth * 7
 
+            QGCLabel{
+                id: flightMode_info
+                anchors {
+                    horizontalCenter:   parent.horizontalCenter
+                    verticalCenter:     parent.verticalCenter
+                    leftMargin:         _toolsMargin + 5
+                }
+                text: _flightMode
+                color: "white"
+            }
+        }
         //----------------------------------------------------
         //-- Heading Number 
         Rectangle{
