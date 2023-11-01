@@ -20,6 +20,7 @@ import QGroundControl               1.0
 import QGroundControl.Controls      1.0
 import QGroundControl.Palette       1.0
 import QGroundControl.ScreenTools   1.0
+import QGroundControl.Vehicle       1.0
 
 import Custom.Widgets 1.0
 
@@ -51,6 +52,11 @@ Item {
     property real   scalable_warnings_panel_width: topWarningDisplay.width/7 - _toolsMargin
 
     property real   _tabWidth:              ScreenTools.defaultFontPixelWidth * 12      
+    property int    _unhealthySensors:      _activeVehicle ? _activeVehicle.sensorsUnhealthyBits : 1
+
+    property string statusNormal:           CustomStatusIndicator.statusNormal // "Normal"
+    property string statusError:            CustomStatusIndicator.statusError // "Error"
+    property string statusDisabled:         CustomStatusIndicator.statusDisabled // "Disabled"
 
     function secondsToHHMMSS(timeS) {
         var sec_num = parseInt(timeS, 10);
@@ -103,7 +109,7 @@ Item {
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
-                statusActive:   _activeVehicle.allSensorsHealthy
+                statusActivity:   _activeVehicle ? (_activeVehicle.allSensorsHealthy ? statusNormal : statusError ) : statusDisabled
             }
             CustomStatusIndicator {
                 id:             warning_panel_1
@@ -113,11 +119,11 @@ Item {
                     left:       parent.left
                     leftMargin: _toolsMargin
                 }
-                text:           _activeVehicle.armed ? qsTr("ARMED") : qsTr("DISARMED")
+                text:           _activeVehicle ? (_activeVehicle.armed ? qsTr("ARMED") : qsTr("DISARMED")) : qsTr("DISARMED")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
-                statusActive:   _activeVehicle.armed
+                statusActivity:   _activeVehicle ? (_activeVehicle.armed ? statusNormal : statusDisabled) : statusDisabled
             }
 
             CustomStatusIndicator {
@@ -132,7 +138,7 @@ Item {
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
-                statusActive:   !_activeVehicle.SysStatusSensor3dGyro
+                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensor3dGyro) ? statusError : statusNormal) : statusDisabled
             }
             CustomStatusIndicator {
                 id:             warning_panel_3
@@ -146,7 +152,7 @@ Item {
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
-                statusActive:   !_activeVehicle.SysStatusSensor3dAccel
+                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensor3dAccel) ? statusError : statusNormal) : statusDisabled
             }
 
             CustomStatusIndicator {
@@ -161,7 +167,7 @@ Item {
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
-                statusActive:   !_activeVehicle.SysStatusSensor3dMag
+                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensor3dMag) ? statusError : statusNormal) : statusDisabled
             }
             CustomStatusIndicator {
                 id:             warning_panel_5
@@ -175,7 +181,7 @@ Item {
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
-                statusActive:   !_activeVehicle.SysStatusSensorGPS
+                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensorGPS) ? statusError : statusNormal) : statusDisabled
             }
 
             CustomStatusIndicator {
@@ -190,7 +196,7 @@ Item {
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
-                statusActive:   !_activeVehicle.SysStatusSensorAHRS
+                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensorAHRS) ? statusError : statusNormal) : statusDisabled
             }
             CustomStatusIndicator {
                 id:             warning_panel_7
@@ -332,7 +338,7 @@ Item {
                 iconSource:     _activeVehicle ? "/qmlimages/Connect.svg" : "/qmlimages/Disconnect.svg"
                 // onClicked:      _activeVehicle.closeVehicle()
                 // enabled:        false
-                statusActive:   _activeVehicle 
+                statusActivity:   _activeVehicle ? "Normal" : "Disabled"
             }
             CustomIconButton {
                 id:             right_button_1
@@ -343,7 +349,7 @@ Item {
                     top:        right_button_0.bottom
                     topMargin:  _toolsMargin
                 }
-                text:           _activeVehicle.armed ? qsTr("ARMED") : qsTr("DISARMED")
+                text:           _activeVehicle ? (_activeVehicle.armed ? qsTr("ARMED") : qsTr("DISARMED")) : qsTr("DISARMED")
                 onClicked:      _activeVehicle.armed ? _activeVehicle.armed = false : _activeVehicle.armed = true
                 enabled:        _activeVehicle
             }
