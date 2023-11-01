@@ -50,6 +50,8 @@ Item {
     property real   scalable_button_height: Window.height/8 - _toolsMargin
     property real   scalable_warnings_panel_width: topWarningDisplay.width/7 - _toolsMargin
 
+    property real   _tabWidth:              ScreenTools.defaultFontPixelWidth * 12      
+
     function secondsToHHMMSS(timeS) {
         var sec_num = parseInt(timeS, 10);
         var hours   = Math.floor(sec_num / 3600);
@@ -97,10 +99,11 @@ Item {
                     left:       parent.left
                     leftMargin: _toolsMargin
                 }
-                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                text:           qsTr("SENSORS")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
+                statusActive:   _activeVehicle.allSensorsHealthy
             }
             CustomStatusIndicator {
                 id:             warning_panel_1
@@ -110,10 +113,11 @@ Item {
                     left:       parent.left
                     leftMargin: _toolsMargin
                 }
-                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                text:           _activeVehicle.armed ? qsTr("ARMED") : qsTr("DISARMED")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
+                statusActive:   _activeVehicle.armed
             }
 
             CustomStatusIndicator {
@@ -124,10 +128,11 @@ Item {
                     left:       warning_panel_0.right
                     leftMargin: _toolsMargin
                 }
-                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                text:           qsTr("GYRO")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
+                statusActive:   !_activeVehicle.SysStatusSensor3dGyro
             }
             CustomStatusIndicator {
                 id:             warning_panel_3
@@ -137,10 +142,11 @@ Item {
                     left:       warning_panel_1.right
                     leftMargin: _toolsMargin
                 }
-                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                text:           qsTr("ACCEL")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
+                statusActive:   !_activeVehicle.SysStatusSensor3dAccel
             }
 
             CustomStatusIndicator {
@@ -151,10 +157,11 @@ Item {
                     left:       warning_panel_2.right
                     leftMargin: _toolsMargin
                 }
-                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                text:           qsTr("MAG")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
+                statusActive:   !_activeVehicle.SysStatusSensor3dMag
             }
             CustomStatusIndicator {
                 id:             warning_panel_5
@@ -164,10 +171,11 @@ Item {
                     left:       warning_panel_2.right
                     leftMargin: _toolsMargin
                 }
-                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                text:           _activeVehicle ? _activeVehicle.gps.lock.enumStringValue : qsTr("GPS: N/A")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
+                statusActive:   !_activeVehicle.SysStatusSensorGPS
             }
 
             CustomStatusIndicator {
@@ -178,10 +186,11 @@ Item {
                     left:       warning_panel_4.right
                     leftMargin: _toolsMargin
                 }
-                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                text:           qsTr("AHRS")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
+                statusActive:   !_activeVehicle.SysStatusSensorAHRS
             }
             CustomStatusIndicator {
                 id:             warning_panel_7
@@ -191,10 +200,11 @@ Item {
                     left:       warning_panel_4.right
                     leftMargin: _toolsMargin
                 }
-                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                text:           qsTr(" ")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
+                enabled:        false
             }
 
             CustomStatusIndicator {
@@ -205,10 +215,11 @@ Item {
                     left:       warning_panel_6.right
                     leftMargin: _toolsMargin
                 }
-                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                text:           qsTr(" ")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
+                enabled:        false
             }
             CustomStatusIndicator {
                 id:             warning_panel_9
@@ -218,10 +229,11 @@ Item {
                     left:       warning_panel_6.right
                     leftMargin: _toolsMargin
                 }
-                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                text:           qsTr(" ")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
+                enabled:        false
             }
 
             CustomStatusIndicator {
@@ -232,10 +244,11 @@ Item {
                     left:       warning_panel_8.right
                     leftMargin: _toolsMargin
                 }
-                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                text:           qsTr(" ")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
+                enabled:        false
             }
             CustomStatusIndicator {
                 id:             warning_panel_11
@@ -245,10 +258,11 @@ Item {
                     left:       warning_panel_8.right
                     leftMargin: _toolsMargin
                 }
-                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                text:           qsTr(" ")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
+                enabled:        false
             }
 
             CustomStatusIndicator {
@@ -259,10 +273,11 @@ Item {
                     left:       warning_panel_10.right
                     leftMargin: _toolsMargin
                 }
-                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                text:           qsTr(" ")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
+                enabled:        false
             }
             CustomStatusIndicator {
                 id:             warning_panel_13
@@ -272,10 +287,11 @@ Item {
                     left:       warning_panel_10.right
                     leftMargin: _toolsMargin
                 }
-                text:           scalable_warnings_panel_width.toFixed() //qsTr("0")
+                text:           qsTr(" ")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
+                enabled:        false
             }
         }
     }
@@ -288,7 +304,7 @@ Item {
             right:          parent.right
         }
         height:             Screen.height
-        width:              ScreenTools.defaultFontPixelWidth * 10 +  _toolsMargin//screen.width * 0.05
+        width:              _tabWidth +  _toolsMargin
         color:              qgcPal.windowShadeDark
         visible:            _test_visible
         MouseArea {
@@ -300,7 +316,7 @@ Item {
                 right:              parent.right
             }
             height:                 parent.height
-            width:                  ScreenTools.defaultFontPixelWidth * 10 //screen.width * 0.05
+            width:                  _tabWidth 
             color:                  qgcPal.windowShade
             visible:                _test_visible
             CustomStatusIndicator {
@@ -327,7 +343,8 @@ Item {
                     top:        right_button_0.bottom
                     topMargin:  _toolsMargin
                 }
-                text:           qsTr("1")
+                text:           _activeVehicle.armed ? qsTr("ARMED") : qsTr("DISARMED")
+                onClicked:      _activeVehicle.armed ? _activeVehicle.armed = false : _activeVehicle.armed = true
                 enabled:        _activeVehicle
             }
             CustomIconButton {
@@ -339,8 +356,8 @@ Item {
                     top:        right_button_1.bottom
                     topMargin:  _toolsMargin
                 }
-                text:           qsTr("2")
-                enabled:        _activeVehicle
+                text:           qsTr(" ")
+                enabled:        false //_activeVehicle
             }
             CustomIconButton {
                 id:             right_button_3
@@ -351,8 +368,8 @@ Item {
                     top:        right_button_2.bottom
                     topMargin:  _toolsMargin
                 }
-                text:           qsTr("3")
-                enabled:        _activeVehicle
+                text:           qsTr(" ")
+                enabled:        false //_activeVehicle
             }
             CustomIconButton {
                 id:             right_button_4
@@ -363,8 +380,8 @@ Item {
                     top:        right_button_3.bottom
                     topMargin:  _toolsMargin
                 }
-                text:           qsTr("4")
-                enabled:        _activeVehicle
+                text:           qsTr(" ")
+                enabled:        false //_activeVehicle
             }
             CustomIconButton {
                 id:             right_button_5
@@ -375,8 +392,8 @@ Item {
                     top:        right_button_4.bottom
                     topMargin:  _toolsMargin
                 }
-                text:           qsTr("5")
-                enabled:        _activeVehicle
+                text:           qsTr(" ")
+                enabled:        false //_activeVehicle
             }
             CustomIconButton {
                 id:             right_button_6
@@ -387,8 +404,8 @@ Item {
                     top:        right_button_5.bottom
                     topMargin:  _toolsMargin
                 }
-                text:           qsTr("6")
-                enabled:        _activeVehicle
+                text:           qsTr(" ")
+                enabled:        false //_activeVehicle
             }
             CustomIconButton {
                 id:             right_button_7
@@ -400,8 +417,8 @@ Item {
                     topMargin:      _toolsMargin
                     bottomMargin:   _toolsMargin
                 }
-                text:           qsTr("7")
-                enabled:        _activeVehicle
+                text:           qsTr(" ")
+                enabled:        false //_activeVehicle
             }
         }
     }
@@ -414,7 +431,7 @@ Item {
             left:               parent.left
         }
         height:                 parent.height
-        width:                  ScreenTools.defaultFontPixelWidth * 10 +  _toolsMargin//screen.width * 0.05
+        width:                  _tabWidth +  _toolsMargin
         color:                  qgcPal.windowShadeDark
         visible:                true
         MouseArea {
@@ -426,7 +443,7 @@ Item {
                 left:           parent.left
             }
             height:             parent.height
-            width:              ScreenTools.defaultFontPixelWidth * 10 //screen.width * 0.05
+            width:              _tabWidth 
             color:              qgcPal.windowShade
             visible:            _test_visible
             CustomIconButton {
