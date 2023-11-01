@@ -34,7 +34,11 @@ Button {
     rightPadding:   _horizontalPadding
     focusPolicy:    Qt.ClickFocus
 
-    property bool   statusActive    // use this flag to change the indicator's status. 
+    property string statusActivity    // use this flag to change the indicator's status. 
+
+    property string statusNormal:   "Normal"
+    property string statusError:    "Error"
+    property string statusDisabled: "Disabled"
 
     property bool   primary:        false                               ///< primary button for a group of buttons
     property real   pointSize:      ScreenTools.defaultFontPointSize    ///< Point size for button text
@@ -59,9 +63,21 @@ Button {
         radius:         backRadius
         border.width:   showBorder ? 1 : 0
         border.color:   qgcPal.buttonText
-        color:          statusActive ?
-                            qgcPal.buttonHighlight :
-                            (primary ? qgcPal.primaryButton : qgcPal.button)
+        color:          qgcPal.button
+        states: [
+            State {
+                name: "Normal"; when: statusActivity == statusNormal
+                PropertyChanges {target: backRect; color: qgcPal.buttonHighlight}
+            },
+            State {
+                name: "Error"; when: statusActivity == statusError
+                PropertyChanges {target: backRect; color: "red"}
+            },
+            State {
+                name: "Disabled"; when: statusActivity == statusDisabled
+                PropertyChanges {target: backRect; color: qgcPal.button}
+            }
+        ]
     }
 
     contentItem: Item {
@@ -95,9 +111,21 @@ Button {
             text:                   control.text
             font.pointSize:         pointSize
             font.family:            ScreenTools.normalFontFamily
-            color:                  statusActive ?
-                                        qgcPal.buttonHighlightText :
-                                        (primary ? qgcPal.primaryButtonText : qgcPal.buttonText)
+            color:                  qgcPal.buttonText
+            states: [
+                State {
+                    name: "Normal"; when: statusActivity == statusNormal
+                    PropertyChanges {target: text; color: qgcPal.buttonHighlightText}
+                },
+                State {
+                    name: "Error"; when: statusActivity == statusError
+                    PropertyChanges {target: text; color: qgcPal.primaryButtonText}
+                },
+                State {
+                    name: "Disabled"; when: statusActivity == statusDisabled
+                    PropertyChanges {target: text; color: qgcPal.buttonText}
+                }
+            ]
         }
     }
 }
