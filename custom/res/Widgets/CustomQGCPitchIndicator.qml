@@ -52,7 +52,7 @@ Rectangle {
                     color: "white"
                     antialiasing: true
                     smooth: true
-                    visible: false // temporary
+                    visible: true // temporary
                     QGCLabel {
                         anchors.horizontalCenter: parent.horizontalCenter
                         anchors.horizontalCenterOffset: -(_longDash)
