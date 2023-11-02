@@ -134,11 +134,11 @@ Item {
                     left:       warning_panel_0.right
                     leftMargin: _toolsMargin
                 }
-                text:           qsTr("GYRO")
+                text:           _activeVehicle ? _activeVehicle.gps.lock.enumStringValue : qsTr("GPS: N/A")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
-                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensor3dGyro) ? statusError : statusNormal) : statusDisabled
+                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensorGPS) ? statusError : statusNormal) : statusDisabled
             }
             CustomStatusIndicator {
                 id:             warning_panel_3
@@ -148,11 +148,11 @@ Item {
                     left:       warning_panel_1.right
                     leftMargin: _toolsMargin
                 }
-                text:           qsTr("ACCEL")
+                text:           qsTr("MAG")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
-                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensor3dAccel) ? statusError : statusNormal) : statusDisabled
+                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensor3dMag) ? statusError : statusNormal) : statusDisabled
             }
 
             CustomStatusIndicator {
@@ -163,11 +163,11 @@ Item {
                     left:       warning_panel_2.right
                     leftMargin: _toolsMargin
                 }
-                text:           qsTr("MAG")
+                text:           qsTr("ACCEL")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
-                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensor3dMag) ? statusError : statusNormal) : statusDisabled
+                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensor3dAccel) ? statusError : statusNormal) : statusDisabled
             }
             CustomStatusIndicator {
                 id:             warning_panel_5
@@ -177,11 +177,11 @@ Item {
                     left:       warning_panel_2.right
                     leftMargin: _toolsMargin
                 }
-                text:           _activeVehicle ? _activeVehicle.gps.lock.enumStringValue : qsTr("GPS: N/A")
+                text:           qsTr("GYRO")
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
-                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensorGPS) ? statusError : statusNormal) : statusDisabled
+                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensor3dGyro) ? statusError : statusNormal) : statusDisabled
             }
 
             CustomStatusIndicator {
