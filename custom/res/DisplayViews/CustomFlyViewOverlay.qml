@@ -53,6 +53,7 @@ Item {
 
     property real   _tabWidth:              ScreenTools.defaultFontPixelWidth * 12      
     property int    _unhealthySensors:      _activeVehicle ? _activeVehicle.sensorsUnhealthyBits : 1
+    property bool   _communicationLost:     _activeVehicle ? _activeVehicle.vehicleLinkManager.communicationLost : false
 
     property string statusNormal:           CustomStatusIndicator.statusNormal // "Normal"
     property string statusError:            CustomStatusIndicator.statusError // "Error"
