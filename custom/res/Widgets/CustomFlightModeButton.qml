@@ -8,6 +8,7 @@
  ****************************************************************************/
 
 import QtQuick 2.11
+import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.11
 
 import QGroundControl 1.0
@@ -16,87 +17,128 @@ import QGroundControl.MultiVehicleManager 1.0
 import QGroundControl.ScreenTools 1.0
 import QGroundControl.Palette 1.0
 
-Item {
-    id:                     _root
-    Layout.preferredWidth:  rowLayout.width
+Button {
+    id:             control
+    hoverEnabled:   true
+    topPadding:     _verticalPadding
+    bottomPadding:  _verticalPadding
+    leftPadding:    _horizontalPadding
+    rightPadding:   _horizontalPadding
+    focusPolicy:    Qt.ClickFocus
 
-    property real fontPointSize: ScreenTools.largeFontPointSize
-    property var activeVehicle: QGroundControl.multiVehicleManager.activeVehicle
+    property bool   primary:        false                               ///< primary button for a group of buttons
+    property real   pointSize:      ScreenTools.defaultFontPointSize    ///< Point size for button text
+    property bool   showBorder:     qgcPal.globalTheme === QGCPalette.Light
+    property bool   iconLeft:       false
+    property real   backRadius:     0
+    property real   heightFactor:   0.5
+    property string iconSource
 
-    Component {
-        id: flightModeMenu
+    property bool   _showHighlight:     pressed | hovered | checked
 
-        Rectangle {
-            width: flickable.width + (ScreenTools.defaultFontPixelWidth * 2)
-            height: flickable.height + (ScreenTools.defaultFontPixelWidth * 2)
-            radius: ScreenTools.defaultFontPixelHeight * 0.5
-            color: qgcPal.window
-            border.color: qgcPal.text
+    property int _horizontalPadding:    ScreenTools.defaultFontPixelWidth
+    property int _verticalPadding:      Math.round(ScreenTools.defaultFontPixelHeight * heightFactor)
+    
+    property var activeVehicle 
 
-            QGCFlickable {
-                id: flickable
-                anchors.margins: ScreenTools.defaultFontPixelWidth
-                anchors.top: parent.top
-                anchors.left: parent.left
-                width: mainLayout.width
-                height: _fullWindowHeight <= mainLayout.height ? _fullWindowHeight : mainLayout.height
-                flickableDirection: Flickable.VerticalFlick
-                contentHeight: mainLayout.height
-                contentWidth: mainLayout.width
+    QGCPalette { id: qgcPal; colorGroupEnabled: enabled }
 
-                property real _fullWindowHeight: mainWindow.contentItem.height - (indicatorPopup.padding * 2) - (ScreenTools.defaultFontPixelWidth * 2)
+    background: Rectangle {
+        id:             backRect
+        implicitWidth:  ScreenTools.implicitButtonWidth
+        implicitHeight: ScreenTools.implicitButtonHeight
+        radius:         backRadius
+        border {
+            width:      showBorder ? 1 : 0
+            color:      qgcPal.buttonText
+        }
+        color:          _showHighlight ?
+                            qgcPal.buttonHighlight :
+                            (primary ? qgcPal.primaryButton : qgcPal.button)
+    }
 
-                ColumnLayout {
-                    id: mainLayout
-                    spacing: ScreenTools.defaultFontPixelWidth / 2
+    contentItem: Item {
+        id:                     _item_root
+        Layout.preferredWidth:  rowLayout.width
 
-                    Repeater {
-                        model: activeVehicle ? activeVehicle.flightModes : []
+        property real fontPointSize: ScreenTools.largeFontPointSize
+        property var activeVehicle: activeVehicle
 
-                        QGCButton {
-                            text: modelData
-                            Layout.fillWidth: true
-                            onClicked: {
-                                activeVehicle.flightMode = text
-                                mainWindow.hideIndicatorPopup()
+        Component {
+            id: flightModeMenu
+
+            Rectangle {
+                width: flickable.width + (ScreenTools.defaultFontPixelWidth * 2)
+                height: flickable.height + (ScreenTools.defaultFontPixelWidth * 2)
+                radius: ScreenTools.defaultFontPixelHeight * 0.5
+                color: qgcPal.window
+                border.color: qgcPal.text
+
+                QGCFlickable {
+                    id: flickable
+                    anchors.margins: ScreenTools.defaultFontPixelWidth
+                    anchors.top: parent.top
+                    anchors.left: parent.left
+                    width: mainLayout.width
+                    height: _fullWindowHeight <= mainLayout.height ? _fullWindowHeight : mainLayout.height
+                    flickableDirection: Flickable.VerticalFlick
+                    contentHeight: mainLayout.height
+                    contentWidth: mainLayout.width
+
+                    property real _fullWindowHeight: mainWindow.contentItem.height - (indicatorPopup.padding * 2) - (ScreenTools.defaultFontPixelWidth * 2)
+
+                    ColumnLayout {
+                        id: mainLayout
+                        spacing: ScreenTools.defaultFontPixelWidth / 2
+
+                        Repeater {
+                            model: activeVehicle ? activeVehicle.flightModes : []
+
+                            QGCButton {
+                                text: modelData
+                                Layout.fillWidth: true
+                                onClicked: {
+                                    activeVehicle.flightMode = text
+                                    mainWindow.hideIndicatorPopup()
+                                }
                             }
                         }
                     }
                 }
             }
         }
-    }
 
-    RowLayout {
-        id:         rowLayout
-        spacing:    0
-        height:     parent.height
+        RowLayout {
+            id:         rowLayout
+            spacing:    0
+            height:     parent.height
 
-        QGCColoredImage {
-            id:         flightModeIcon
-            width:      ScreenTools.defaultFontPixelWidth * 2
-            height:     ScreenTools.defaultFontPixelHeight * 0.75
-            fillMode:   Image.PreserveAspectFit
-            mipmap:     true
-            color:      qgcPal.text
-            source:     "/qmlimages/FlightModesComponentIcon.png"
-            Layout.alignment:   Qt.AlignVCenter
+            QGCColoredImage {
+                id:         flightModeIcon
+                width:      ScreenTools.defaultFontPixelWidth * 2
+                height:     ScreenTools.defaultFontPixelHeight * 0.75
+                fillMode:   Image.PreserveAspectFit
+                mipmap:     true
+                color:      qgcPal.text
+                source:     "/qmlimages/FlightModesComponentIcon.png"
+                Layout.alignment:   Qt.AlignVCenter
+            }
+
+            Item {
+                Layout.preferredWidth:  ScreenTools.defaultFontPixelWidth / 2
+                height:                 1
+            }
+
+            QGCLabel {
+                text:               activeVehicle ? activeVehicle.flightMode : qsTr("N/A", "No data to display")
+                font.pointSize:     fontPointSize
+                Layout.alignment:   Qt.AlignVCenter
+            }
         }
 
-        Item {
-            Layout.preferredWidth:  ScreenTools.defaultFontPixelWidth / 2
-            height:                 1
+        QGCMouseArea {
+            anchors.fill:   parent
+            onClicked:      mainWindow.showIndicatorPopup(_item_root, flightModeMenu)
         }
-
-        QGCLabel {
-            text:               activeVehicle ? activeVehicle.flightMode : qsTr("N/A", "No data to display")
-            font.pointSize:     fontPointSize
-            Layout.alignment:   Qt.AlignVCenter
-        }
-    }
-
-    QGCMouseArea {
-        anchors.fill:   parent
-        onClicked:      mainWindow.showIndicatorPopup(_root, flightModeMenu)
     }
 }

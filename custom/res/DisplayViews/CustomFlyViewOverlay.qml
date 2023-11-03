@@ -353,7 +353,7 @@ Item {
                 onClicked:      _activeVehicle.armed ? _activeVehicle.armed = false : _activeVehicle.armed = true
                 enabled:        _activeVehicle
             }
-            CustomIconButton {
+            CustomFlightModeButton {
                 id:             right_button_2
                 height:         scalable_button_height 
                 width:          parent.width
@@ -363,7 +363,8 @@ Item {
                     topMargin:  _toolsMargin
                 }
                 text:           qsTr(" ")
-                enabled:        false //_activeVehicle
+                enabled:        _activeVehicle
+                activeVehicle: _activeVehicle
             }
             CustomIconButton {
                 id:             right_button_3
