@@ -107,33 +107,32 @@ Button {
                 }
             }
         }
+       
+        Text {
+            id:                     text
+            // anchors.centerIn:       parent
+            anchors.bottom:             parent.bottom
+            anchors.bottomMargin:       parent.bottomMargin
+            anchors.horizontalCenter:   parent.horizontalCenter
+            antialiasing:               true
+            text:                       activeVehicle ? activeVehicle.flightMode : qsTr("N/A", "No data to display")
+            font.pointSize:             pointSize
+            font.family:                ScreenTools.normalFontFamily
+            color:                      _showHighlight ?
+                                            qgcPal.buttonHighlightText :
+                                            (primary ? qgcPal.primaryButtonText : qgcPal.buttonText)
+        }
 
-        RowLayout {
-            id:         rowLayout
-            spacing:    0
-            height:     parent.height
-
-            QGCColoredImage {
-                id:         flightModeIcon
-                width:      ScreenTools.defaultFontPixelWidth * 2
-                height:     ScreenTools.defaultFontPixelHeight * 0.75
-                fillMode:   Image.PreserveAspectFit
-                mipmap:     true
-                color:      qgcPal.text
-                source:     "/qmlimages/FlightModesComponentIcon.png"
-                Layout.alignment:   Qt.AlignVCenter
-            }
-
-            Item {
-                Layout.preferredWidth:  ScreenTools.defaultFontPixelWidth / 2
-                height:                 1
-            }
-
-            QGCLabel {
-                text:               activeVehicle ? activeVehicle.flightMode : qsTr("N/A", "No data to display")
-                font.pointSize:     fontPointSize
-                Layout.alignment:   Qt.AlignVCenter
-            }
+        QGCColoredImage {
+            id:                     icon
+            source:                 "/qmlimages/FlightModesComponentIcon.png"
+            height:                 source === "" ? 0 : text.height *2
+            width:                  height
+            color:                  text.color
+            fillMode:               Image.PreserveAspectFit
+            sourceSize.height:      height
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: parent.verticalCenter
         }
 
         QGCMouseArea {
