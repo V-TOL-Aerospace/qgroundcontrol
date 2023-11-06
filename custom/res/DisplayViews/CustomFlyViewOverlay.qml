@@ -55,9 +55,9 @@ Item {
     property int    _unhealthySensors:      _activeVehicle ? _activeVehicle.sensorsUnhealthyBits : 1
     property bool   _communicationLost:     _activeVehicle ? _activeVehicle.vehicleLinkManager.communicationLost : false
 
-    property string statusNormal:           CustomStatusIndicator.statusNormal // "Normal"
-    property string statusError:            CustomStatusIndicator.statusError // "Error"
-    property string statusDisabled:         CustomStatusIndicator.statusDisabled // "Disabled"
+    property string statusNormal:           "Normal" // CustomStatusIndicator.statusNormal 
+    property string statusError:            "Error"// CustomStatusIndicator.statusError 
+    property string statusDisabled:         "Disabled"// CustomStatusIndicator.statusDisabled 
 
     function secondsToHHMMSS(timeS) {
         var sec_num = parseInt(timeS, 10);
@@ -765,7 +765,7 @@ Item {
         anchors.horizontalCenter: flightControlRectangle.horizontalCenter
         anchors.top: compassBackground.visible ? compassBackground.bottom:attitudeIndicator.bottom
         width:  flightControlRectangle.width
-        height: gpsCol.height  + ScreenTools.defaultFontPixelHeight * 2
+        height: width * 0.35//gpsCol.height  + ScreenTools.defaultFontPixelHeight * 2
         radius: ScreenTools.defaultFontPixelHeight * 0.5
         color:  qgcPal.window
         border.color:   qgcPal.text
@@ -804,5 +804,15 @@ Item {
                 //QGCLabel { text: _activeVehicle ? _activeVehicle.gps.courseOverGround.valueString : qsTr("--.--", "No data to display") }
             }
         }
+    }
+    CustomMavMessageWidget {
+        id:             messageWindow
+        width:          flightControlRectangle.width
+        height:         width
+        anchors {
+            top:                gps_info_window.bottom
+            horizontalCenter:   flightControlRectangle.horizontalCenter
+        }
+        _activeVehicle: _activeVehicle
     }
 }
