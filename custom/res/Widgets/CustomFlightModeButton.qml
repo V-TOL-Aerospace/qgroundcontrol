@@ -59,7 +59,7 @@ Button {
 
     contentItem: Item {
         id:                     _item_root
-        Layout.preferredWidth:  rowLayout.width
+        // Layout.preferredWidth:  rowLayout.width
 
         property real fontPointSize: ScreenTools.largeFontPointSize
         property var activeVehicle: activeVehicle
