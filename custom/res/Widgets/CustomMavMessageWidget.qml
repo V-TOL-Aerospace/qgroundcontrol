@@ -21,7 +21,7 @@ Rectangle {
     property bool showIndicator: true
 
     property var _activeVehicle
-    // property var    _activeVehicle:         QGroundControl.multiVehicleManager.activeVehicle
+    property var activeVehicleBase:               QGroundControl.multiVehicleManager.activeVehicle
     property bool   _isMessageImportant:    _activeVehicle ? !_activeVehicle.messageTypeNormal && !_activeVehicle.messageTypeNone : false
 
     function getMessageColor() {
@@ -51,7 +51,7 @@ Rectangle {
     }
 
     Connections {
-        target: QGroundControl.multiVehicleManager.activeVehicle
+        target: activeVehicleBase
         onNewFormattedMessage :{
             messageText.append(formatMessage(formattedMessage))
             //-- Hack to scroll down
@@ -61,7 +61,7 @@ Rectangle {
 
     QGCLabel {
         anchors.centerIn:   parent
-        text:               _activeVehicle ? messageText : qsTr("TEST: No Messages")
+        text:               qsTr("No Messages")
         visible:            messageText.length === 0
     }
 
@@ -78,12 +78,12 @@ Rectangle {
         mipmap:             true
         smooth:             true
         color:              qgcPal.text
-        visible:            messageText.length !== 0
+        visible:            false //messageText.length !== 0
         MouseArea {
             anchors.fill:   parent
             onClicked: {
-                if (_activeVehicle) {
-                    _activeVehicle.clearMessages()
+                if (activeVehicleBase) {
+                    activeVehicleBase.clearMessages()
                     // mainWindow.hideIndicatorPopup()
                 }
             }

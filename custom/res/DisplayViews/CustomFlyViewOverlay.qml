@@ -135,7 +135,7 @@ Item {
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
-                statusActivity:   _activeVehicle ? (_activeVehicle.armed ? statusNormal : statusDisabled) : statusDisabled
+                statusActivity:   _activeVehicle ? (_activeVehicle.armed ? statusNormal : statusError) : statusDisabled
             }
 
             CustomStatusIndicator {
