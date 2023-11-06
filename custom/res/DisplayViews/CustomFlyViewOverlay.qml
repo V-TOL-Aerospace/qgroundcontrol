@@ -17,7 +17,11 @@ import QtPositioning            5.3
 import QtQuick.Window           2.2
 
 import QGroundControl               1.0
+import QGroundControl.Controllers   1.0
 import QGroundControl.Controls      1.0
+import QGroundControl.FactSystem    1.0
+import QGroundControl.FlightDisplay 1.0
+import QGroundControl.FlightMap     1.0
 import QGroundControl.Palette       1.0
 import QGroundControl.ScreenTools   1.0
 import QGroundControl.Vehicle       1.0
@@ -30,7 +34,7 @@ Item {
     property var totalToolInsets:   _totalToolInsets    // The insets updated for the custom overlay additions
     property var mapControl
 
-    readonly property string noGPS:         qsTr("NO GPS")
+    readonly property string noGPS:                 qsTr("NO GPS")
     readonly property real   indicatorValueWidth:   ScreenTools.defaultFontPixelWidth * 7
 
     property var    _activeVehicle:         QGroundControl.multiVehicleManager.activeVehicle
@@ -48,8 +52,8 @@ Item {
     property real   _toolsMargin:           ScreenTools.defaultFontPixelWidth * 0.75
     property bool   _test_visible:          true
 
-    property real   scalable_button_height: Window.height/8 - _toolsMargin
-    property real   scalable_warnings_panel_width: topWarningDisplay.width/7 - _toolsMargin
+    property real   scalable_button_height:         Window.height/8 - _toolsMargin
+    property real   scalable_warnings_panel_width:  topWarningDisplay.width/7 - _toolsMargin
 
     property real   _tabWidth:              ScreenTools.defaultFontPixelWidth * 12      
     property int    _unhealthySensors:      _activeVehicle ? _activeVehicle.sensorsUnhealthyBits : 1
@@ -58,6 +62,13 @@ Item {
     property string statusNormal:           "Normal" // CustomStatusIndicator.statusNormal 
     property string statusError:            "Error"// CustomStatusIndicator.statusError 
     property string statusDisabled:         "Disabled"// CustomStatusIndicator.statusDisabled 
+    
+    // property var planController:            _planController
+    // property var guidedController:          _guidedController
+    // property var _guidedController:         guidedActionsController
+    // property var _guidedActionList:         guidedActionList
+    // property var _guidedValueSlider:        guidedValueSlider
+    // property var _mapControl:               mapControl
 
     function secondsToHHMMSS(timeS) {
         var sec_num = parseInt(timeS, 10);
