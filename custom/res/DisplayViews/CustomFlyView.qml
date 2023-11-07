@@ -47,10 +47,6 @@ Item {
     property var    _geoFenceController:    _planController.geoFenceController
     property var    _rallyPointController:  _planController.rallyPointController
     property real   _margins:               ScreenTools.defaultFontPixelWidth / 2
-    // property var    _guidedController:      guidedActionsController
-    // property var    _guidedActionList:      guidedActionList
-    // property var    _guidedValueSlider:     guidedValueSlider
-    // property var    _widgetLayer:           widgetLayer
     property real   _toolsMargin:           ScreenTools.defaultFontPixelWidth * 0.75
     property rect   _centerViewport:        Qt.rect(0, 0, width, height)
     property real   _rightPanelWidth:       ScreenTools.defaultFontPixelWidth * 30
@@ -58,6 +54,11 @@ Item {
 
     property real   _fullItemZorder:    0
     property real   _pipItemZorder:     QGroundControl.zOrderWidgets
+    
+    property var    _guidedController:      guidedActionsController
+    property var    _guidedActionList:      guidedActionList
+    property var    _guidedValueSlider:     guidedValueSlider
+    // property var    _widgetLayer:           widgetLayer
 
     function _calcCenterViewPort() {
         var newToolInset = Qt.rect(0, 0, width, height)
@@ -94,14 +95,14 @@ Item {
         visible:            !QGroundControl.videoManager.fullScreen
     }
 
-    // GuidedActionsController {
-    //     id:                 guidedActionsController
-    //     missionController:  _missionController
-    //     actionList:         _guidedActionList
-    //     guidedValueSlider:     _guidedValueSlider
-    // }
+    GuidedActionsController {
+        id:                 guidedActionsController
+        missionController:  _missionController
+        actionList:         _guidedActionList
+        guidedValueSlider:     _guidedValueSlider
+    }
 
-    /*GuidedActionConfirm {
+    GuidedActionConfirm {
         id:                         guidedActionConfirm
         anchors.margins:            _margins
         anchors.bottom:             parent.bottom
@@ -109,30 +110,30 @@ Item {
         z:                          QGroundControl.zOrderTopMost
         guidedController:           _guidedController
         guidedValueSlider:             _guidedValueSlider
-    }*/
+    }
 
-    // GuidedActionList {
-    //     id:                         guidedActionList
-    //     anchors.margins:            _margins
-    //     anchors.bottom:             parent.bottom
-    //     anchors.horizontalCenter:   parent.horizontalCenter
-    //     z:                          QGroundControl.zOrderTopMost
-    //     guidedController:           _guidedController
-    // }
+    GuidedActionList {
+        id:                         guidedActionList
+        anchors.margins:            _margins
+        anchors.bottom:             parent.bottom
+        anchors.horizontalCenter:   parent.horizontalCenter
+        z:                          QGroundControl.zOrderTopMost
+        guidedController:           _guidedController
+    }
 
     // //-- Guided value slider (e.g. altitude)
-    // GuidedValueSlider {
-    //     id:                 guidedValueSlider
-    //     anchors.margins:    _toolsMargin
-    //     anchors.right:      parent.right
-    //     anchors.top:        parent.top
-    //     anchors.bottom:     parent.bottom
-    //     z:                  QGroundControl.zOrderTopMost
-    //     radius:             ScreenTools.defaultFontPixelWidth / 2
-    //     width:              ScreenTools.defaultFontPixelWidth * 10
-    //     color:              qgcPal.window
-    //     visible:            false
-    // }
+    GuidedValueSlider {
+        id:                 guidedValueSlider
+        anchors.margins:    _toolsMargin
+        anchors.right:      parent.right
+        anchors.top:        parent.top
+        anchors.bottom:     parent.bottom
+        z:                  QGroundControl.zOrderTopMost
+        radius:             ScreenTools.defaultFontPixelWidth / 2
+        width:              ScreenTools.defaultFontPixelWidth * 10
+        color:              qgcPal.window
+        visible:            false
+    }
 
     FlyViewMap {
         id:                     mapControl
