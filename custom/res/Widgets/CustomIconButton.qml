@@ -37,6 +37,7 @@ Button {
     property real   backRadius:     0
     property real   heightFactor:   0.5
     property string iconSource
+    property bool   grayscale:      true
 
     property alias wrapMode:            text.wrapMode
     property alias horizontalAlignment: text.horizontalAlignment
@@ -70,7 +71,7 @@ Button {
             source:                 control.iconSource
             height:                 source === "" ? 0 : text.height *2
             width:                  height
-            color:                  text.color
+            color:                  grayscale ? text.color: "transparent"
             fillMode:               Image.PreserveAspectFit
             sourceSize.height:      height
             anchors.horizontalCenter: parent.horizontalCenter
@@ -97,48 +98,3 @@ Button {
         }
     }
 }
-
-
-// Button {
-//     id:                             _rootButton
-//     width:                          parent.height * 1.25
-//     height:                         parent.height
-//     flat:                           true
-//     contentItem: Item {
-//         id:                         _content
-//         anchors.fill:               _rootButton
-//         Row {
-//             id:                     _edge
-//             spacing:                ScreenTools.defaultFontPixelWidth * 0.25
-//             anchors.left:           parent.left
-//             anchors.leftMargin:     ScreenTools.defaultFontPixelWidth
-//             anchors.verticalCenter: parent.verticalCenter
-//             Repeater {
-//                 model: [1,2,3]
-//                 Rectangle {
-//                     height:         ScreenTools.defaultFontPixelHeight
-//                     width:          ScreenTools.defaultFontPixelWidth * 0.25
-//                     color:          qgcPal.text
-//                     opacity:        0.75
-//                 }
-//             }
-//         }
-//         Image {
-//             id:                     _icon
-//             height:                 _rootButton.height * 0.75
-//             width:                  height
-//             smooth:                 true
-//             mipmap:                 true
-//             antialiasing:           true
-//             fillMode:               Image.PreserveAspectFit
-//             source:                 qgcPal.globalTheme === QGCPalette.Light ? "/res/QGCLogoBlack" : "/res/QGCLogoWhite"
-//             sourceSize.height:      height
-//             anchors.left:           _edge.right
-//             anchors.leftMargin:     ScreenTools.defaultFontPixelWidth
-//             anchors.verticalCenter: parent.verticalCenter
-//         }
-//     }
-//     background: Item {
-//         anchors.fill: parent
-//     }
-// }
