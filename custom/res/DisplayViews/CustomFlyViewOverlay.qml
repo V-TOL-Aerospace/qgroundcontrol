@@ -122,6 +122,7 @@ Item {
                 width:          scalable_warnings_panel_width
                 showBorder:     true
                 statusActivity:   _activeVehicle ? (_activeVehicle.allSensorsHealthy ? statusNormal : statusError ) : statusDisabled
+                showOnMouseHighlight: true
             }
             CustomStatusIndicator {
                 id:             warning_panel_1
@@ -362,8 +363,10 @@ Item {
                     topMargin:  _toolsMargin
                 }
                 text:           _activeVehicle ? (_activeVehicle.armed ? qsTr("ARMED") : qsTr("DISARMED")) : qsTr("DISARMED")
-                onClicked:      _activeVehicle.armed ? _activeVehicle.armed = false : _activeVehicle.armed = true
+                iconSource:     _activeVehicle ? (_activeVehicle.armed ? "/qmlimages/Armed.svg" : "/qmlimages/Disarmed.svg") : "/qmlimages/Disarmed.svg"
+                onClicked:      _activeVehicle.armed ? _guidedController.confirmAction(_guidedController.actionDisarm, 1) : _guidedController.confirmAction(_guidedController.actionArm, 1) //_activeVehicle.armed ? _activeVehicle.armed = false : _activeVehicle.armed = true
                 enabled:        _activeVehicle
+                grayscale:      false
             }
             CustomFlightModeButton {
                 id:             right_button_2
@@ -387,8 +390,10 @@ Item {
                     top:        right_button_2.bottom
                     topMargin:  _toolsMargin
                 }
-                text:           qsTr(" ")
-                enabled:        false //_activeVehicle
+                text:           qsTr("Set Takeoff")
+                iconSource:     "/res/takeoff.svg"
+                enabled:        _activeVehicle ? (_activeVehicle.armed ? false:true): false
+                onClicked:      _guidedController.confirmAction(_guidedController.actionSetWaypoint, 1)
             }
             CustomIconButton {
                 id:             right_button_4
@@ -399,8 +404,10 @@ Item {
                     top:        right_button_3.bottom
                     topMargin:  _toolsMargin
                 }
-                text:           qsTr(" ")
-                enabled:        false //_activeVehicle
+                text:           qsTr("RTL")
+                iconSource:     "/res/rtl.svg"
+                enabled:        _activeVehicle ? (_activeVehicle.armed ? true:false): false
+                onClicked:      _guidedController.confirmAction(_guidedController.actionRTL, 1)
             }
             CustomIconButton {
                 id:             right_button_5

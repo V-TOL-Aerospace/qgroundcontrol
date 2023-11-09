@@ -10,20 +10,14 @@
  */
 
 import QtQuick                      2.11
-import QtQuick.Controls             2.4
+import QtQuick.Controls             2.12
+import QtQuick.Controls.Styles      1.4
 
 import QGroundControl               1.0
 import QGroundControl.Controls      1.0
 import QGroundControl.Palette       1.0
 import QGroundControl.ScreenTools   1.0
 import QtGraphicalEffects           1.0
-
-import QtQuick                  2.3
-import QtQuick.Controls         2.12
-import QtQuick.Controls.Styles  1.4
-
-import QGroundControl.Palette 1.0
-import QGroundControl.ScreenTools 1.0
 
 Button {
     id:             control
@@ -40,6 +34,9 @@ Button {
     property string statusError:    "Error"
     property string statusDisabled: "Disabled"
 
+    property bool   onMouseHighlight:       pressed | hovered | checked
+    property bool   showOnMouseHighlight
+
     property bool   primary:        false                               ///< primary button for a group of buttons
     property real   pointSize:      ScreenTools.defaultFontPointSize    ///< Point size for button text
     property bool   showBorder:     qgcPal.globalTheme === QGCPalette.Light
@@ -47,9 +44,6 @@ Button {
     property real   backRadius:     0
     property real   heightFactor:   0.5
     property string iconSource
-
-    property alias wrapMode:            text.wrapMode
-    property alias horizontalAlignment: text.horizontalAlignment
 
     property int _horizontalPadding:    ScreenTools.defaultFontPixelWidth
     property int _verticalPadding:      Math.round(ScreenTools.defaultFontPixelHeight * heightFactor)
@@ -65,9 +59,17 @@ Button {
         border.color:   qgcPal.buttonText
         color:          qgcPal.button
         states: [
+            State{
+                name: "on_mouse"; when: onMouseHighlight && showOnMouseHighlight
+                PropertyChanges {
+                    target: backRect; 
+                    color:  onMouseHighlight ? 
+                        qgcPal.buttonHighlight : (primary ? qgcPal.primaryButton : qgcPal.button)
+                }
+            },
             State {
                 name: "Normal"; when: statusActivity == statusNormal
-                PropertyChanges {target: backRect; color: qgcPal.buttonHighlight}
+                PropertyChanges {target: backRect; color: "green"}//qgcPal.buttonHighlight}
             },
             State {
                 name: "Error"; when: statusActivity == statusError
@@ -112,7 +114,20 @@ Button {
             font.pointSize:         pointSize
             font.family:            ScreenTools.normalFontFamily
             color:                  qgcPal.buttonText
+
+            wrapMode:               Text.WordWrap
+            horizontalAlignment:    Text.AlignHCenter
+            verticalAlignment:      Text.AlignVCenter
+
             states: [
+                State {
+                    name: "on_mouse"; when: onMouseHighlight && showOnMouseHighlight
+                    PropertyChanges {
+                        target: backRect; 
+                        color:  _showHighlight ? 
+                            qgcPal.buttonHighlightText : (primary ? qgcPal.primaryButtonText : qgcPal.buttonText)
+                    }
+                },
                 State {
                     name: "Normal"; when: statusActivity == statusNormal
                     PropertyChanges {target: text; color: qgcPal.buttonHighlightText}
