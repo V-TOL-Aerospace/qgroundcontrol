@@ -123,7 +123,7 @@ Button {
                 State {
                     name: "on_mouse"; when: onMouseHighlight && showOnMouseHighlight
                     PropertyChanges {
-                        target: backRect; 
+                        target: text; 
                         color:  _showHighlight ? 
                             qgcPal.buttonHighlightText : (primary ? qgcPal.primaryButtonText : qgcPal.buttonText)
                     }
