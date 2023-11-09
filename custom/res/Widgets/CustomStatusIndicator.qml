@@ -124,7 +124,7 @@ Button {
                     name: "on_mouse"; when: onMouseHighlight && showOnMouseHighlight
                     PropertyChanges {
                         target: text; 
-                        color:  _showHighlight ? 
+                        color:  onMouseHighlight ? 
                             qgcPal.buttonHighlightText : (primary ? qgcPal.primaryButtonText : qgcPal.buttonText)
                     }
                 },
