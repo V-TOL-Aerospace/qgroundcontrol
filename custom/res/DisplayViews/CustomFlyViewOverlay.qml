@@ -55,7 +55,7 @@ Item {
     property real   scalable_button_height:         Window.height/8 - _toolsMargin
     property real   scalable_warnings_panel_width:  topWarningDisplay.width/7 - _toolsMargin
 
-    property real   _tabWidth:              ScreenTools.defaultFontPixelWidth * 12      
+    property real   _tabWidth:              Window.width * 0.075 // ScreenTools.defaultFontPixelWidth * 12      
     property int    _unhealthySensors:      _activeVehicle ? _activeVehicle.sensorsUnhealthyBits : 1
     property bool   _communicationLost:     _activeVehicle ? _activeVehicle.vehicleLinkManager.communicationLost : false
 
@@ -293,7 +293,7 @@ Item {
                     left:       warning_panel_10.right
                     leftMargin: _toolsMargin
                 }
-                text:           qsTr(" ")
+                text:           Window.width
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
@@ -307,7 +307,7 @@ Item {
                     left:       warning_panel_10.right
                     leftMargin: _toolsMargin
                 }
-                text:           qsTr(" ")
+                text:           Window.height
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
@@ -593,8 +593,8 @@ Item {
             topMargin: _toolsMargin
             left:      leftSideButtonControls_Boarder.right
         }
-        height:                 screen.height
-        width:                  screen.width * 0.2
+        height:                 Window.height
+        width:                  Window.width * 0.2
         color:                  qgcPal.windowShade
         visible:                _test_visible
         MouseArea {
