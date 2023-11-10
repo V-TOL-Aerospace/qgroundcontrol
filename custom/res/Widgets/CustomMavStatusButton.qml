@@ -134,7 +134,32 @@ Button {
                             model: _activeVehicle.sysStatusSensorInfo.sensorStatus
 
                             QGCLabel {
-                                text: modelData
+                                text:       modelData
+                            }
+                        }
+
+                        Repeater {
+                            model: _activeVehicle.sysStatusSensorInfo.sensorStatus
+                            Rectangle {
+                                id:     modelDataStatus_background
+                                width:  height //ScreenTools.defaultFontPixelWidth
+                                height: ScreenTools.defaultFontPixelHeight
+                                color:  "green" // qgcPal.window
+                                property string reference_text: modelData
+                                states: [
+                                    State {
+                                        name: "Normal"; when: reference_text == statusNormal
+                                        PropertyChanges {target: modelDataStatus_background; color: "green"}//qgcPal.buttonHighlight}
+                                    },
+                                    State {
+                                        name: "Error"; when: reference_text == statusError
+                                        PropertyChanges {target: modelDataStatus_background; color: "red"}
+                                    },
+                                    State {
+                                        name: "Disabled"; when: reference_text == statusDisabled
+                                        PropertyChanges {target: modelDataStatus_background; color: qgcPal.button}
+                                    }
+                                ]
                             }
                         }
                     }
