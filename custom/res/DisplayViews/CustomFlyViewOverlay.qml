@@ -109,7 +109,7 @@ Item {
             height:                 parent.height - _toolsMargin
             width:                  parent.width - _toolsMargin
             color:                  qgcPal.windowShade
-            CustomStatusIndicator {
+            CustomMavStatusButton {
                 id:             warning_panel_0
                 anchors {
                     top:        parent.top
@@ -117,12 +117,13 @@ Item {
                     left:       parent.left
                     leftMargin: _toolsMargin
                 }
-                text:           qsTr("SENSORS")
-                height:         parent.height * 0.5 - _toolsMargin
-                width:          scalable_warnings_panel_width
-                showBorder:     true
-                statusActivity:   _activeVehicle ? (_activeVehicle.allSensorsHealthy ? statusNormal : statusError ) : statusDisabled
-                showOnMouseHighlight: true
+                // text:                   qsTr("SENSORS")
+                height:                 parent.height * 0.5 - _toolsMargin
+                width:                  scalable_warnings_panel_width
+                showBorder:             true
+                activeVehicle:          _activeVehicle
+                statusActivity:         _activeVehicle ? (_activeVehicle.allSensorsHealthy ? statusNormal : statusError ) : statusDisabled
+                showOnMouseHighlight:   true
             }
             CustomStatusIndicator {
                 id:             warning_panel_1

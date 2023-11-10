@@ -12,3 +12,4 @@ CustomVehicleButton     1.0     CustomVehicleButton.qml
 CustomQGCPitchIndicator 1.0     CustomQGCPitchIndicator.qml
 CustomFlightModeButton  1.0     CustomFlightModeButton.qml
 CustomMavMessageWidget  1.0     CustomMavMessageWidget.qml
+CustomMavStatusButton   1.0     CustomMavStatusButton.qml
