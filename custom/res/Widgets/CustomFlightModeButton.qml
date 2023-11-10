@@ -1,12 +1,3 @@
-/****************************************************************************
- *
- * (c) 2009-2022 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
- *
- * QGroundControl is licensed according to the terms in the file
- * COPYING.md in the root of the source code directory.
- *
- ****************************************************************************/
-
 import QtQuick 2.11
 import QtQuick.Controls 2.12
 import QtQuick.Layouts 1.11
@@ -137,7 +128,7 @@ Button {
 
         QGCMouseArea {
             anchors.fill:   parent
-            onClicked:      mainWindow.showIndicatorPopup(_item_root, flightModeMenu)
+            onClicked:      mainWindow.showIndicatorPopup(control, flightModeMenu)
         }
     }
 }
