@@ -24,6 +24,7 @@
         <file alias="Custom/Widgets/CustomFlightModeButton.qml">res/Widgets/CustomFlightModeButton.qml</file>
         <file alias="Custom/Widgets/CustomIconButton.qml">res/Widgets/CustomIconButton.qml</file>
         <file alias="Custom/Widgets/CustomMavMessageWidget.qml">res/Widgets/CustomMavMessageWidget.qml</file>
+        <file alias="Custom/Widgets/CustomMavStatusButton.qml">res/Widgets/CustomMavStatusButton.qml</file>
         <file alias="Custom/Widgets/CustomOnOffSwitch.qml">res/Widgets/CustomOnOffSwitch.qml</file>
         <file alias="Custom/Widgets/CustomQGCPitchIndicator.qml">res/Widgets/CustomQGCPitchIndicator.qml</file>
         <file alias="Custom/Widgets/CustomQuickButton.qml">res/Widgets/CustomQuickButton.qml</file>
