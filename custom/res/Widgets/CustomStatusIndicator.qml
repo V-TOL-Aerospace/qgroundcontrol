@@ -1,14 +1,3 @@
-/****************************************************************************
- *
- * (c) 2009-2019 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
- *
- * QGroundControl is licensed according to the terms in the file
- * COPYING.md in the root of the source code directory.
- *
- * @file
- *   @author Gus Grubba <gus@auterion.com>
- */
-
 import QtQuick                      2.11
 import QtQuick.Controls             2.12
 import QtQuick.Controls.Styles      1.4
@@ -83,37 +72,37 @@ Button {
     }
 
     contentItem: Item {
-        implicitWidth:  text.implicitWidth + icon.width
-        implicitHeight: text.implicitHeight
-        baselineOffset: text.y + text.baselineOffset
+        implicitWidth:  _text.implicitWidth + icon.width
+        implicitHeight: _text.implicitHeight
+        baselineOffset: _text.y + _text.baselineOffset
 
         QGCColoredImage {
             id:                     icon
             source:                 control.iconSource
-            height:                 source === "" ? 0 : text.height *2
+            height:                 source === "" ? 0 : _text.height *2
             width:                  height
-            color:                  text.color
+            color:                  _text.color
             fillMode:               Image.PreserveAspectFit
             sourceSize.height:      height
-            anchors.horizontalCenter: parent.horizontalCenter
-            // anchors.left:           control.iconLeft ? parent.left : undefined
-            // anchors.leftMargin:     control.iconLeft ? ScreenTools.defaultFontPixelWidth : undefined
-            // anchors.right:          !control.iconLeft ? parent.right : undefined
-            // anchors.rightMargin:    !control.iconLeft ? ScreenTools.defaultFontPixelWidth : undefined
-            anchors.verticalCenter: parent.verticalCenter
+            anchors {
+                horizontalCenter:   parent.horizontalCenter 
+                verticalCenter:     parent.verticalCenter
+            }
         }
 
         Text {
-            id:                     text
-            // anchors.centerIn:       parent
-            anchors.bottom:             parent.bottom
-            anchors.bottomMargin:       parent.bottomMargin
-            anchors.horizontalCenter:   parent.horizontalCenter
+            id:                     _text
+            anchors {
+                horizontalCenter:   parent.horizontalCenter
+                verticalCenter:     parent.verticalCenter
+            }
             antialiasing:           true
             text:                   control.text
             font.pointSize:         pointSize
             font.family:            ScreenTools.normalFontFamily
             color:                  qgcPal.buttonText
+
+            visible:                !iconSource
 
             wrapMode:               Text.WordWrap
             horizontalAlignment:    Text.AlignHCenter
@@ -123,22 +112,65 @@ Button {
                 State {
                     name: "on_mouse"; when: onMouseHighlight && showOnMouseHighlight
                     PropertyChanges {
-                        target: text; 
+                        target: _text; 
                         color:  onMouseHighlight ? 
                             qgcPal.buttonHighlightText : (primary ? qgcPal.primaryButtonText : qgcPal.buttonText)
                     }
                 },
                 State {
                     name: "Normal"; when: statusActivity == statusNormal
-                    PropertyChanges {target: text; color: qgcPal.buttonHighlightText}
+                    PropertyChanges {target:_text; color: qgcPal.buttonHighlightText}
                 },
                 State {
                     name: "Error"; when: statusActivity == statusError
-                    PropertyChanges {target: text; color: qgcPal.primaryButtonText}
+                    PropertyChanges {target:_text; color: qgcPal.primaryButtonText}
                 },
                 State {
                     name: "Disabled"; when: statusActivity == statusDisabled
-                    PropertyChanges {target: text; color: qgcPal.buttonText}
+                    PropertyChanges {target:_text; color: qgcPal.buttonText}
+                }
+            ]
+        }
+
+        Text {
+            id:                     _text_bottom_if_with_icon
+            anchors {
+                bottom:             parent.bottom
+                bottomMargin:       parent.bottomMargin
+                horizontalCenter:   parent.horizontalCenter
+            }
+            antialiasing:           true
+            text:                   control.text
+            font.pointSize:         pointSize
+            font.family:            ScreenTools.normalFontFamily
+            color:                  qgcPal.buttonText
+
+            visible:                iconSource
+
+            wrapMode:               Text.WordWrap
+            horizontalAlignment:    Text.AlignHCenter
+            verticalAlignment:      Text.AlignVCenter
+
+            states: [
+                State {
+                    name: "on_mouse"; when: onMouseHighlight && showOnMouseHighlight
+                    PropertyChanges {
+                        target: _text_bottom_if_with_icon; 
+                        color:  onMouseHighlight ? 
+                            qgcPal.buttonHighlightText : (primary ? qgcPal.primaryButtonText : qgcPal.buttonText)
+                    }
+                },
+                State {
+                    name: "Normal"; when: statusActivity == statusNormal
+                    PropertyChanges {target:_text_bottom_if_with_icon; color: qgcPal.buttonHighlightText}
+                },
+                State {
+                    name: "Error"; when: statusActivity == statusError
+                    PropertyChanges {target:_text_bottom_if_with_icon; color: qgcPal.primaryButtonText}
+                },
+                State {
+                    name: "Disabled"; when: statusActivity == statusDisabled
+                    PropertyChanges {target:_text_bottom_if_with_icon; color: qgcPal.buttonText}
                 }
             ]
         }
