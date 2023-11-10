@@ -99,7 +99,8 @@ Item {
         id:                 guidedActionsController
         missionController:  _missionController
         actionList:         _guidedActionList
-        guidedValueSlider:     _guidedValueSlider
+        guidedValueSlider:  _guidedValueSlider
+        showStartMission:   false
     }
 
     GuidedActionConfirm {
