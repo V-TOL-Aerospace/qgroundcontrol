@@ -39,9 +39,6 @@ Button {
     property string iconSource
     property bool   grayscale:      true
 
-    property alias wrapMode:            text.wrapMode
-    property alias horizontalAlignment: text.horizontalAlignment
-
     property bool   _showHighlight:     pressed | hovered | checked
 
     property int _horizontalPadding:    ScreenTools.defaultFontPixelWidth
@@ -62,32 +59,31 @@ Button {
     }
 
     contentItem: Item {
-        implicitWidth:  text.implicitWidth + icon.width
-        implicitHeight: text.implicitHeight
-        baselineOffset: text.y + text.baselineOffset
+        implicitWidth:  _text.implicitWidth + icon.width
+        implicitHeight: _text.implicitHeight
+        baselineOffset: _text.y + _text.baselineOffset
 
         QGCColoredImage {
             id:                     icon
             source:                 control.iconSource
-            height:                 source === "" ? 0 : text.height *2
+            height:                 source === "" ? 0 : _text.height *2
             width:                  height
-            color:                  grayscale ? text.color: "transparent"
+            color:                  grayscale ? _text.color: "transparent"
             fillMode:               Image.PreserveAspectFit
             sourceSize.height:      height
-            anchors.horizontalCenter: parent.horizontalCenter
-            // anchors.left:           control.iconLeft ? parent.left : undefined
-            // anchors.leftMargin:     control.iconLeft ? ScreenTools.defaultFontPixelWidth : undefined
-            // anchors.right:          !control.iconLeft ? parent.right : undefined
-            // anchors.rightMargin:    !control.iconLeft ? ScreenTools.defaultFontPixelWidth : undefined
-            anchors.verticalCenter: parent.verticalCenter
+            anchors {
+                horizontalCenter:   parent.horizontalCenter
+                verticalCenter:     parent.verticalCenter
+            }
         }
 
         Text {
-            id:                     text
-            // anchors.centerIn:       parent
-            anchors.bottom:             parent.bottom
-            anchors.bottomMargin:       parent.bottomMargin
-            anchors.horizontalCenter:   parent.horizontalCenter
+            id:                     _text
+            anchors {
+                bottom:             parent.bottom
+                bottomMargin:       parent.bottomMargin
+                horizontalCenter:   parent.horizontalCenter
+            }
             antialiasing:           true
             text:                   control.text
             font.pointSize:         pointSize
