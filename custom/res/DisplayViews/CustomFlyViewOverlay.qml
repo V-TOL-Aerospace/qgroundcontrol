@@ -55,7 +55,7 @@ Item {
     property real   scalable_button_height:         Window.height/8 - _toolsMargin
     property real   scalable_warnings_panel_width:  topWarningDisplay.width/7 - _toolsMargin
 
-    property real   _tabWidth:              Window.width * 0.075 // ScreenTools.defaultFontPixelWidth * 12      
+    property real   _tabWidth:              Window.width * 0.05 // ScreenTools.defaultFontPixelWidth * 12      
     property int    _unhealthySensors:      _activeVehicle ? _activeVehicle.sensorsUnhealthyBits : 1
     property bool   _communicationLost:     _activeVehicle ? _activeVehicle.vehicleLinkManager.communicationLost : false
 
@@ -89,7 +89,8 @@ Item {
 
     // TOP RECTANGLE WARNING PANELS AREA
     Rectangle {
-        id:     topWarningDisplay_boarder
+        id:         topWarningDisplay_boarder
+        visible:    true
         anchors {
             top:    parent.top
             left:   flightControlRectangle.right
@@ -348,7 +349,7 @@ Item {
                     top:        parent.top
                     topMargin:  _toolsMargin
                 }
-                text:           _activeVehicle ? qsTr("CONN"):qsTr("DISCONN")
+                text:           _activeVehicle ? qsTr("Connected"):qsTr("Disconn")
                 iconSource:     _activeVehicle ? "/qmlimages/Connect.svg" : "/qmlimages/Disconnect.svg"
                 // onClicked:      _activeVehicle.closeVehicle()
                 // enabled:        false
@@ -394,7 +395,7 @@ Item {
                 text:           qsTr("Set Takeoff")
                 iconSource:     "/res/takeoff.svg"
                 enabled:        _activeVehicle ? (_activeVehicle.armed ? false:true): false
-                onClicked:      _guidedController.confirmAction(_guidedController.actionSetWaypoint, 1)
+                onClicked:      _activeVehicle.setCurrentMissionSequence(1) //_guidedController.confirmAction(_guidedController.actionSetWaypoint, 1)
             }
             CustomIconButton {
                 id:             right_button_4
@@ -804,11 +805,11 @@ Item {
             }
 
             GridLayout {
-                id:                 gpsGrid
-                visible:            (_activeVehicle && _activeVehicle.gps.count.value >= 0)
-                anchors.margins:    ScreenTools.defaultFontPixelHeight
-                columnSpacing:      ScreenTools.defaultFontPixelWidth
-                anchors.horizontalCenter: parent.horizontalCenter
+                id:                         gpsGrid
+                visible:                    (_activeVehicle && _activeVehicle.gps.count.value >= 0)
+                anchors.margins:            ScreenTools.defaultFontPixelHeight
+                columnSpacing:              ScreenTools.defaultFontPixelWidth
+                anchors.horizontalCenter:   parent.horizontalCenter
                 columns: 2
 
                 QGCLabel { text: qsTr("GPS Count:") }
@@ -827,7 +828,7 @@ Item {
     CustomMavMessageWidget {
         id:             messageWindow
         width:          flightControlRectangle.width
-        height:         width
+        height:         Window.height - compassBar.height - attitudeIndicator.height - gps_info_window.height - _toolsMargin
         anchors {
             top:                gps_info_window.bottom
             horizontalCenter:   flightControlRectangle.horizontalCenter

@@ -111,7 +111,7 @@ Button {
 
                     QGCLabel {
                         Layout.alignment:   Qt.AlignHCenter
-                        text:               qsTr("Sensor Status")
+                        text:               !_activeVehicle? qsTr("Sensor Status (No aircraft connected)") : qsTr("Sensor Status")
                         visible:            !_healthAndArmingChecksSupported
                     }
 
@@ -324,10 +324,11 @@ Button {
             horizontalCenter:       parent.horizontalCenter
         }
         antialiasing:               true
-        text:                       activeVehicle ? qsTr("SENORS"): qsTr("Please Connect")
+        text:                       qsTr("SENSORS")
         font.pointSize:             pointSize
         font.family:                ScreenTools.normalFontFamily
         color:                      qgcPal.buttonText
+        enabled:                    activeVehicle
 
         states: [
             State {
