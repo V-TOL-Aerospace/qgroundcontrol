@@ -102,9 +102,10 @@ Button {
             font.family:            ScreenTools.normalFontFamily
             color:                  qgcPal.buttonText
 
-            visible:                !iconSource
-
+            visible:                !control.iconSource
+            width:                  control.width
             wrapMode:               Text.WordWrap
+            maximumLineCount:       1
             horizontalAlignment:    Text.AlignHCenter
             verticalAlignment:      Text.AlignVCenter
 
@@ -145,9 +146,10 @@ Button {
             font.family:            ScreenTools.normalFontFamily
             color:                  qgcPal.buttonText
 
-            visible:                iconSource
-
+            visible:                control.iconSource
+            width:                  control.width
             wrapMode:               Text.WordWrap
+            maximumLineCount:       1
             horizontalAlignment:    Text.AlignHCenter
             verticalAlignment:      Text.AlignVCenter
 
