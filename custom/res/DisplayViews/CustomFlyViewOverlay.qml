@@ -59,9 +59,9 @@ Item {
     property int    _unhealthySensors:      _activeVehicle ? _activeVehicle.sensorsUnhealthyBits : 1
     property bool   _communicationLost:     _activeVehicle ? _activeVehicle.vehicleLinkManager.communicationLost : false
 
-    property string statusNormal:           "Normal" // CustomStatusIndicator.statusNormal 
-    property string statusError:            "Error"// CustomStatusIndicator.statusError 
-    property string statusDisabled:         "Disabled"// CustomStatusIndicator.statusDisabled 
+    property string statusNormal:           "Normal" // CustomMavStatusIndicator.statusNormal 
+    property string statusError:            "Error"// CustomMavStatusIndicator.statusError 
+    property string statusDisabled:         "Disabled"// CustomMavStatusIndicator.statusDisabled 
     
     // property var planController:            _planController
     // property var guidedController:          _guidedController
@@ -126,7 +126,7 @@ Item {
                 statusActivity:         _activeVehicle ? (_activeVehicle.allSensorsHealthy ? statusNormal : statusError ) : statusDisabled
                 showOnMouseHighlight:   true
             }
-            CustomStatusIndicator {
+            CustomMavStatusIndicator {
                 id:             warning_panel_1
                 anchors {
                     top:        warning_panel_0.bottom
@@ -141,7 +141,7 @@ Item {
                 statusActivity:   _activeVehicle ? (_activeVehicle.armed ? statusNormal : statusError) : statusDisabled
             }
 
-            CustomStatusIndicator {
+            CustomMavStatusIndicator {
                 id:             warning_panel_2
                 anchors {
                     top:        parent.top
@@ -155,7 +155,7 @@ Item {
                 showBorder:     true
                 statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensorGPS) ? statusError : statusNormal) : statusDisabled
             }
-            CustomStatusIndicator {
+            CustomMavStatusIndicator {
                 id:             warning_panel_3
                 anchors {
                     top:        warning_panel_2.bottom
@@ -170,7 +170,7 @@ Item {
                 statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensor3dMag) ? statusError : statusNormal) : statusDisabled
             }
 
-            CustomStatusIndicator {
+            CustomMavStatusIndicator {
                 id:             warning_panel_4
                 anchors {
                     top:        parent.top
@@ -184,7 +184,7 @@ Item {
                 showBorder:     true
                 statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensor3dAccel) ? statusError : statusNormal) : statusDisabled
             }
-            CustomStatusIndicator {
+            CustomMavStatusIndicator {
                 id:             warning_panel_5
                 anchors {
                     top:        warning_panel_4.bottom
@@ -199,7 +199,7 @@ Item {
                 statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensor3dGyro) ? statusError : statusNormal) : statusDisabled
             }
 
-            CustomStatusIndicator {
+            CustomMavStatusIndicator {
                 id:             warning_panel_6
                 anchors {
                     top:        parent.top
@@ -213,7 +213,7 @@ Item {
                 showBorder:     true
                 statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensorAHRS) ? statusError : statusNormal) : statusDisabled
             }
-            CustomStatusIndicator {
+            CustomMavStatusIndicator {
                 id:             warning_panel_7
                 anchors {
                     top:        warning_panel_6.bottom
@@ -228,7 +228,7 @@ Item {
                 enabled:        false
             }
 
-            CustomStatusIndicator {
+            CustomMavStatusIndicator {
                 id:             warning_panel_8
                 anchors {
                     top:        parent.top
@@ -242,7 +242,7 @@ Item {
                 showBorder:     true
                 enabled:        false
             }
-            CustomStatusIndicator {
+            CustomMavStatusIndicator {
                 id:             warning_panel_9
                 anchors {
                     top:        warning_panel_8.bottom
@@ -257,7 +257,7 @@ Item {
                 enabled:        false
             }
 
-            CustomStatusIndicator {
+            CustomMavStatusIndicator {
                 id:             warning_panel_10
                 anchors {
                     top:        parent.top
@@ -271,7 +271,7 @@ Item {
                 showBorder:     true
                 enabled:        false
             }
-            CustomStatusIndicator {
+            CustomMavStatusIndicator {
                 id:             warning_panel_11
                 anchors {
                     top:        warning_panel_10.bottom
@@ -286,7 +286,7 @@ Item {
                 enabled:        false
             }
 
-            CustomStatusIndicator {
+            CustomMavStatusIndicator {
                 id:             warning_panel_12
                 anchors {
                     top:        parent.top
@@ -300,7 +300,7 @@ Item {
                 showBorder:     true
                 enabled:        false
             }
-            CustomStatusIndicator {
+            CustomMavStatusIndicator {
                 id:             warning_panel_13
                 anchors {
                     top:        warning_panel_12.bottom
@@ -340,7 +340,7 @@ Item {
             width:                  _tabWidth 
             color:                  qgcPal.windowShade
             visible:                _test_visible
-            CustomStatusIndicator {
+            CustomMavStatusIndicator {
                 id:             right_button_0
                 height:         scalable_button_height 
                 width:          parent.width
