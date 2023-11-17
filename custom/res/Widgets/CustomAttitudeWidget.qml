@@ -1,14 +1,3 @@
-/****************************************************************************
- *
- * (c) 2009-2019 QGROUNDCONTROL PROJECT <http://www.qgroundcontrol.org>
- *
- * QGroundControl is licensed according to the terms in the file
- * COPYING.md in the root of the source code directory.
- *
- * @file
- *   @author Gus Grubba <gus@auterion.com>
- */
-
 import QtQuick              2.11
 import QtGraphicalEffects   1.0
 
@@ -157,10 +146,8 @@ Item {
         Rectangle{
             id: flightMode_info_rectangle
             anchors {
-                right:          altitude_info_rectangle.left
-                top:            altitude_info_rectangle.bottom
-                topMargin:      _toolsMargin * 3
-                rightMargin:    _toolsMargin
+                left:           altitude_info_rectangle.left
+                top:            heading_info_rectangle.top
             }
             color:                      qgcPal.windowShadeDark
             height:                     ScreenTools.defaultFontPixelHeight
