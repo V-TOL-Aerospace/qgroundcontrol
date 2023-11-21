@@ -138,22 +138,23 @@ Item {
                 height:         parent.height * 0.5 - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
-                statusActivity:   _activeVehicle ? (_activeVehicle.armed ? statusNormal : statusError) : statusDisabled
+                statusActivity: _activeVehicle ? (_activeVehicle.armed ? statusNormal : statusError) : statusDisabled
             }
 
-            CustomMavStatusIndicator {
-                id:             warning_panel_2
+            CustomMavStatusGPSButton {
+                id:                 warning_panel_2
                 anchors {
-                    top:        parent.top
-                    topMargin:  _toolsMargin
-                    left:       warning_panel_0.right
-                    leftMargin: _toolsMargin
+                    top:            parent.top
+                    topMargin:      _toolsMargin
+                    left:           warning_panel_0.right
+                    leftMargin:     _toolsMargin
                 }
-                text:           _activeVehicle ? _activeVehicle.gps.lock.enumStringValue : qsTr("GPS: N/A")
-                height:         parent.height * 0.5 - _toolsMargin
-                width:          scalable_warnings_panel_width
-                showBorder:     true
-                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensorGPS) ? statusError : statusNormal) : statusDisabled
+                // text:                   _activeVehicle ? _activeVehicle.gps.lock.enumStringValue : qsTr("GPS: N/A")
+                height:                 parent.height * 0.5 - _toolsMargin
+                width:                  scalable_warnings_panel_width
+                showBorder:             true
+                statusActivity:         _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensorGPS) ? statusError : statusNormal) : statusDisabled
+                showOnMouseHighlight:   true
             }
             CustomMavStatusIndicator {
                 id:             warning_panel_3
