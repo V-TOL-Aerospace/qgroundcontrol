@@ -119,18 +119,140 @@ Button {
                     // anchors.margins:            ScreenTools.defaultFontPixelHeight
                     columnSpacing:              ScreenTools.defaultFontPixelWidth
                     anchors.horizontalCenter:   parent.horizontalCenter
-                    columns: 2
+                    columns: 3
 
                     QGCLabel { text: qsTr("GPS Count:") }
                     QGCLabel { text: _activeVehicle ? _activeVehicle.gps.count.valueString : qsTr("N/A", "No data to display") }
+                    Rectangle {
+                        id:     gps_count_state_rect
+                        width:  height //ScreenTools.defaultFontPixelWidth
+                        height: ScreenTools.defaultFontPixelHeight
+                        color:  "green" // qgcPal.window
+                        states: [
+                            State {
+                                name: "Disabled"; when: !_activeVehicle
+                                PropertyChanges {target: gps_count_state_rect; color: "red"}//color: qgcPal.button}
+                            },
+                            State {
+                                name: "Error"; when: _activeVehicle.gps.count.rawValue > 7
+                                PropertyChanges {target: gps_count_state_rect; color: "green"}
+                            },
+                            State {
+                                name: "Normal"; when: _activeVehicle.gps.count.rawValue > 3 
+                                PropertyChanges {target: gps_count_state_rect; color: "yellow"}//qgcPal.buttonHighlight}
+                            }
+                        ]
+                    }
+
                     QGCLabel { text: qsTr("GPS Lock:") }
                     QGCLabel { text: _activeVehicle ? _activeVehicle.gps.lock.enumStringValue : qsTr("N/A", "No data to display") }
+                    Rectangle {
+                        id:     gps_string_state_rect
+                        width:  height //ScreenTools.defaultFontPixelWidth
+                        height: ScreenTools.defaultFontPixelHeight
+                        color:  "green" // qgcPal.window
+                        states: [
+                            State {
+                                name: "Disabled"; when: !_activeVehicle
+                                PropertyChanges {target: gps_string_state_rect; color: "red"}//color: qgcPal.button}
+                            },
+                            State {
+                                name: "None"; when: _activeVehicle.gps.lock.enumStringValue == "None"
+                                PropertyChanges {target: gps_string_state_rect; color: "red"}//qgcPal.buttonHighlight}
+                            },
+                            State {
+                                name: "2D Lock"; when: _activeVehicle.gps.lock.enumStringValue == "2D Lock"
+                                PropertyChanges {target: gps_string_state_rect; color: "yellow"}//qgcPal.buttonHighlight}
+                            },
+                            State {
+                                name: "3D Lock"; when: _activeVehicle.gps.lock.enumStringValue == "3D Lock"
+                                PropertyChanges {target: gps_string_state_rect; color: "green"}//qgcPal.buttonHighlight}
+                            },
+                            State {
+                                name: "3D DGPS Lock"; when: _activeVehicle.gps.lock.enumStringValue == "3D DGPS Lock"
+                                PropertyChanges {target: gps_string_state_rect; color: "green"}//qgcPal.buttonHighlight}
+                            },
+                            State {
+                                name: "3D RTK GPS Lock (float)"; when: _activeVehicle.gps.lock.enumStringValue == "3D RTK GPS Lock (float)"
+                                PropertyChanges {target: gps_string_state_rect; color: "yellow"}//qgcPal.buttonHighlight}
+                            },
+                            State {
+                                name: "3D RTK GPS Lock (fixed)"; when: _activeVehicle.gps.lock.enumStringValue == "3D RTK GPS Lock (fixed)"
+                                PropertyChanges {target: gps_string_state_rect; color: "green"}
+                            },
+                            State {
+                                name: "Static (fixed)"; when: _activeVehicle.gps.lock.enumStringValue == "Static (fixed)"
+                                PropertyChanges {target: gps_string_state_rect; color: "green"}
+                            }
+                        ]
+                    }
+
                     QGCLabel { text: qsTr("HDOP:") }
                     QGCLabel { text: _activeVehicle ? _activeVehicle.gps.hdop.valueString : qsTr("--.--", "No data to display") }
+                    Rectangle {
+                        id:     gps_HDOP_state_rect
+                        width:  height //ScreenTools.defaultFontPixelWidth
+                        height: ScreenTools.defaultFontPixelHeight
+                        color:  "green" // qgcPal.window
+                        states: [
+                            State {
+                                name: "Disabled"; when: !_activeVehicle
+                                PropertyChanges {target: gps_HDOP_state_rect; color: "red"}//color: qgcPal.button}
+                            },
+                            State {
+                                name: "Nominal"; when: _activeVehicle.gps.hdop.rawValue < 1.7
+                                PropertyChanges {target: gps_HDOP_state_rect; color: "green"}
+                            },
+                            State {
+                                name: "Warning"; when: _activeVehicle.gps.hdop.rawValue < 10 
+                                PropertyChanges {target: gps_HDOP_state_rect; color: "yellow"}//qgcPal.buttonHighlight}
+                            }
+                        ]
+                    }
+
                     QGCLabel { text: qsTr("VDOP:") }
                     QGCLabel { text: _activeVehicle ? _activeVehicle.gps.vdop.valueString : qsTr("--.--", "No data to display") }
-                    //QGCLabel { text: qsTr("Course Over Ground:") }
-                    //QGCLabel { text: _activeVehicle ? _activeVehicle.gps.courseOverGround.valueString : qsTr("--.--", "No data to display") }
+                    Rectangle {
+                        id:     gps_VDOP_state_rect
+                        width:  height //ScreenTools.defaultFontPixelWidth
+                        height: ScreenTools.defaultFontPixelHeight
+                        color:  "green" // qgcPal.window
+                        states: [
+                            State {
+                                name: "Disabled"; when: !_activeVehicle
+                                PropertyChanges {target: gps_VDOP_state_rect; color: "red"}//color: qgcPal.button}
+                            },
+                            State {
+                                name: "Nominal"; when: _activeVehicle.gps.vdop.rawValue < 2.1
+                                PropertyChanges {target: gps_VDOP_state_rect; color: "green"}
+                            },
+                            State {
+                                name: "Warning"; when: _activeVehicle.gps.vdop.rawValue < 10 
+                                PropertyChanges {target: gps_VDOP_state_rect; color: "yellow"}//qgcPal.buttonHighlight}
+                            }
+                        ]
+                    }
+
+                    // QGCLabel { text: qsTr("Course Over Ground:") }
+                    // QGCLabel { text: _activeVehicle ? _activeVehicle.gps.courseOverGround.valueString : qsTr("--.--", "No data to display") }
+
+                    QGCLabel { text: qsTr("Latitude:") }
+                    QGCLabel { text: _activeVehicle ? _activeVehicle.gps.lat.valueString : qsTr("--.--", "No data to display") }
+                    Rectangle {
+                        id:     gps_lat_rect
+                        width:  height //ScreenTools.defaultFontPixelWidth
+                        height: ScreenTools.defaultFontPixelHeight
+                        color:  _activeVehicle ? "green" : qgcPal.button// qgcPal.window
+                    }
+
+                    QGCLabel { text: qsTr("Longitude:") }
+                    QGCLabel { text: _activeVehicle ? _activeVehicle.gps.lon.valueString : qsTr("--.--", "No data to display") }
+                    Rectangle {
+                        id:     gps_lon_rect
+                        width:  height //ScreenTools.defaultFontPixelWidth
+                        height: ScreenTools.defaultFontPixelHeight
+                        color:  _activeVehicle ? "green" : qgcPal.button// qgcPal.window
+                    }
                 }
             }
         }
