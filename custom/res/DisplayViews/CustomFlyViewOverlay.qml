@@ -55,7 +55,7 @@ Item {
     property real   scalable_button_height:         Window.height/8 - _toolsMargin
     property real   scalable_warnings_panel_width:  topWarningDisplay.width/7 - _toolsMargin
 
-    property real   _tabWidth:              Window.width * 0.05 // ScreenTools.defaultFontPixelWidth * 12      
+    property real   _tabWidth:              (Window.width < 1000) ? (Window.width * 0.05) : (Window.width * 0.04)// ScreenTools.defaultFontPixelWidth * 12      
     property int    _unhealthySensors:      _activeVehicle ? _activeVehicle.sensorsUnhealthyBits : 1
     property bool   _communicationLost:     _activeVehicle ? _activeVehicle.vehicleLinkManager.communicationLost : false
 
@@ -421,8 +421,9 @@ Item {
                     top:        right_button_4.bottom
                     topMargin:  _toolsMargin
                 }
-                text:           qsTr(" ")
-                enabled:        false //_activeVehicle
+                // text:           qsTr("WP ") + _guidedController._currentMissionIndex
+                enabled:        false // _activeVehicle
+                // onClicked:      _guidedController.confirmAction(_guidedController.actionSetWaypoint, _guidedController._currentMissionIndex + 1)
             }
             CustomIconButton {
                 id:             right_button_6
@@ -678,7 +679,7 @@ Item {
             }
         }
     }
-        
+    
     // MAIN FLIGHT ATTITUDE INDICATOR
     Rectangle {
         id:                     attitudeIndicator
