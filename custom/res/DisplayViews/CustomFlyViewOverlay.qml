@@ -119,27 +119,28 @@ Item {
                     leftMargin: _toolsMargin
                 }
                 // text:                   qsTr("SENSORS")
-                height:                 parent.height * 0.5 - _toolsMargin
+                height:                 parent.height - _toolsMargin
                 width:                  scalable_warnings_panel_width
                 showBorder:             true
                 activeVehicle:          _activeVehicle
                 statusActivity:         _activeVehicle ? (_activeVehicle.allSensorsHealthy ? statusNormal : statusError ) : statusDisabled
                 showOnMouseHighlight:   true
             }
-            CustomMavStatusIndicator {
-                id:             warning_panel_1
-                anchors {
-                    top:        warning_panel_0.bottom
-                    topMargin:  _toolsMargin
-                    left:       parent.left
-                    leftMargin: _toolsMargin
-                }
-                text:           _activeVehicle ? (_activeVehicle.armed ? qsTr("ARMED") : qsTr("DISARMED")) : qsTr("DISARMED")
-                height:         parent.height * 0.5 - _toolsMargin
-                width:          scalable_warnings_panel_width
-                showBorder:     true
-                statusActivity: _activeVehicle ? (_activeVehicle.armed ? statusNormal : statusError) : statusDisabled
-            }
+            // CustomMavStatusIndicator {
+            //     id:             warning_panel_1
+            //     anchors {
+            //         top:        warning_panel_0.bottom
+            //         topMargin:  _toolsMargin
+            //         left:       parent.left
+            //         leftMargin: _toolsMargin
+            //     }
+            //     text:           _activeVehicle ? (_activeVehicle.armed ? qsTr("ARMED") : qsTr("DISARMED")) : qsTr("DISARMED")
+            //     height:         parent.height - _toolsMargin
+            //     width:          scalable_warnings_panel_width
+            //     showBorder:     true
+            //     statusActivity: _activeVehicle ? (_activeVehicle.armed ? statusNormal : statusError) : statusDisabled
+            //     visible:        false
+            // }
 
             CustomMavStatusGPSButton {
                 id:                 warning_panel_2
@@ -150,25 +151,11 @@ Item {
                     leftMargin:     _toolsMargin
                 }
                 // text:                   _activeVehicle ? _activeVehicle.gps.lock.enumStringValue : qsTr("GPS: N/A")
-                height:                 parent.height * 0.5 - _toolsMargin
+                height:                 parent.height - _toolsMargin
                 width:                  scalable_warnings_panel_width
                 showBorder:             true
                 statusActivity:         _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensorGPS) ? statusError : statusNormal) : statusDisabled
                 showOnMouseHighlight:   true
-            }
-            CustomMavStatusIndicator {
-                id:             warning_panel_3
-                anchors {
-                    top:        warning_panel_2.bottom
-                    topMargin:  _toolsMargin
-                    left:       warning_panel_1.right
-                    leftMargin: _toolsMargin
-                }
-                text:           qsTr("MAG")
-                height:         parent.height * 0.5 - _toolsMargin
-                width:          scalable_warnings_panel_width
-                showBorder:     true
-                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensor3dMag) ? statusError : statusNormal) : statusDisabled
             }
 
             CustomMavStatusIndicator {
@@ -179,26 +166,27 @@ Item {
                     left:       warning_panel_2.right
                     leftMargin: _toolsMargin
                 }
-                text:           qsTr("ACCEL")
-                height:         parent.height * 0.5 - _toolsMargin
+                text:           qsTr("MAG")
+                height:         parent.height - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
-                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensor3dAccel) ? statusError : statusNormal) : statusDisabled
+                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensor3dMag) ? statusError : statusNormal) : statusDisabled
             }
-            CustomMavStatusIndicator {
-                id:             warning_panel_5
-                anchors {
-                    top:        warning_panel_4.bottom
-                    topMargin:  _toolsMargin
-                    left:       warning_panel_2.right
-                    leftMargin: _toolsMargin
-                }
-                text:           qsTr("GYRO")
-                height:         parent.height * 0.5 - _toolsMargin
-                width:          scalable_warnings_panel_width
-                showBorder:     true
-                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensor3dGyro) ? statusError : statusNormal) : statusDisabled
-            }
+            // CustomMavStatusIndicator {
+            //     id:             warning_panel_5
+            //     anchors {
+            //         top:        warning_panel_4.bottom
+            //         topMargin:  _toolsMargin
+            //         left:       warning_panel_2.right
+            //         leftMargin: _toolsMargin
+            //     }
+            //     text:           qsTr("NOT IN USE")
+            //     height:         parent.height * 0.5 - _toolsMargin
+            //     width:          scalable_warnings_panel_width
+            //     showBorder:     true
+            //     statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensor3dGyro) ? statusError : statusNormal) : statusDisabled
+            //     visible:        false
+            // }
 
             CustomMavStatusIndicator {
                 id:             warning_panel_6
@@ -208,26 +196,27 @@ Item {
                     left:       warning_panel_4.right
                     leftMargin: _toolsMargin
                 }
-                text:           qsTr("AHRS")
-                height:         parent.height * 0.5 - _toolsMargin
+                text:           qsTr("ACCEL")
+                height:         parent.height - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
-                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensorAHRS) ? statusError : statusNormal) : statusDisabled
+                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensor3dAccel) ? statusError : statusNormal) : statusDisabled
             }
-            CustomMavStatusIndicator {
-                id:             warning_panel_7
-                anchors {
-                    top:        warning_panel_6.bottom
-                    topMargin:  _toolsMargin
-                    left:       warning_panel_4.right
-                    leftMargin: _toolsMargin
-                }
-                text:           qsTr(" ")
-                height:         parent.height * 0.5 - _toolsMargin
-                width:          scalable_warnings_panel_width
-                showBorder:     true
-                enabled:        false
-            }
+            // CustomMavStatusIndicator {
+            //     id:             warning_panel_7
+            //     anchors {
+            //         top:        warning_panel_6.bottom
+            //         topMargin:  _toolsMargin
+            //         left:       warning_panel_4.right
+            //         leftMargin: _toolsMargin
+            //     }
+            //     text:           qsTr(" ")
+            //     height:         parent.height * 0.5 - _toolsMargin
+            //     width:          scalable_warnings_panel_width
+            //     showBorder:     true
+            //     enabled:        false
+            //     visible:        false
+            // }
 
             CustomMavStatusIndicator {
                 id:             warning_panel_8
@@ -237,26 +226,27 @@ Item {
                     left:       warning_panel_6.right
                     leftMargin: _toolsMargin
                 }
-                text:           qsTr(" ")
-                height:         parent.height * 0.5 - _toolsMargin
+                text:           qsTr("GYRO")
+                height:         parent.height - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
-                enabled:        false
+                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensor3dGyro) ? statusError : statusNormal) : statusDisabled
             }
-            CustomMavStatusIndicator {
-                id:             warning_panel_9
-                anchors {
-                    top:        warning_panel_8.bottom
-                    topMargin:  _toolsMargin
-                    left:       warning_panel_6.right
-                    leftMargin: _toolsMargin
-                }
-                text:           qsTr(" ")
-                height:         parent.height * 0.5 - _toolsMargin
-                width:          scalable_warnings_panel_width
-                showBorder:     true
-                enabled:        false
-            }
+            // CustomMavStatusIndicator {
+            //     id:             warning_panel_9
+            //     anchors {
+            //         top:        warning_panel_8.bottom
+            //         topMargin:  _toolsMargin
+            //         left:       warning_panel_6.right
+            //         leftMargin: _toolsMargin
+            //     }
+            //     text:           qsTr(" ")
+            //     height:         parent.height * 0.5 - _toolsMargin
+            //     width:          scalable_warnings_panel_width
+            //     showBorder:     true
+            //     enabled:        false
+            //     visible:        false
+            // }
 
             CustomMavStatusIndicator {
                 id:             warning_panel_10
@@ -266,26 +256,27 @@ Item {
                     left:       warning_panel_8.right
                     leftMargin: _toolsMargin
                 }
-                text:           qsTr(" ")
-                height:         parent.height * 0.5 - _toolsMargin
+                text:           qsTr("AHRS")
+                height:         parent.height - _toolsMargin
                 width:          scalable_warnings_panel_width
                 showBorder:     true
-                enabled:        false
+                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensorAHRS) ? statusError : statusNormal) : statusDisabled
             }
-            CustomMavStatusIndicator {
-                id:             warning_panel_11
-                anchors {
-                    top:        warning_panel_10.bottom
-                    topMargin:  _toolsMargin
-                    left:       warning_panel_8.right
-                    leftMargin: _toolsMargin
-                }
-                text:           qsTr(" ")
-                height:         parent.height * 0.5 - _toolsMargin
-                width:          scalable_warnings_panel_width
-                showBorder:     true
-                enabled:        false
-            }
+            // CustomMavStatusIndicator {
+            //     id:             warning_panel_11
+            //     anchors {
+            //         top:        warning_panel_10.bottom
+            //         topMargin:  _toolsMargin
+            //         left:       warning_panel_8.right
+            //         leftMargin: _toolsMargin
+            //     }
+            //     text:           qsTr(" ")
+            //     height:         parent.height * 0.5 - _toolsMargin
+            //     width:          scalable_warnings_panel_width
+            //     showBorder:     true
+            //     enabled:        false
+            //     visible:        false
+            // }
 
             CustomMavStatusIndicator {
                 id:             warning_panel_12
@@ -499,6 +490,7 @@ Item {
                     top:        button_0.bottom
                     topMargin:  _toolsMargin
                 }
+                iconSource:     "/qmlimages/PaperPlane.svg"
                 enabled: false
             }
             CustomIconButton {
