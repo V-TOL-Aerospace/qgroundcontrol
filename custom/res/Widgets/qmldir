@@ -14,3 +14,5 @@ CustomFlightModeButton      1.0     CustomFlightModeButton.qml
 CustomMavMessageWidget      1.0     CustomMavMessageWidget.qml
 CustomMavStatusButton       1.0     CustomMavStatusButton.qml
 CustomMavStatusGPSButton    1.0     CustomMavStatusGPSButton.qml
+CustomToolStrip             1.0     CustomToolStrip.qml
+CustomToolStripHoverButton  1.0     CustomToolStripHoverButton.qml

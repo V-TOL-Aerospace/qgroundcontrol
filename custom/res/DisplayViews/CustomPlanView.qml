@@ -25,6 +25,8 @@ import QGroundControl.Palette           1.0
 import QGroundControl.Controllers       1.0
 import QGroundControl.ShapeFileHelper   1.0
 
+import Custom.Widgets 1.0
+
 Item {
     id: _root
 
@@ -58,6 +60,10 @@ Item {
     readonly property int       _layerGeoFence:             2
     readonly property int       _layerRallyPoints:          3
     readonly property string    _armedVehicleUploadPrompt:  qsTr("Vehicle is currently armed. Do you want to upload the mission to the vehicle?")
+
+    property real   scalable_button_height:         Window.height/8 - _toolsMargin
+
+    property real   _tabWidth:              (Window.width < 1000) ? (Window.width * 0.05) : (Window.width * 0.04)// ScreenTools.defaultFontPixelWidth * 12   
 
     function mapCenter() {
         var coordinate = editorMap.center
@@ -494,14 +500,16 @@ Item {
 
         //-----------------------------------------------------------
         // Left tool strip
-        ToolStrip {
+        CustomToolStrip {
             id:                 toolStrip
-            anchors.margins:    _toolsMargin
-            anchors.left:       parent.left
-            anchors.top:        parent.top
+            anchors{
+                margins:        _toolsMargin
+                left:           leftSideButtonControls_Boarder.right //parent.left
+                top:            parent.top
+            }
             z:                  QGroundControl.zOrderWidgets
             maxHeight:          parent.height - toolStrip.y
-            title:              qsTr("Plan")
+            // title:              qsTr("Plan")
 
             readonly property int flyButtonIndex:       0
             readonly property int fileButtonIndex:      1
@@ -1052,6 +1060,155 @@ Item {
                         clearButtonClicked()
                     }
                 }
+            }
+        }
+    }
+    
+    // LEFT SIDE BUTTON CONTROLS
+    Rectangle {
+        id:                     leftSideButtonControls_Boarder
+        anchors {
+            topMargin:          _toolsMargin
+            left:               parent.left
+        }
+        height:                 parent.height
+        width:                  _tabWidth +  _toolsMargin
+        color:                  qgcPal.windowShadeDark
+        visible:                false
+        MouseArea {
+            anchors.fill: parent
+        }
+        Rectangle {
+            id:                 leftSideButtonControls
+            anchors {
+                left:           parent.left
+            }
+            height:             parent.height
+            width:              _tabWidth 
+            color:              qgcPal.windowShade
+            visible:            true
+            CustomIconButton {
+                id:             button_0
+                height:         scalable_button_height 
+                width:          parent.width
+                showBorder:     true
+                anchors {
+                    top:        parent.top
+                    topMargin:  _toolsMargin
+                }
+                text:           qsTr("Plan")
+                iconSource:     "/qmlimages/Plan.svg"
+                onClicked:      mainWindow.showPlanView()
+                enabled:        false
+            }
+            CustomIconButton {
+                id:             button_1
+                text:           qsTr("Fly View")
+                height:         scalable_button_height 
+                width:          parent.width
+                showBorder:     true
+                anchors {
+                    top:        button_0.bottom
+                    topMargin:  _toolsMargin
+                }
+                onClicked:      mainWindow.showFlyView()
+                iconSource:     "/qmlimages/PaperPlane.svg"
+                enabled:        true
+            }
+            CustomIconButton {
+                id:             button_2
+                height:         scalable_button_height 
+                width:          parent.width
+                showBorder:     true
+                anchors {
+                    top:        button_1.bottom
+                    topMargin:  _toolsMargin
+                }
+                text:           qsTr("File")
+                iconSource:     "/qmlimages/MapSync.svg"
+                enabled:        true
+                ToolStripAction {
+                    text:                   qsTr("File")
+                    enabled:                !_planMasterController.syncInProgress
+                    visible:                true
+                    showAlternateIcon:      _planMasterController.dirty
+                    iconSource:             "/qmlimages/MapSync.svg"
+                    alternateIconSource:    "/qmlimages/MapSyncChanged.svg"
+                    dropPanelComponent:     syncDropPanel
+                }
+            }
+            CustomIconButton {
+                id:             button_3
+                height:         scalable_button_height 
+                width:          parent.width
+                showBorder:     true
+                anchors {
+                    top:        button_2.bottom
+                    topMargin:  _toolsMargin
+                }
+                text:           qsTr("")
+                enabled:        false
+            }
+            CustomIconButton {
+                id:             button_4
+                height:         scalable_button_height 
+                width:          parent.width
+                showBorder:     true
+                anchors {
+                    top:        button_3.bottom
+                    topMargin:  _toolsMargin
+                }
+                text:           qsTr("")
+                enabled:        false
+            }
+            CustomIconButton {
+                id:             button_5
+                height:         scalable_button_height 
+                width:          parent.width
+                showBorder:     true
+                anchors {
+                    top:        button_4.bottom
+                    topMargin:  _toolsMargin
+                }
+                text:           qsTr("")
+                enabled:        false
+            }
+            CustomIconButton {
+                id:             button_6
+                height:         scalable_button_height 
+                width:          parent.width
+                showBorder:     true
+                anchors {
+                    top:        button_5.bottom
+                    topMargin:  _toolsMargin
+                }
+                
+                text:           qsTr("Vehicle")
+                iconSource:     "/qmlimages/Gears.svg"
+                onClicked: {
+                    if (!mainWindow.preventViewSwitch()) {
+                        mainWindow.showSetupTool()
+                    }
+                }
+            }
+            CustomIconButton {
+                id:             button_7
+                height:         scalable_button_height 
+                width:          parent.width
+                showBorder:     true
+                anchors {
+                    top:        button_6.bottom
+                    topMargin:  _toolsMargin
+                    bottomMargin: _toolsMargin
+                }
+
+                text:           qsTr("App")
+                iconSource:     "/res/gear-white.svg"
+                onClicked: {
+                    if (!mainWindow.preventViewSwitch()) {
+                        mainWindow.showSettingsTool()
+                    }
+                }     //mainWindow.showToolSelectDialog()
             }
         }
     }
