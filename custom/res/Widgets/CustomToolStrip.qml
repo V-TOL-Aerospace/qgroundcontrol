@@ -67,7 +67,7 @@ Rectangle {
             id:             toolStripColumn
             anchors.left:   parent.left
             anchors.right:  parent.right
-            spacing:        ScreenTools.defaultFontPixelWidth * 0.25
+            spacing:        _toolsMargin//ScreenTools.defaultFontPixelWidth * 0.25
 
             QGCLabel {
                 id:                     titleLabel
@@ -85,7 +85,7 @@ Rectangle {
                     id:                 buttonTemplate
                     anchors.left:       toolStripColumn.left
                     anchors.right:      toolStripColumn.right
-                    height:             scalable_button_height //width
+                    height:             scalable_button_height
                     radius:             ScreenTools.defaultFontPixelWidth / 2
                     fontPointSize:      ScreenTools.smallFontPointSize
                     toolStripAction:    modelData
