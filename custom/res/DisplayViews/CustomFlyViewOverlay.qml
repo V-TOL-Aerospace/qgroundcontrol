@@ -309,7 +309,65 @@ Item {
         }
     }
 
-    // RIGHT SIDE BUTTON CONTROLS
+    // RIGHT SIDE BUTTON TOOL STRIP
+    CustomToolStrip {
+        id: rightSide_toolStrip
+        anchors {
+            right:  parent.right
+            top:    parent.top
+        }
+        z:                  QGroundControl.zOrderWidgets
+        maxHeight:          parent.height - rightSide_toolStrip.y
+
+        ToolStripActionList {
+            id: rightSide_toolStripActionList
+            model: [
+                ToolStripAction {
+                    text:           _activeVehicle ? qsTr("Connected"):qsTr("Disconn")
+                    iconSource:     _activeVehicle ? "/qmlimages/Connect.svg" : "/qmlimages/Disconnect.svg"
+                    enabled:        false
+                },
+                ToolStripAction {
+                    text:           _activeVehicle ? (_activeVehicle.armed ? qsTr("ARMED") : qsTr("DISARMED")) : qsTr("DISARMED")
+                    iconSource:     _activeVehicle ? (_activeVehicle.armed ? "/qmlimages/Armed.svg" : "/qmlimages/Disarmed.svg") : "/qmlimages/Disarmed.svg"
+                    onTriggered:    _activeVehicle.armed ? _guidedController.confirmAction(_guidedController.actionDisarm, 1) : _guidedController.confirmAction(_guidedController.actionArm, 1)
+                    enabled:        _activeVehicle
+                },
+                ToolStripAction {
+                    text:           qsTr(" ")
+                    enabled:        false
+                },
+                ToolStripAction {
+                    text:           qsTr("Set Takeoff")
+                    iconSource:     "/res/takeoff.svg"
+                    enabled:        _activeVehicle ? (_activeVehicle.armed ? false:true): false
+                    onTriggered:    _activeVehicle.setCurrentMissionSequence(1)
+                },
+                ToolStripAction {
+                    text:           qsTr("RTL")
+                    iconSource:     "/res/rtl.svg"
+                    enabled:        _activeVehicle ? (_activeVehicle.armed ? true:false): false
+                    onTriggered:    _guidedController.confirmAction(_guidedController.actionRTL, 1)
+                },
+                ToolStripAction {
+                    text:           qsTr(" ")
+                    enabled:        false
+                },
+                ToolStripAction {
+                    text:           qsTr(" ")
+                    enabled:        false
+                },
+                ToolStripAction {
+                    text:           qsTr(" ")
+                    enabled:        false
+                }
+            ]
+        }
+        model: rightSide_toolStripActionList.model
+    }
+
+
+    // RIGHT SIDE BUTTON CONTROLS - OLD
     Rectangle {
         id:                     rightSideButtonControls_Boarder
         anchors {
@@ -319,7 +377,7 @@ Item {
         height:             Screen.height
         width:              _tabWidth +  _toolsMargin
         color:              qgcPal.windowShadeDark
-        visible:            _test_visible
+        visible:            false
         MouseArea {
             anchors.fill:   parent
         }
@@ -446,25 +504,13 @@ Item {
 
     // LEFT SIDE BUTTON TOOL STRIP
     CustomToolStrip {
-        id:                 leftSide_ToolStrip
+        id: leftSide_toolStrip
         anchors {
-            left:           parent.left
-            top:            parent.top
+            left:   parent.left
+            top:    parent.top
         }
         z:                  QGroundControl.zOrderWidgets
-        maxHeight:          parent.height - toolStrip.y
-
-        readonly property int flyButtonIndex:       0
-        readonly property int fileButtonIndex:      1
-        readonly property int takeoffButtonIndex:   2
-        readonly property int waypointButtonIndex:  3
-        readonly property int roiButtonIndex:       4
-        readonly property int patternButtonIndex:   5
-        readonly property int landButtonIndex:      6
-        readonly property int centerButtonIndex:    7
-
-        property bool _isRallyLayer:    _editingLayer == _layerRallyPoints
-        property bool _isMissionLayer:  _editingLayer == _layerMission
+        maxHeight:          parent.height - leftSide_toolStrip.y
 
         ToolStripActionList {
             id: leftSide_toolStripActionList
@@ -475,7 +521,7 @@ Item {
                     onTriggered:    mainWindow.showPlanView()
                 },
                 ToolStripAction {
-                    text:           qsTr("Fly View")
+                    text:           qsTr(" ")
                     enabled:        false
                 },
                 ToolStripAction {
@@ -518,7 +564,7 @@ Item {
         model: leftSide_toolStripActionList.model
     }
 
-    // LEFT SIDE BUTTON CONTROLS
+    // LEFT SIDE BUTTON CONTROLS - OLD
     Rectangle {
         id:                     leftSideButtonControls_Boarder
         anchors {
