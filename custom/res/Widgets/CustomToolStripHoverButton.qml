@@ -21,7 +21,7 @@ import Custom.Widgets               1.0
 Button {
     id:             control
     width:          contentLayoutItem.contentWidth + (contentMargins * 2)
-    height:         width
+    // height:         width
     hoverEnabled:   true
     enabled:        toolStripAction.enabled
     visible:        toolStripAction.visible

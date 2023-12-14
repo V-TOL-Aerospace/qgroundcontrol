@@ -503,7 +503,7 @@ Item {
         CustomToolStrip {
             id:                 toolStrip
             anchors{
-                margins:        _toolsMargin
+                // margins:        _toolsMargin
                 left:           leftSideButtonControls_Boarder.right //parent.left
                 top:            parent.top
             }
