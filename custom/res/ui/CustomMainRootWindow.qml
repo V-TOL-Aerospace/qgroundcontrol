@@ -267,7 +267,7 @@ ApplicationWindow {
         id:         toolbar
         height:     ScreenTools.toolbarHeight
         width:      Screen.width
-        visible:    planView.visible//!(QGroundControl.videoManager.fullScreen && flightView.visible)
+        visible:    false //planView.visible//!(QGroundControl.videoManager.fullScreen && flightView.visible)
     }
 
     footer: LogReplayStatusBar {

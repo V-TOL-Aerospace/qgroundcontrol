@@ -32,6 +32,8 @@
         <file alias="Custom/Widgets/CustomQuickButton.qml">res/Widgets/CustomQuickButton.qml</file>
         <file alias="Custom/Widgets/CustomSignalStrength.qml">res/Widgets/CustomSignalStrength.qml</file>
         <file alias="Custom/Widgets/CustomToolBarButton.qml">res/Widgets/CustomToolBarButton.qml</file>
+        <file alias="Custom/Widgets/CustomToolStrip.qml">res/Widgets/CustomToolStrip.qml</file>
+        <file alias="Custom/Widgets/CustomToolStripHoverButton.qml">res/Widgets/CustomToolStripHoverButton.qml</file>
         <file alias="Custom/Widgets/CustomVehicleButton.qml">res/Widgets/CustomVehicleButton.qml</file>
         <file alias="Custom/Widgets/qmldir">res/Widgets/qmldir</file>
     </qresource>
@@ -39,5 +41,6 @@
 	    <file alias="MainRootWindow.qml">res/ui/CustomMainRootWindow.qml</file>
         <file alias="QGroundControl/FlightDisplay/FlyViewCustomLayer.qml">res/DisplayViews/CustomFlyViewOverlay.qml</file>
         <file alias="QGroundControl/FlightDisplay/FlyView.qml">res/DisplayViews/CustomFlyView.qml</file>
+        <file alias="PlanView.qml">res/DisplayViews/CustomPlanView.qml</file>
     </qresource>
 </RCC>
