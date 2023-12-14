@@ -444,6 +444,80 @@ Item {
         }
     }
 
+    // LEFT SIDE BUTTON TOOL STRIP
+    CustomToolStrip {
+        id:                 leftSide_ToolStrip
+        anchors {
+            left:           parent.left
+            top:            parent.top
+        }
+        z:                  QGroundControl.zOrderWidgets
+        maxHeight:          parent.height - toolStrip.y
+
+        readonly property int flyButtonIndex:       0
+        readonly property int fileButtonIndex:      1
+        readonly property int takeoffButtonIndex:   2
+        readonly property int waypointButtonIndex:  3
+        readonly property int roiButtonIndex:       4
+        readonly property int patternButtonIndex:   5
+        readonly property int landButtonIndex:      6
+        readonly property int centerButtonIndex:    7
+
+        property bool _isRallyLayer:    _editingLayer == _layerRallyPoints
+        property bool _isMissionLayer:  _editingLayer == _layerMission
+
+        ToolStripActionList {
+            id: leftSide_toolStripActionList
+            model: [
+                ToolStripAction {
+                    text:           qsTr("Plan")
+                    iconSource:     "/qmlimages/Plan.svg"
+                    onTriggered:    mainWindow.showPlanView()
+                },
+                ToolStripAction {
+                    text:           qsTr("Fly View")
+                    enabled:        false
+                },
+                ToolStripAction {
+                    text:           qsTr(" ")
+                    enabled:        false
+                },
+                ToolStripAction {
+                    text:           qsTr(" ")
+                    enabled:        false
+                },
+                ToolStripAction {
+                    text:           qsTr(" ")
+                    enabled:        false
+                },
+                ToolStripAction {
+                    text:           qsTr(" ")
+                    enabled:        false
+                },
+                ToolStripAction {
+                    text:           qsTr("Vehicle")
+                    iconSource:     "/qmlimages/Gears.svg"
+                    onTriggered: {
+                        if (!mainWindow.preventViewSwitch()) {
+                            mainWindow.showSetupTool()
+                        } 
+                    } 
+                },
+                ToolStripAction {                
+                    text:           qsTr("App")
+                    iconSource:     "/res/gear-white.svg"
+                    onTriggered: {
+                        if (!mainWindow.preventViewSwitch()) {
+                            mainWindow.showSettingsTool()
+                        }
+                    } 
+                }
+            ]
+        }
+        
+        model: leftSide_toolStripActionList.model
+    }
+
     // LEFT SIDE BUTTON CONTROLS
     Rectangle {
         id:                     leftSideButtonControls_Boarder
@@ -454,7 +528,7 @@ Item {
         height:                 parent.height
         width:                  _tabWidth +  _toolsMargin
         color:                  qgcPal.windowShadeDark
-        visible:                true
+        visible:                false
         MouseArea {
             anchors.fill: parent
         }
