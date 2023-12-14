@@ -504,7 +504,7 @@ Item {
             id:                 toolStrip
             anchors{
                 // margins:        _toolsMargin
-                left:           leftSideButtonControls_Boarder.right //parent.left
+                left:           parent.left
                 top:            parent.top
             }
             z:                  QGroundControl.zOrderWidgets
@@ -618,6 +618,57 @@ Item {
         }
 
         //-----------------------------------------------------------
+        // RIGHT SIDE PANEL TOOL STRIP
+        CustomToolStrip {
+            id: rightSide_toolStrip
+            anchors{
+                right:          parent.right 
+                top:            parent.top
+            }
+            z:                  QGroundControl.zOrderWidgets
+            maxHeight:          parent.height - toolStrip.y
+            ToolStripActionList {
+                id: rightSide_toolStripActionList
+                model: [
+                    ToolStripAction {
+                        text:           qsTr(" ")
+                        enabled:        false
+                    },
+                    ToolStripAction {
+                        text:           qsTr(" ")
+                        enabled:        false
+                    },
+                    ToolStripAction {
+                        text:           qsTr(" ")
+                        enabled:        false
+                    },
+                    ToolStripAction {
+                        text:           qsTr(" ")
+                        enabled:        false
+                    },
+                    ToolStripAction {
+                        text:           qsTr(" ")
+                        enabled:        false
+                    },
+                    ToolStripAction {
+                        text:           qsTr(" ")
+                        enabled:        false
+                    },
+                    ToolStripAction {
+                        text:           qsTr(" ")
+                        enabled:        false
+                    },
+                    ToolStripAction {
+                        text:           qsTr(" ")
+                        enabled:        false
+                    }
+                ]
+            }
+
+            model: rightSide_toolStripActionList.model
+        }
+
+        //-----------------------------------------------------------
         // Right pane for mission editing controls
         Rectangle {
             id:                 rightPanel
@@ -626,7 +677,7 @@ Item {
             color:              qgcPal.window
             opacity:            layerTabBar.visible ? 0.2 : 0
             anchors.bottom:     parent.bottom
-            anchors.right:      parent.right
+            anchors.right:      rightSide_toolStrip.left
             anchors.rightMargin: _toolsMargin
         }
         //-------------------------------------------------------
