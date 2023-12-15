@@ -315,6 +315,7 @@ Item {
         anchors {
             right:  parent.right
             top:    parent.top
+            bottom: parent.bottom
         }
         z:                  QGroundControl.zOrderWidgets
         maxHeight:          parent.height - rightSide_toolStrip.y
@@ -508,6 +509,7 @@ Item {
         anchors {
             left:   parent.left
             top:    parent.top
+            bottom: parent.bottom
         }
         z:                  QGroundControl.zOrderWidgets
         maxHeight:          parent.height - leftSide_toolStrip.y

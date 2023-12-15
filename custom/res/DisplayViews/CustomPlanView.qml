@@ -503,9 +503,9 @@ Item {
         CustomToolStrip {
             id:                 toolStrip
             anchors{
-                // margins:        _toolsMargin
                 left:           parent.left
                 top:            parent.top
+                bottom:         parent.bottom
             }
             z:                  QGroundControl.zOrderWidgets
             maxHeight:          parent.height - toolStrip.y
@@ -532,7 +532,7 @@ Item {
                         onTriggered:    mainWindow.showFlyView()
                     },
                     ToolStripAction {
-                        text:                   qsTr("File")
+                        text:                   qsTr("Sync")
                         enabled:                !_planMasterController.syncInProgress
                         visible:                true
                         showAlternateIcon:      _planMasterController.dirty
@@ -612,6 +612,7 @@ Item {
             function allAddClickBoolsOff() {
                 _addROIOnClick =        false
                 addWaypointRallyPointAction.checked = false
+                rightSide_addWaypointRallyPointAction.checked = false
             }
 
             onDropped: allAddClickBoolsOff()
@@ -624,9 +625,20 @@ Item {
             anchors{
                 right:          parent.right 
                 top:            parent.top
+                bottom:         parent.bottom
             }
             z:                  QGroundControl.zOrderWidgets
             maxHeight:          parent.height - toolStrip.y
+
+            readonly property int flyButtonIndex:       0
+            readonly property int fileButtonIndex:      1
+            readonly property int takeoffButtonIndex:   2
+            readonly property int waypointButtonIndex:  3
+            readonly property int roiButtonIndex:       4
+            readonly property int patternButtonIndex:   5
+            readonly property int landButtonIndex:      6
+            readonly property int centerButtonIndex:    7
+
             ToolStripActionList {
                 id: rightSide_toolStripActionList
                 model: [
@@ -635,24 +647,61 @@ Item {
                         enabled:        false
                     },
                     ToolStripAction {
-                        text:           qsTr(" ")
-                        enabled:        false
+                        text:       qsTr("Takeoff")
+                        iconSource: "/res/takeoff.svg"
+                        enabled:    _missionController.isInsertTakeoffValid
+                        visible:    toolStrip._isMissionLayer && !_planMasterController.controllerVehicle.rover
+                        onTriggered: {
+                            toolStrip.allAddClickBoolsOff()
+                            insertTakeItemAfterCurrent()
+                        }
                     },
                     ToolStripAction {
-                        text:           qsTr(" ")
-                        enabled:        false
+                        id:                 rightSide_addWaypointRallyPointAction
+                        text:               toolStrip._editingLayer == toolStrip._layerRallyPoints ? qsTr("Rally Point") : qsTr("Waypoint")
+                        iconSource:         "/qmlimages/MapAddMission.svg"
+                        enabled:            toolStrip._isRallyLayer ? true : _missionController.flyThroughCommandsAllowed
+                        visible:            toolStrip._isRallyLayer || toolStrip._isMissionLayer
+                        checkable:          true
                     },
                     ToolStripAction {
-                        text:           qsTr(" ")
-                        enabled:        false
+                        text:               _missionController.isROIActive ? qsTr("Cancel ROI") : qsTr("ROI")
+                        iconSource:         "/qmlimages/MapAddMission.svg"
+                        enabled:            !_missionController.onlyInsertTakeoffValid
+                        visible:            toolStrip._isMissionLayer && _planMasterController.controllerVehicle.roiModeSupported
+                        checkable:          !_missionController.isROIActive
+                        onCheckedChanged:   _addROIOnClick = checked
+                        onTriggered: {
+                            if (_missionController.isROIActive) {
+                                toolStrip.allAddClickBoolsOff()
+                                insertCancelROIAfterCurrent()
+                            }
+                        }
+                        property bool myAddROIOnClick: _addROIOnClick
+                        onMyAddROIOnClickChanged: checked = _addROIOnClick
                     },
                     ToolStripAction {
-                        text:           qsTr(" ")
-                        enabled:        false
+                        text:               _singleComplexItem ? _missionController.complexMissionItemNames[0] : qsTr("Pattern")
+                        iconSource:         "/qmlimages/MapDrawShape.svg"
+                        enabled:            _missionController.flyThroughCommandsAllowed
+                        visible:            toolStrip._isMissionLayer
+                        dropPanelComponent: _singleComplexItem ? undefined : patternDropPanel
+                        onTriggered: {
+                            toolStrip.allAddClickBoolsOff()
+                            if (_singleComplexItem) {
+                                insertComplexItemAfterCurrent(_missionController.complexMissionItemNames[0])
+                            }
+                        }
                     },
                     ToolStripAction {
-                        text:           qsTr(" ")
-                        enabled:        false
+                        text:       _planMasterController.controllerVehicle.multiRotor ? qsTr("Return") : qsTr("Land")
+                        iconSource: "/res/rtl.svg"
+                        enabled:    _missionController.isInsertLandValid
+                        visible:    toolStrip._isMissionLayer
+                        onTriggered: {
+                            toolStrip.allAddClickBoolsOff()
+                            insertLandItemAfterCurrent()
+                        }
                     },
                     ToolStripAction {
                         text:           qsTr(" ")
@@ -666,6 +715,7 @@ Item {
             }
 
             model: rightSide_toolStripActionList.model
+            onDropped: toolStrip.allAddClickBoolsOff()
         }
 
         //-----------------------------------------------------------
@@ -1111,155 +1161,6 @@ Item {
                         clearButtonClicked()
                     }
                 }
-            }
-        }
-    }
-    
-    // LEFT SIDE BUTTON CONTROLS
-    Rectangle {
-        id:                     leftSideButtonControls_Boarder
-        anchors {
-            topMargin:          _toolsMargin
-            left:               parent.left
-        }
-        height:                 parent.height
-        width:                  _tabWidth +  _toolsMargin
-        color:                  qgcPal.windowShadeDark
-        visible:                false
-        MouseArea {
-            anchors.fill: parent
-        }
-        Rectangle {
-            id:                 leftSideButtonControls
-            anchors {
-                left:           parent.left
-            }
-            height:             parent.height
-            width:              _tabWidth 
-            color:              qgcPal.windowShade
-            visible:            true
-            CustomIconButton {
-                id:             button_0
-                height:         scalable_button_height 
-                width:          parent.width
-                showBorder:     true
-                anchors {
-                    top:        parent.top
-                    topMargin:  _toolsMargin
-                }
-                text:           qsTr("Plan")
-                iconSource:     "/qmlimages/Plan.svg"
-                onClicked:      mainWindow.showPlanView()
-                enabled:        false
-            }
-            CustomIconButton {
-                id:             button_1
-                text:           qsTr("Fly View")
-                height:         scalable_button_height 
-                width:          parent.width
-                showBorder:     true
-                anchors {
-                    top:        button_0.bottom
-                    topMargin:  _toolsMargin
-                }
-                onClicked:      mainWindow.showFlyView()
-                iconSource:     "/qmlimages/PaperPlane.svg"
-                enabled:        true
-            }
-            CustomIconButton {
-                id:             button_2
-                height:         scalable_button_height 
-                width:          parent.width
-                showBorder:     true
-                anchors {
-                    top:        button_1.bottom
-                    topMargin:  _toolsMargin
-                }
-                text:           qsTr("File")
-                iconSource:     "/qmlimages/MapSync.svg"
-                enabled:        true
-                ToolStripAction {
-                    text:                   qsTr("File")
-                    enabled:                !_planMasterController.syncInProgress
-                    visible:                true
-                    showAlternateIcon:      _planMasterController.dirty
-                    iconSource:             "/qmlimages/MapSync.svg"
-                    alternateIconSource:    "/qmlimages/MapSyncChanged.svg"
-                    dropPanelComponent:     syncDropPanel
-                }
-            }
-            CustomIconButton {
-                id:             button_3
-                height:         scalable_button_height 
-                width:          parent.width
-                showBorder:     true
-                anchors {
-                    top:        button_2.bottom
-                    topMargin:  _toolsMargin
-                }
-                text:           qsTr("")
-                enabled:        false
-            }
-            CustomIconButton {
-                id:             button_4
-                height:         scalable_button_height 
-                width:          parent.width
-                showBorder:     true
-                anchors {
-                    top:        button_3.bottom
-                    topMargin:  _toolsMargin
-                }
-                text:           qsTr("")
-                enabled:        false
-            }
-            CustomIconButton {
-                id:             button_5
-                height:         scalable_button_height 
-                width:          parent.width
-                showBorder:     true
-                anchors {
-                    top:        button_4.bottom
-                    topMargin:  _toolsMargin
-                }
-                text:           qsTr("")
-                enabled:        false
-            }
-            CustomIconButton {
-                id:             button_6
-                height:         scalable_button_height 
-                width:          parent.width
-                showBorder:     true
-                anchors {
-                    top:        button_5.bottom
-                    topMargin:  _toolsMargin
-                }
-                
-                text:           qsTr("Vehicle")
-                iconSource:     "/qmlimages/Gears.svg"
-                onClicked: {
-                    if (!mainWindow.preventViewSwitch()) {
-                        mainWindow.showSetupTool()
-                    }
-                }
-            }
-            CustomIconButton {
-                id:             button_7
-                height:         scalable_button_height 
-                width:          parent.width
-                showBorder:     true
-                anchors {
-                    top:        button_6.bottom
-                    topMargin:  _toolsMargin
-                    bottomMargin: _toolsMargin
-                }
-
-                text:           qsTr("App")
-                iconSource:     "/res/gear-white.svg"
-                onClicked: {
-                    if (!mainWindow.preventViewSwitch()) {
-                        mainWindow.showSettingsTool()
-                    }
-                }     //mainWindow.showToolSelectDialog()
             }
         }
     }

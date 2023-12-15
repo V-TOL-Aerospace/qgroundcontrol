@@ -29,7 +29,7 @@ Rectangle {
     property real   maxHeight           ///< Maximum height for control, determines whether text is hidden to make control shorter
     property alias  title:              titleLabel.text
 
-    property real   scalable_button_height:         Window.height/repeater.count - _toolsMargin
+    property real   scalable_button_height:         Window.height/repeater.count - (_toolsMargin + 0.2)
     property bool   showBorder:                     qgcPal.globalTheme === QGCPalette.Light
 
     property var _dropPanel: dropPanel
