@@ -371,7 +371,7 @@ Item {
 
                     switch (_editingLayer) {
                     case _layerMission:
-                        if (addWaypointRallyPointAction.checked) {
+                        if (addWaypointRallyPointAction.checked || rightSide_addWaypointRallyPointAction.checked) {
                             insertSimpleItemAfterCurrent(coordinate)
                         } else if (_addROIOnClick) {
                             insertROIAfterCurrent(coordinate)
@@ -380,7 +380,7 @@ Item {
 
                         break
                     case _layerRallyPoints:
-                        if (_rallyPointController.supported && addWaypointRallyPointAction.checked) {
+                        if ((_rallyPointController.supported && addWaypointRallyPointAction.checked) || _rallyPointController.supported && rightSide_addWaypointRallyPointAction.checked )  {
                             _rallyPointController.addPoint(coordinate)
                         }
                         break
@@ -658,7 +658,7 @@ Item {
                     },
                     ToolStripAction {
                         id:                 rightSide_addWaypointRallyPointAction
-                        text:               toolStrip._editingLayer == toolStrip._layerRallyPoints ? qsTr("Rally Point") : qsTr("Waypoint")
+                        text:               _editingLayer == _layerRallyPoints ? qsTr("Rally Point") : qsTr("Waypoint")
                         iconSource:         "/qmlimages/MapAddMission.svg"
                         enabled:            toolStrip._isRallyLayer ? true : _missionController.flyThroughCommandsAllowed
                         visible:            toolStrip._isRallyLayer || toolStrip._isMissionLayer
