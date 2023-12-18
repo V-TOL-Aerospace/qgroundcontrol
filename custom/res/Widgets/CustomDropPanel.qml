@@ -12,12 +12,17 @@ import QtQuick.Controls         1.2
 import QtQuick.Controls.Styles  1.4
 
 import QGroundControl               1.0
+import QGroundControl.Controls      1.0
 import QGroundControl.ScreenTools   1.0
 import QGroundControl.Palette       1.0
+
+import Custom.Widgets 1.0
 
 Item {
     id:         _root
     visible:    false
+
+    property int    dropDirection:      dropLeft 
 
     signal          clicked()
     property real   radius:             ScreenTools.isMobile ? ScreenTools.defaultFontPixelHeight * 1.75 : ScreenTools.defaultFontPixelHeight * 1.25
