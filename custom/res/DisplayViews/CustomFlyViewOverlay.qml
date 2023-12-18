@@ -329,7 +329,7 @@ Item {
                     enabled:        false
                 },
                 ToolStripAction {
-                    text:           _activeVehicle ? (_activeVehicle.armed ? qsTr("ARMED") : qsTr("DISARMED")) : qsTr("DISARMED")
+                    text:           _activeVehicle ? (_activeVehicle.armed ? qsTr("Armed") : qsTr("Disarmed")) : qsTr("Disarmed")
                     iconSource:     _activeVehicle ? (_activeVehicle.armed ? "/qmlimages/Armed.svg" : "/qmlimages/Disarmed.svg") : "/qmlimages/Disarmed.svg"
                     onTriggered:    _activeVehicle.armed ? _guidedController.confirmAction(_guidedController.actionDisarm, 1) : _guidedController.confirmAction(_guidedController.actionArm, 1)
                     enabled:        _activeVehicle
@@ -339,7 +339,7 @@ Item {
                     enabled:        false
                 },
                 ToolStripAction {
-                    text:           qsTr("Set Takeoff")
+                    text:           qsTr("Takeoff")
                     iconSource:     "/res/takeoff.svg"
                     enabled:        _activeVehicle ? (_activeVehicle.armed ? false:true): false
                     onTriggered:    _activeVehicle.setCurrentMissionSequence(1)
@@ -539,8 +539,9 @@ Item {
                     enabled:        false
                 },
                 ToolStripAction {
-                    text:           qsTr(" ")
-                    enabled:        false
+                    text:           qsTr("Messages")
+                    iconSource:     "/qmlimages/Megaphone.svg"
+                    dropPanelComponent: messageDropPanel
                 },
                 ToolStripAction {
                     text:           qsTr("Vehicle")
@@ -706,6 +707,7 @@ Item {
     // FLIGHT CONTROL AREA - PFD AND OTHER FLIGHT CRITICAL INFORMATION ARE ANCHORED TO THIS RECTANGLE
     Rectangle {
         id:                 flightControlRectangle
+        visible:            false
         anchors {
             topMargin:      _toolsMargin
             left:           leftSideButtonControls_Boarder.right
@@ -713,7 +715,6 @@ Item {
         height:             Window.height
         width:              Window.width * 0.2
         color:              qgcPal.windowShade
-        visible:            _test_visible
         MouseArea {
             anchors.fill:   parent
         }
@@ -728,10 +729,15 @@ Item {
         color:                      "#DEDEDE"
         radius:                     2
         clip:                       true
-        anchors.top:                flightControlRectangle.top
-        anchors.topMargin:          _toolsMargin //-headingIndicator.height / 2
+        anchors {
+            top:                    parent.top
+            topMargin:              _toolsMargin
+            horizontalCenter:       attitudeIndicator.horizontalCenter
+        }
+        // anchors.top:                parent.top //flightControlRectangle.top
+        // anchors.topMargin:          _toolsMargin //-headingIndicator.height / 2
         // anchors.left:               flightControlRectangle.right
-        anchors.horizontalCenter:   flightControlRectangle.horizontalCenter
+        // anchors.horizontalCenter:   flightControlRectangle.horizontalCenter
         Repeater {
             model: 720
             QGCLabel {
@@ -956,17 +962,33 @@ Item {
     }
 
     // MESSAGE INDICATOR
+    Component {
+        id: messageDropPanel
+        ColumnLayout {
+            spacing:    ScreenTools.defaultFontPixelWidth * 0.5
+            width:      messageWindow.width
+            height:     messageWindow.height
+            // QGCLabel { text: qsTr("Messages:") }
+            CustomMavMessageWidget {
+                id:                     messageWindow
+                width:                  Window.width - leftSide_toolStrip.width*3
+                height:                 flightControlRectangle.width
+                anchors.fill:           parent.fill
+            }
+        }
+    }
+
     CustomMavMessageWidget {
         property real height_gps_info:       Window.height - compassBar.height - attitudeIndicator.height - gps_info_window.height - _toolsMargin
         property real height_no_gps_info:    Window.height - compassBar.height - attitudeIndicator.height - _toolsMargin
+        visible:                false
 
-        id:                     messageWindow
+        id:                     static_messageWindow
         width:                  flightControlRectangle.width
-        height:                 gps_info_window.visible ? height_gps_info : height_no_gps_info
+        height:                 (gps_info_window.visible ? height_gps_info : height_no_gps_info) - 1
         anchors {
             top:                gps_info_window.visible ? gps_info_window.bottom : gps_info_window.top
             horizontalCenter:   flightControlRectangle.horizontalCenter
         }
-        _activeVehicle:         _activeVehicle
     }
 }
