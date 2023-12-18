@@ -371,7 +371,8 @@ Item {
 
                     switch (_editingLayer) {
                     case _layerMission:
-                        if (addWaypointRallyPointAction.checked || rightSide_addWaypointRallyPointAction.checked) {
+                        // if (addWaypointRallyPointAction.checked || rightSide_addWaypointRallyPointAction.checked) {
+                        if (rightSide_addWaypointRallyPointAction.checked) {
                             insertSimpleItemAfterCurrent(coordinate)
                         } else if (_addROIOnClick) {
                             insertROIAfterCurrent(coordinate)
@@ -380,7 +381,8 @@ Item {
 
                         break
                     case _layerRallyPoints:
-                        if ((_rallyPointController.supported && addWaypointRallyPointAction.checked) || _rallyPointController.supported && rightSide_addWaypointRallyPointAction.checked )  {
+                        // if ((_rallyPointController.supported && addWaypointRallyPointAction.checked) || _rallyPointController.supported && rightSide_addWaypointRallyPointAction.checked )  {
+                        if ( _rallyPointController.supported && rightSide_addWaypointRallyPointAction.checked )  {
                             _rallyPointController.addPoint(coordinate)
                         }
                         break
@@ -541,69 +543,98 @@ Item {
                         dropPanelComponent:     syncDropPanel
                     },
                     ToolStripAction {
-                        text:       qsTr("Takeoff")
-                        iconSource: "/res/takeoff.svg"
-                        enabled:    _missionController.isInsertTakeoffValid
-                        visible:    toolStrip._isMissionLayer && !_planMasterController.controllerVehicle.rover
-                        onTriggered: {
-                            toolStrip.allAddClickBoolsOff()
-                            insertTakeItemAfterCurrent()
-                        }
-                    },
-                    ToolStripAction {
-                        id:                 addWaypointRallyPointAction
-                        text:               _editingLayer == _layerRallyPoints ? qsTr("Rally Point") : qsTr("Waypoint")
-                        iconSource:         "/qmlimages/MapAddMission.svg"
-                        enabled:            toolStrip._isRallyLayer ? true : _missionController.flyThroughCommandsAllowed
-                        visible:            toolStrip._isRallyLayer || toolStrip._isMissionLayer
-                        checkable:          true
-                    },
-                    ToolStripAction {
-                        text:               _missionController.isROIActive ? qsTr("Cancel ROI") : qsTr("ROI")
-                        iconSource:         "/qmlimages/MapAddMission.svg"
-                        enabled:            !_missionController.onlyInsertTakeoffValid
-                        visible:            toolStrip._isMissionLayer && _planMasterController.controllerVehicle.roiModeSupported
-                        checkable:          !_missionController.isROIActive
-                        onCheckedChanged:   _addROIOnClick = checked
-                        onTriggered: {
-                            if (_missionController.isROIActive) {
-                                toolStrip.allAddClickBoolsOff()
-                                insertCancelROIAfterCurrent()
-                            }
-                        }
-                        property bool myAddROIOnClick: _addROIOnClick
-                        onMyAddROIOnClickChanged: checked = _addROIOnClick
-                    },
-                    ToolStripAction {
-                        text:               _singleComplexItem ? _missionController.complexMissionItemNames[0] : qsTr("Pattern")
-                        iconSource:         "/qmlimages/MapDrawShape.svg"
-                        enabled:            _missionController.flyThroughCommandsAllowed
-                        visible:            toolStrip._isMissionLayer
-                        dropPanelComponent: _singleComplexItem ? undefined : patternDropPanel
-                        onTriggered: {
-                            toolStrip.allAddClickBoolsOff()
-                            if (_singleComplexItem) {
-                                insertComplexItemAfterCurrent(_missionController.complexMissionItemNames[0])
-                            }
-                        }
-                    },
-                    ToolStripAction {
-                        text:       _planMasterController.controllerVehicle.multiRotor ? qsTr("Return") : qsTr("Land")
-                        iconSource: "/res/rtl.svg"
-                        enabled:    _missionController.isInsertLandValid
-                        visible:    toolStrip._isMissionLayer
-                        onTriggered: {
-                            toolStrip.allAddClickBoolsOff()
-                            insertLandItemAfterCurrent()
-                        }
-                    },
-                    ToolStripAction {
                         text:               qsTr("Center")
                         iconSource:         "/qmlimages/MapCenter.svg"
                         enabled:            true
                         visible:            true
                         dropPanelComponent: centerMapDropPanel
-                    }
+                    },
+                    ToolStripAction {
+                        text:           qsTr(" ")
+                        enabled:        false
+                    },
+                    ToolStripAction {
+                        text:           qsTr(" ")
+                        enabled:        false
+                    },
+                    ToolStripAction {
+                        text:           qsTr(" ")
+                        enabled:        false
+                    },                ToolStripAction {
+                    text:           qsTr("Vehicle")
+                    iconSource:     "/qmlimages/Gears.svg"
+                    onTriggered: {
+                        if (!mainWindow.preventViewSwitch()) {
+                            mainWindow.showSetupTool()
+                        } 
+                    } 
+                },
+                ToolStripAction {                
+                    text:           qsTr("App")
+                    iconSource:     "/res/gear-white.svg"
+                    onTriggered: {
+                        if (!mainWindow.preventViewSwitch()) {
+                            mainWindow.showSettingsTool()
+                        }
+                    } 
+                }
+                    // ToolStripAction {
+                    //     text:       qsTr("Takeoff")
+                    //     iconSource: "/res/takeoff.svg"
+                    //     enabled:    _missionController.isInsertTakeoffValid
+                    //     visible:    toolStrip._isMissionLayer && !_planMasterController.controllerVehicle.rover
+                    //     onTriggered: {
+                    //         toolStrip.allAddClickBoolsOff()
+                    //         insertTakeItemAfterCurrent()
+                    //     }
+                    // },
+                    // ToolStripAction {
+                    //     id:                 addWaypointRallyPointAction
+                    //     text:               _editingLayer == _layerRallyPoints ? qsTr("Rally Point") : qsTr("Waypoint")
+                    //     iconSource:         "/qmlimages/MapAddMission.svg"
+                    //     enabled:            toolStrip._isRallyLayer ? true : _missionController.flyThroughCommandsAllowed
+                    //     visible:            toolStrip._isRallyLayer || toolStrip._isMissionLayer
+                    //     checkable:          true
+                    // },
+                    // ToolStripAction {
+                    //     text:               _missionController.isROIActive ? qsTr("Cancel ROI") : qsTr("ROI")
+                    //     iconSource:         "/qmlimages/MapAddMission.svg"
+                    //     enabled:            !_missionController.onlyInsertTakeoffValid
+                    //     visible:            toolStrip._isMissionLayer && _planMasterController.controllerVehicle.roiModeSupported
+                    //     checkable:          !_missionController.isROIActive
+                    //     onCheckedChanged:   _addROIOnClick = checked
+                    //     onTriggered: {
+                    //         if (_missionController.isROIActive) {
+                    //             toolStrip.allAddClickBoolsOff()
+                    //             insertCancelROIAfterCurrent()
+                    //         }
+                    //     }
+                    //     property bool myAddROIOnClick: _addROIOnClick
+                    //     onMyAddROIOnClickChanged: checked = _addROIOnClick
+                    // },
+                    // ToolStripAction {
+                    //     text:               _singleComplexItem ? _missionController.complexMissionItemNames[0] : qsTr("Pattern")
+                    //     iconSource:         "/qmlimages/MapDrawShape.svg"
+                    //     enabled:            _missionController.flyThroughCommandsAllowed
+                    //     visible:            toolStrip._isMissionLayer
+                    //     dropPanelComponent: _singleComplexItem ? undefined : patternDropPanel
+                    //     onTriggered: {
+                    //         toolStrip.allAddClickBoolsOff()
+                    //         if (_singleComplexItem) {
+                    //             insertComplexItemAfterCurrent(_missionController.complexMissionItemNames[0])
+                    //         }
+                    //     }
+                    // },
+                    // ToolStripAction {
+                    //     text:       _planMasterController.controllerVehicle.multiRotor ? qsTr("Return") : qsTr("Land")
+                    //     iconSource: "/res/rtl.svg"
+                    //     enabled:    _missionController.isInsertLandValid
+                    //     visible:    toolStrip._isMissionLayer
+                    //     onTriggered: {
+                    //         toolStrip.allAddClickBoolsOff()
+                    //         insertLandItemAfterCurrent()
+                    //     }
+                    // },
                 ]
             }
 
@@ -611,7 +642,7 @@ Item {
 
             function allAddClickBoolsOff() {
                 _addROIOnClick =        false
-                addWaypointRallyPointAction.checked = false
+                // addWaypointRallyPointAction.checked = false
                 rightSide_addWaypointRallyPointAction.checked = false
             }
 
@@ -643,14 +674,17 @@ Item {
                 id: rightSide_toolStripActionList
                 model: [
                     ToolStripAction {
-                        text:           qsTr(" ")
-                        enabled:        false
+                        text:               qsTr("Upload")
+                    iconSource:             "/qmlimages/MapSync.svg"
+                        enabled:            !_planMasterController.offline && !_planMasterController.syncInProgress && _planMasterController.containsItems
+                        visible:            !QGroundControl.corePlugin.options.disableVehicleConnection
+                        onTriggered:        _planMasterController.upload()
                     },
                     ToolStripAction {
-                        text:       qsTr("Takeoff")
-                        iconSource: "/res/takeoff.svg"
-                        enabled:    _missionController.isInsertTakeoffValid
-                        visible:    toolStrip._isMissionLayer && !_planMasterController.controllerVehicle.rover
+                        text:               qsTr("Takeoff")
+                        iconSource:         "/res/takeoff.svg"
+                        enabled:            _missionController.isInsertTakeoffValid
+                        visible:            toolStrip._isMissionLayer && !_planMasterController.controllerVehicle.rover
                         onTriggered: {
                             toolStrip.allAddClickBoolsOff()
                             insertTakeItemAfterCurrent()
