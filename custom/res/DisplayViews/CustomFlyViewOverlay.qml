@@ -535,17 +535,18 @@ Item {
                     enabled:        false
                 },
                 ToolStripAction {
-                    text:           qsTr(" ")
-                    enabled:        false
+                    text:               _activeVehicle ? _activeVehicle.flightMode : qsTr("N/A") 
+                    iconSource:         "/qmlimages/FlightModesComponentIcon.png"
+                    dropPanelComponent: flightModeSelectDropPanel
                 },
                 ToolStripAction {
-                    text:           qsTr("Messages")
-                    iconSource:     "/qmlimages/Megaphone.svg"
+                    text:               qsTr("Messages")
+                    iconSource:         "/qmlimages/Megaphone.svg"
                     dropPanelComponent: messageDropPanel
                 },
                 ToolStripAction {
-                    text:           qsTr("Vehicle")
-                    iconSource:     "/qmlimages/Gears.svg"
+                    text:               qsTr("Vehicle")
+                    iconSource:         "/qmlimages/Gears.svg"
                     onTriggered: {
                         if (!mainWindow.preventViewSwitch()) {
                             mainWindow.showSetupTool()
@@ -553,8 +554,8 @@ Item {
                     } 
                 },
                 ToolStripAction {                
-                    text:           qsTr("App")
-                    iconSource:     "/res/gear-white.svg"
+                    text:               qsTr("App")
+                    iconSource:         "/res/gear-white.svg"
                     onTriggered: {
                         if (!mainWindow.preventViewSwitch()) {
                             mainWindow.showSettingsTool()
@@ -975,6 +976,13 @@ Item {
                 height:                 flightControlRectangle.width
                 anchors.fill:           parent.fill
             }
+        }
+    }
+
+    Component {
+        id: flightModeSelectDropPanel
+        CustomFlightModeSelectDropPanel {
+            activeVehicle:      _activeVehicle
         }
     }
 
