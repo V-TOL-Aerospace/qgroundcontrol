@@ -18,24 +18,23 @@ Rectangle {
     color:          qgcPal.window
     border.color:   qgcPal.text
 
-    property bool showIndicator: true
+    property bool   showIndicator: true
 
-    property var _activeVehicle
-    property var activeVehicleBase:               QGroundControl.multiVehicleManager.activeVehicle
-    property bool   _isMessageImportant:    _activeVehicle ? !_activeVehicle.messageTypeNormal && !_activeVehicle.messageTypeNone : false
+    property var    activeVehicle:          QGroundControl.multiVehicleManager.activeVehicle
+    property bool   _isMessageImportant:    activeVehicle ? !activeVehicle.messageTypeNormal && !activeVehicle.messageTypeNone : false
 
     function getMessageColor() {
-        if (_activeVehicle) {
-            if (_activeVehicle.messageTypeNone)
+        if (activeVehicle) {
+            if (activeVehicle.messageTypeNone)
                 return qgcPal.colorGrey
-            if (_activeVehicle.messageTypeNormal)
+            if (activeVehicle.messageTypeNormal)
                 return qgcPal.colorBlue;
-            if (_activeVehicle.messageTypeWarning)
+            if (activeVehicle.messageTypeWarning)
                 return qgcPal.colorOrange;
-            if (_activeVehicle.messageTypeError)
+            if (activeVehicle.messageTypeError)
                 return qgcPal.colorRed;
             // Cannot be so make make it obnoxious to show error
-            console.warn("MessageIndicator.qml:getMessageColor Invalid vehicle message type", _activeVehicle.messageTypeNone)
+            console.warn("MessageIndicator.qml:getMessageColor Invalid vehicle message type", activeVehicle.messageTypeNone)
             return "purple";
         }
         //-- It can only get here when closing (vehicle gone while window active)
@@ -51,7 +50,7 @@ Rectangle {
     }
 
     Connections {
-        target: activeVehicleBase
+        target: activeVehicle
         onNewFormattedMessage :{
             messageText.append(formatMessage(formattedMessage))
             //-- Hack to scroll down
@@ -65,30 +64,38 @@ Rectangle {
         visible:            messageText.length === 0
     }
 
-    //-- Clear Messages
-    QGCColoredImage {
-        anchors.bottom:     parent.bottom
-        anchors.right:      parent.right
-        anchors.margins:    ScreenTools.defaultFontPixelHeight * 0.5
-        height:             ScreenTools.isMobile ? ScreenTools.defaultFontPixelHeight * 1.5 : ScreenTools.defaultFontPixelHeight
-        width:              height
-        sourceSize.height:   height
-        source:             "/res/TrashDelete.svg"
-        fillMode:           Image.PreserveAspectFit
-        mipmap:             true
-        smooth:             true
-        color:              qgcPal.text
-        visible:            false //messageText.length !== 0
-        MouseArea {
-            anchors.fill:   parent
-            onClicked: {
-                if (activeVehicleBase) {
-                    activeVehicleBase.clearMessages()
-                    // mainWindow.hideIndicatorPopup()
-                }
-            }
-        }
+    Component.onCompleted: {
+        messageText.text = formatMessage(_activeVehicle.formattedMessages)
+        //-- Hack to scroll to last message
+        for (var i = 0; i <= _activeVehicle.messageCount; i++)
+            messageFlick.flick(0,-5000)
+        _activeVehicle.resetAllMessages()
     }
+
+    //-- Clear Messages
+    // QGCColoredImage {
+    //     anchors.bottom:     parent.bottom
+    //     anchors.right:      parent.right
+    //     anchors.margins:    ScreenTools.defaultFontPixelHeight * 0.5
+    //     height:             ScreenTools.isMobile ? ScreenTools.defaultFontPixelHeight * 1.5 : ScreenTools.defaultFontPixelHeight
+    //     width:              height
+    //     sourceSize.height:   height
+    //     source:             "/res/TrashDelete.svg"
+    //     fillMode:           Image.PreserveAspectFit
+    //     mipmap:             true
+    //     smooth:             true
+    //     color:              qgcPal.text
+    //     visible:            messageText.length !== 0
+    //     MouseArea {
+    //         anchors.fill:   parent
+    //         onClicked: {
+    //             if (activeVehicle) {
+    //                 activeVehicle.clearMessages()
+    //                 // mainWindow.hideIndicatorPopup()
+    //             }
+    //         }
+    //     }
+    // }
 
     FactPanelController {
         id: controller
@@ -133,5 +140,4 @@ Rectangle {
             }
         }
     }
-
 }
