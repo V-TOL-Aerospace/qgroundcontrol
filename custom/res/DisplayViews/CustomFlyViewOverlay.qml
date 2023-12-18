@@ -93,8 +93,8 @@ Item {
         visible:    true
         anchors {
             top:    parent.top
-            left:   flightControlRectangle.right
-            right:  rightSideButtonControls_Boarder.left
+            left:   attitudeIndicator.right // flightControlRectangle.right
+            right:  rightSide_toolStrip.left // rightSideButtonControls_Boarder.left
         }
         color:      qgcPal.windowShadeDark
         height:     parent.height * 0.08
@@ -105,13 +105,14 @@ Item {
             id:                     topWarningDisplay
             anchors {
                 top:                parent.top
-                horizontalCenter:   parent.horizontalCenter
+                right:              parent.right
             }
             height:                 parent.height - _toolsMargin
             width:                  parent.width - _toolsMargin
             color:                  qgcPal.windowShade
             CustomMavStatusButton {
                 id:             warning_panel_0
+                enabled:        _activeVehicle
                 anchors {
                     top:        parent.top
                     topMargin:  _toolsMargin
@@ -144,6 +145,7 @@ Item {
 
             CustomMavStatusGPSButton {
                 id:                 warning_panel_2
+                enabled:            _activeVehicle
                 anchors {
                     top:            parent.top
                     topMargin:      _toolsMargin
@@ -160,6 +162,7 @@ Item {
 
             CustomMavStatusIndicator {
                 id:             warning_panel_4
+                enabled:        _activeVehicle
                 anchors {
                     top:        parent.top
                     topMargin:  _toolsMargin
@@ -190,6 +193,7 @@ Item {
 
             CustomMavStatusIndicator {
                 id:             warning_panel_6
+                enabled:        _activeVehicle
                 anchors {
                     top:        parent.top
                     topMargin:  _toolsMargin
@@ -220,6 +224,7 @@ Item {
 
             CustomMavStatusIndicator {
                 id:             warning_panel_8
+                enabled:        _activeVehicle
                 anchors {
                     top:        parent.top
                     topMargin:  _toolsMargin
@@ -250,6 +255,7 @@ Item {
 
             CustomMavStatusIndicator {
                 id:             warning_panel_10
+                enabled:        _activeVehicle
                 anchors {
                     top:        parent.top
                     topMargin:  _toolsMargin
@@ -536,6 +542,7 @@ Item {
                 },
                 ToolStripAction {
                     text:               _activeVehicle ? _activeVehicle.flightMode : qsTr("N/A") 
+                    enabled:            _activeVehicle
                     iconSource:         "/qmlimages/FlightModesComponentIcon.png"
                     dropPanelComponent: flightModeSelectDropPanel
                 },
