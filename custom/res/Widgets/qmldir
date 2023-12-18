@@ -11,9 +11,9 @@ CustomToolBarButton             1.0     CustomToolBarButton.qml
 CustomVehicleButton             1.0     CustomVehicleButton.qml
 CustomQGCPitchIndicator         1.0     CustomQGCPitchIndicator.qml
 CustomFlightModeButton          1.0     CustomFlightModeButton.qml
+CustomFlightModeSelectDropPanel 1.0     CustomFlightModeSelectDropPanel.qml
 CustomMavMessageWidget          1.0     CustomMavMessageWidget.qml
 CustomMavStatusButton           1.0     CustomMavStatusButton.qml
 CustomMavStatusGPSButton        1.0     CustomMavStatusGPSButton.qml
 CustomToolStrip                 1.0     CustomToolStrip.qml
-CustomToolStripFlightModeSelect 1.0     CustomToolStripFlightModeSelect.qml
 CustomToolStripHoverButton      1.0     CustomToolStripHoverButton.qml
