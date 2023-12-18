@@ -14,7 +14,7 @@ ColumnLayout {
     id:         root
     spacing:    ScreenTools.defaultFontPixelWidth * 0.5
 
-    property var activeVehicle:         QGroundControl.multiVehicleManager.activeVehicle
+    property var activeVehicle
     property bool _useShortListModes:   true
 
     property var _flightModesFixedWingShortList: [
