@@ -21,6 +21,7 @@
     <qresource prefix="Custom/Widgets">
         <file alias="Custom/Widgets/CustomArtificialHorizon.qml">res/Widgets/CustomArtificialHorizon.qml</file>
         <file alias="Custom/Widgets/CustomAttitudeWidget.qml">res/Widgets/CustomAttitudeWidget.qml</file>
+        <file alias="Custom/Widgets/CustomDropPanel.qml">res/Widgets/CustomDropPanel.qml</file>
         <file alias="Custom/Widgets/CustomFlightModeButton.qml">res/Widgets/CustomFlightModeButton.qml</file>
         <file alias="Custom/Widgets/CustomFlightModeSelectDropPanel.qml">res/Widgets/CustomFlightModeSelectDropPanel.qml</file>
         <file alias="Custom/Widgets/CustomIconButton.qml">res/Widgets/CustomIconButton.qml</file>
