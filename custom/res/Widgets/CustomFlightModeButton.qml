@@ -76,7 +76,6 @@ Button {
         // Layout.preferredWidth:  rowLayout.width
 
         property real fontPointSize: ScreenTools.largeFontPointSize
-        property var activeVehicle: activeVehicle
 
         Component {
             id: flightModeMenu
