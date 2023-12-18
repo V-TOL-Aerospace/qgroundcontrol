@@ -2,18 +2,18 @@ Module Custom.Widgets
 
 CustomArtificialHorizon         1.0     CustomArtificialHorizon.qml
 CustomAttitudeWidget            1.0     CustomAttitudeWidget.qml
-CustomIconButton                1.0     CustomIconButton.qml
-CustomOnOffSwitch               1.0     CustomOnOffSwitch.qml
-CustomQuickButton               1.0     CustomQuickButton.qml
-CustomMavStatusIndicator        1.0     CustomMavStatusIndicator.qml
-CustomSignalStrength            1.0     CustomSignalStrength.qml
-CustomToolBarButton             1.0     CustomToolBarButton.qml
-CustomVehicleButton             1.0     CustomVehicleButton.qml
-CustomQGCPitchIndicator         1.0     CustomQGCPitchIndicator.qml
 CustomFlightModeButton          1.0     CustomFlightModeButton.qml
 CustomFlightModeSelectDropPanel 1.0     CustomFlightModeSelectDropPanel.qml
+CustomIconButton                1.0     CustomIconButton.qml
 CustomMavMessageWidget          1.0     CustomMavMessageWidget.qml
+CustomMavStatusIndicator        1.0     CustomMavStatusIndicator.qml
 CustomMavStatusButton           1.0     CustomMavStatusButton.qml
 CustomMavStatusGPSButton        1.0     CustomMavStatusGPSButton.qml
+CustomOnOffSwitch               1.0     CustomOnOffSwitch.qml
+CustomQGCPitchIndicator         1.0     CustomQGCPitchIndicator.qml
+CustomQuickButton               1.0     CustomQuickButton.qml
+CustomSignalStrength            1.0     CustomSignalStrength.qml
+CustomToolBarButton             1.0     CustomToolBarButton.qml
 CustomToolStrip                 1.0     CustomToolStrip.qml
 CustomToolStripHoverButton      1.0     CustomToolStripHoverButton.qml
+CustomVehicleButton             1.0     CustomVehicleButton.qml
