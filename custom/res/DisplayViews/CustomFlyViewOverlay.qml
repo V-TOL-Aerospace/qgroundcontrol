@@ -550,10 +550,8 @@ Item {
                     enabled:        false
                 },
                 ToolStripAction {
-                    text:               _activeVehicle ? _activeVehicle.flightMode : qsTr("N/A") 
-                    enabled:            _activeVehicle
-                    iconSource:         "/qmlimages/FlightModesComponentIcon.png"
-                    dropPanelComponent: flightModeSelectDropPanel
+                    text:           qsTr(" ")
+                    enabled:        false
                 },
                 ToolStripAction {
                     text:               qsTr("Messages")
