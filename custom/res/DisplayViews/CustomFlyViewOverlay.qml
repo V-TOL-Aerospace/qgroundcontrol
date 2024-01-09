@@ -70,6 +70,11 @@ Item {
     // property var _guidedValueSlider:        guidedValueSlider
     // property var _mapControl:               mapControl
 
+    readonly property int dropLeft:     1
+    readonly property int dropRight:    2
+    readonly property int dropUp:       3
+    readonly property int dropDown:     4
+
     function secondsToHHMMSS(timeS) {
         var sec_num = parseInt(timeS, 10);
         var hours   = Math.floor(sec_num / 3600);
@@ -325,6 +330,7 @@ Item {
         }
         z:                  QGroundControl.zOrderWidgets
         maxHeight:          parent.height - rightSide_toolStrip.y
+        dropDirection:      dropLeft
 
         ToolStripActionList {
             id: rightSide_toolStripActionList
@@ -341,8 +347,10 @@ Item {
                     enabled:        _activeVehicle
                 },
                 ToolStripAction {
-                    text:           qsTr(" ")
-                    enabled:        false
+                    text:               _activeVehicle ? _activeVehicle.flightMode : qsTr("N/A") 
+                    enabled:            _activeVehicle
+                    iconSource:         "/qmlimages/FlightModesComponentIcon.png"
+                    dropPanelComponent: flightModeSelectDropPanel
                 },
                 ToolStripAction {
                     text:           qsTr("Takeoff")
@@ -365,7 +373,7 @@ Item {
                     enabled:        false
                 },
                 ToolStripAction {
-                    text:           qsTr(" ")
+                    text:           qsTr("dropDir: ") + rightSide_toolStrip.dropDirection
                     enabled:        false
                 }
             ]
@@ -519,6 +527,7 @@ Item {
         }
         z:                  QGroundControl.zOrderWidgets
         maxHeight:          parent.height - leftSide_toolStrip.y
+        dropDirection:      dropRight
 
         ToolStripActionList {
             id: leftSide_toolStripActionList
@@ -529,7 +538,7 @@ Item {
                     onTriggered:    mainWindow.showPlanView()
                 },
                 ToolStripAction {
-                    text:           qsTr(" ")
+                    text:           qsTr("dropDir: ") + leftSide_toolStrip.dropDirection //qsTr(" ")
                     enabled:        false
                 },
                 ToolStripAction {

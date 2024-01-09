@@ -39,6 +39,15 @@ Button {
     property alias  fontPointSize:      innerText.font.pointSize
     property alias  imageSource:        innerImage.source
     property alias  contentWidth:       innerText.contentWidth
+    property bool   grayscale:          true
+    
+    // Should be an enum but that get's into the whole problem of creating a singleton which isn't worth the effort
+    readonly property int dropLeft:     1
+    readonly property int dropRight:    2
+    readonly property int dropUp:       3
+    readonly property int dropDown:     4
+
+    property int    dropDirection
 
     property real imageScale:       0.6
     property real contentMargins:   innerText.height * 0.1
@@ -54,8 +63,14 @@ Button {
         if (!toolStripAction.dropPanelComponent) {
             toolStripAction.triggered(this)
         } else if (checked) {
-            var panelEdgeTopPoint = mapToItem(_root, width, 0)
-            dropPanel.show(panelEdgeTopPoint, toolStripAction.dropPanelComponent, this)
+            if (control.dropDirection == dropRight) {
+                var panelEdgeTopPoint = mapToItem(_root, width, 0)
+                dropPanel.show(panelEdgeTopPoint, toolStripAction.dropPanelComponent, this)
+            }
+            else if (control.dropDirection == dropLeft) {
+                var panelEdgeTopPoint = mapToItem(_root, -1.5*width - contentLayoutItem.width, 0)
+                dropPanel.show(panelEdgeTopPoint, toolStripAction.dropPanelComponent, this)
+            }
             checked = true
             control.dropped(index)
         }
@@ -78,7 +93,8 @@ Button {
                 width:                      contentLayoutItem.width  * imageScale
                 smooth:                     true
                 mipmap:                     true
-                color:                      _currentContentColor
+                // color:                      _currentContentColor
+                color:                      grayscale ? _currentContentColor: "transparent"
                 fillMode:                   Image.PreserveAspectFit
                 antialiasing:               true
                 sourceSize.height:          height
