@@ -22,7 +22,6 @@ Item {
     id:         _root
     visible:    false
 
-    property int    dropDirection:      dropLeft 
 
     signal          clicked()
     property real   radius:             ScreenTools.isMobile ? ScreenTools.defaultFontPixelHeight * 1.75 : ScreenTools.defaultFontPixelHeight * 1.25
@@ -35,8 +34,10 @@ Item {
     readonly property int dropUp:       3
     readonly property int dropDown:     4
 
+    property int    dropDirection
+
     readonly property real _arrowBaseHeight:    radius             // Height of vertical side of arrow
-    readonly property real _arrowPointWidth:    radius * 0.666     // Distance from vertical side to point
+    readonly property real _arrowPointWidth:    radius * 0.667     // Distance from vertical side to point
     readonly property real _dropMargin:         ScreenTools.defaultFontPixelWidth
 
     property var    _dropEdgeTopPoint
@@ -122,8 +123,6 @@ Item {
             property point arrowBase2: Qt.point(0, 0)
 
             onPaint: {
-                var panelX = _arrowPointWidth
-                var panelY = 0
                 var panelWidth = parent.width - _arrowPointWidth
                 var panelHeight = parent.height
 
@@ -131,14 +130,36 @@ Item {
                 context.reset()
                 context.beginPath()
 
-                context.moveTo(panelX, panelY)                              // top left
-                context.lineTo(panelX + panelWidth, panelY)                 // top right
-                context.lineTo(panelX + panelWidth, panelX + panelHeight)   // bottom right
-                context.lineTo(panelX, panelY + panelHeight)                // bottom left
-                context.lineTo(arrowBase2.x, arrowBase2.y)
-                context.lineTo(arrowPoint.x, arrowPoint.y)
-                context.lineTo(arrowBase1.x, arrowBase1.y)
-                context.lineTo(panelX, panelY)                              // top left
+                if (_root.dropDirection == dropRight) {
+                    var panelX = _arrowPointWidth
+                    var panelY = 0
+
+                    context.moveTo(panelX, panelY)                              // top left
+                    context.lineTo(panelX + panelWidth, panelY)                 // top right
+                    context.lineTo(panelX + panelWidth, panelX + panelHeight)   // bottom right
+                    context.lineTo(panelX, panelY + panelHeight)                // bottom left
+                    // midway to sketching the drop panel, we trace the path of the protruding arrow. 
+                    context.lineTo(arrowBase2.x, arrowBase2.y)                  // from base of triangular arrow
+                    context.lineTo(arrowPoint.x, arrowPoint.y)                  // to the point of the arrow
+                    context.lineTo(arrowBase1.x, arrowBase1.y)                  // then back to the second base of the arrow
+                    // from the second base point of the triangular arrow, we return to the top left edge point once again. 
+                    context.lineTo(panelX, panelY)                              // top left again
+                }
+                else if (_root.dropDirection == dropLeft) {
+                    var panelX = 0
+                    var panelY = 0
+
+                    context.moveTo(panelX, panelY)                              // top left
+                    context.lineTo(panelX + panelWidth, panelY)                 // top right
+                    // from the top left corner and midway, we stop for the first base of the tringular arrrow
+                    context.lineTo(panelX + panelWidth, arrowBase1.y)
+                    context.lineTo(panelX + panelWidth + _arrowPointWidth, arrowPoint.y)
+                    context.lineTo(panelX + panelWidth, arrowBase2.y)
+                    // after making the arrow, trace back around the drop panel box
+                    context.lineTo(panelX + panelWidth, panelX + panelHeight)   // bottom right
+                    context.lineTo(panelX, panelY + panelHeight)                // bottom left
+                    context.lineTo(panelX, panelY)                              // top left again
+                }
 
                 context.closePath()
                 context.fillStyle = qgcPal.windowShade
@@ -149,7 +170,7 @@ Item {
         QGCFlickable {
             id:                 panelItemFlickable
             anchors.margins:    _dropMargin
-            anchors.leftMargin: _dropMargin + _arrowPointWidth
+            anchors.leftMargin: (_root.dropDirection == dropRight)? _dropMargin + _arrowPointWidth : _dropMargin
             anchors.fill:       parent
             flickableDirection: Flickable.VerticalFlick
             contentWidth:       panelLoader.width

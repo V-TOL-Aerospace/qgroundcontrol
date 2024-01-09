@@ -34,6 +34,13 @@ Rectangle {
 
     property var _dropPanel: dropPanel
 
+    readonly property int dropLeft:     1
+    readonly property int dropRight:    2
+    readonly property int dropUp:       3
+    readonly property int dropDown:     4
+
+    property int dropDirection: dropRight // DropRight by default
+
     function simulateClick(buttonIndex) {
         buttonIndex = buttonIndex + 1 // skip over title label
         var button = toolStripColumn.children[buttonIndex]
@@ -92,6 +99,7 @@ Rectangle {
                     dropPanel:          _dropPanel
                     onDropped:          _root.dropped(index)
                     showBorder:         true
+                    dropDirection:      _root.dropDirection
 
                     onCheckedChanged: {
                         // We deal with exclusive check state manually since usinug autoExclusive caused all sorts of crazt problems
@@ -111,8 +119,9 @@ Rectangle {
         }
     }
 
-    DropPanel {
+    CustomDropPanel {
         id:         dropPanel
         toolStrip:  _root
+        dropDirection: parent.dropDirection
     }
 }
