@@ -46,6 +46,7 @@ ColumnLayout {
             text: modelData
             Layout.fillWidth: true
             onClicked: {
+                dropPanel.hide()
                 activeVehicle.flightMode = text
                 mainWindow.hideIndicatorPopup()
             }
