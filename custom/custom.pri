@@ -83,3 +83,14 @@ SOURCES += \
     $$PWD/src/FirmwarePlugin/CustomFirmwarePlugin.cc \
     $$PWD/src/FirmwarePlugin/CustomFirmwarePluginFactory.cc \
 
+#-------------------------------------------------------------------------------------
+# Adding CustomToolStripAction
+
+INCLUDEPATH += \
+    $$PWD/res/Widgets
+
+HEADERS+= \
+    $$PWD/res/Widgets/CustomToolStripAction.h
+
+SOURCES += \
+    $$PWD/res/Widgets/CustomToolStripAction.cc
