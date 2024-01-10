@@ -105,6 +105,7 @@
 #include "RemoteIDManager.h"
 #include "CustomAction.h"
 #include "CustomActionManager.h"
+#include "CustomToolStripAction.h"
 
 #if defined(QGC_ENABLE_PAIRING)
 #include "PairingManager.h"
@@ -521,6 +522,7 @@ void QGCApplication::_initCommon()
     qmlRegisterType<TerrainProfile>                 ("QGroundControl.Controls",             1, 0, "TerrainProfile");
     qmlRegisterType<ToolStripAction>                ("QGroundControl.Controls",             1, 0, "ToolStripAction");
     qmlRegisterType<ToolStripActionList>            ("QGroundControl.Controls",             1, 0, "ToolStripActionList");
+    qmlRegisterType<CustomToolStripAction>          ("Custom.Widgets",                      1, 0, "CustomToolStripAction");
 
 #ifndef __mobile__
 #ifndef NO_SERIAL_LINK
