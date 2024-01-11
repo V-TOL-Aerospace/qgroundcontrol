@@ -62,6 +62,9 @@ Item {
     property string statusNormal:           "Normal" // CustomMavStatusIndicator.statusNormal 
     property string statusError:            "Error"// CustomMavStatusIndicator.statusError 
     property string statusDisabled:         "Disabled"// CustomMavStatusIndicator.statusDisabled 
+
+    property string statusHealthyColorHEX:  "#1b8539"
+    property string statusWarningColorHEX:  "#a88714"
     
     // property var planController:            _planController
     // property var guidedController:          _guidedController
@@ -340,7 +343,7 @@ Item {
                     iconSource:     _activeVehicle ? "/qmlimages/Connect.svg" : "/qmlimages/Disconnect.svg"
                     enabled:        _activeVehicle
                     iconTrueColor:  true
-                    buttonColor:    _activeVehicle ? "green" : qgcPal.toolbarBackground
+                    buttonColor:    _activeVehicle ? statusHealthyColorHEX : qgcPal.toolbarBackground
                 },
                 CustomToolStripAction {
                     text:           _activeVehicle ? (_activeVehicle.armed ? qsTr("Armed") : qsTr("Disarmed")) : qsTr("Disarmed")
@@ -536,7 +539,7 @@ Item {
             id: leftSide_toolStripActionList
             model: [
                 ToolStripAction {
-                    text:           qsTr("Plan")
+                    text:           qsTr("Plan View")
                     iconSource:     "/qmlimages/Plan.svg"
                     onTriggered:    mainWindow.showPlanView()
                 },

@@ -65,6 +65,9 @@ Item {
 
     property real   _tabWidth:              (Window.width < 1000) ? (Window.width * 0.05) : (Window.width * 0.04)// ScreenTools.defaultFontPixelWidth * 12   
 
+    property string statusHealthyColorHEX:  "#1b8539"
+    property string statusWarningColorHEX:  "#a88714"
+
     function mapCenter() {
         var coordinate = editorMap.center
         coordinate.latitude  = coordinate.latitude.toFixed(_decimalPlaces)
@@ -529,7 +532,7 @@ Item {
                 id: toolStripActionList
                 model: [
                     ToolStripAction {
-                        text:           qsTr("Fly")
+                        text:           qsTr("Fly View")
                         iconSource:     "/qmlimages/PaperPlane.svg"
                         onTriggered:    mainWindow.showFlyView()
                     },
@@ -541,7 +544,7 @@ Item {
                         iconSource:             "/qmlimages/MapSync.svg"
                         alternateIconSource:    "/qmlimages/MapSyncChanged.svg"
                         dropPanelComponent:     syncDropPanel
-                        buttonColor:            _planMasterController.dirty ? qgcPal.colorOrange : null //qgcPal.toolbarBackground
+                        buttonColor:            _planMasterController.dirty ? statusWarningColorHEX : null //qgcPal.colorOrange : null //qgcPal.toolbarBackground
                     },
                     ToolStripAction {
                         text:               qsTr("Center")
@@ -682,7 +685,7 @@ Item {
                         enabled:                !_planMasterController.offline && !_planMasterController.syncInProgress && _planMasterController.containsItems
                         visible:                !QGroundControl.corePlugin.options.disableVehicleConnection
                         onTriggered:            _planMasterController.upload()
-                        buttonColor:            _planMasterController.dirty ? qgcPal.colorOrange : "green"//qgcPal.toolbarBackground
+                        buttonColor:            _planMasterController.dirty ? statusWarningColorHEX : statusHealthyColorHEX //qgcPal.toolbarBackground
                     },
                     CustomToolStripAction {
                         text:               qsTr("Takeoff")
