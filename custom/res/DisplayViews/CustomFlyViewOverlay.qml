@@ -65,6 +65,7 @@ Item {
 
     property string statusHealthyColorHEX:  "#1b8539"
     property string statusWarningColorHEX:  "#a88714"
+    property string statusCriticalColorHEX: "#931010"
     
     // property var planController:            _planController
     // property var guidedController:          _guidedController
@@ -98,7 +99,7 @@ Item {
     // TOP RECTANGLE WARNING PANELS AREA
     Rectangle {
         id:         topWarningDisplay_boarder
-        visible:    true
+        visible:    false
         anchors {
             top:    parent.top
             left:   attitudeIndicator.right // flightControlRectangle.right
@@ -551,13 +552,41 @@ Item {
                     text:           qsTr(" ")
                     enabled:        false
                 },
-                ToolStripAction {
-                    text:           qsTr(" ")
-                    enabled:        false
+                CustomToolStripAction {
+                    text:               qsTr("Sensors")
+                    enabled:            _activeVehicle
+                    // iconSource: inster iconSource
+                    dropPanelComponent: statusSenrosDropPanel
                 },
-                ToolStripAction {
-                    text:           qsTr(" ")
-                    enabled:        false
+                CustomToolStripAction {
+                    id:                 toolStrip_GPSStatus
+                    text:               (_activeVehicle && _activeVehicle.gps.count.value >= 0) ? qsTr("GPS Status") : qsTr("NO GPS")
+                    enabled:            _activeVehicle
+                    dropPanelComponent: statusGPSDropPanel
+                    // iconSource:  insert iconSource
+                    // buttonColor:    _activeVehicle ? qgcPal.toolbarBackground
+                    // status: [
+                    //     State {
+                    //         name: "on_mouse"; when: onMouseHighlight && showOnMouseHighlight
+                    //         PropertyChanges {
+                    //             target:         toolStrip_GPSStatus; 
+                    //             buttonColor:    onMouseHighlight ? 
+                    //                 qgcPal.buttonHighlight : (primary ? qgcPal.primaryButton : qgcPal.button)
+                    //         }
+                    //     },
+                    //     State {
+                    //         name: "Normal"; when: statusActivity == statusNormal
+                    //         PropertyChanges {target: toolStrip_GPSStatus; buttonColor: statusHealthyColorHEX}//qgcPal.buttonHighlight}
+                    //     },
+                    //     State {
+                    //         name: "Error"; when: statusActivity == statusError
+                    //         PropertyChanges {target: toolStrip_GPSStatus; buttonColor: statusCriticalColorHEX}
+                    //     },
+                    //     State {
+                    //         name: "Disabled"; when: statusActivity == statusDisabled
+                    //         PropertyChanges {target: toolStrip_GPSStatus; buttonColor: qgcPal.toolbarBackground}
+                    //     }
+                    // ]
                 },
                 CustomToolStripAction {
                     text:               qsTr("Messages")
@@ -1037,6 +1066,21 @@ Item {
         anchors {
             top:                gps_info_window.visible ? gps_info_window.bottom : gps_info_window.top
             horizontalCenter:   flightControlRectangle.horizontalCenter
+        }
+    }
+
+    // GPS DROP Component
+    Component {
+        id: statusGPSDropPanel
+        CustomMavStatusGPSDropPanel {
+            activeVehicle: _activeVehicle
+        }
+    }
+
+    Component {
+        id: statusSenrosDropPanel
+        CustomMavStatusSensorsDropPanel {
+            activeVehicle: _activeVehicle
         }
     }
 }
