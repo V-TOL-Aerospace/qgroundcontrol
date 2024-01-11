@@ -40,6 +40,7 @@ Button {
     property alias  imageSource:        innerImage.source
     property alias  contentWidth:       innerText.contentWidth
     property bool   iconTrueColor:      toolStripAction.iconTrueColor!=null ? toolStripAction.iconTrueColor : false
+    property var    iconColor:          toolStripAction.iconColor
     property var    buttonColor:        toolStripAction.buttonColor
     
     // Should be an enum but that get's into the whole problem of creating a singleton which isn't worth the effort
@@ -95,7 +96,8 @@ Button {
                 smooth:                     true
                 mipmap:                     true
                 // color:                      _currentContentColor
-                color:                      iconTrueColor ? "transparent" : _currentContentColor
+                color:                      iconTrueColor ? "transparent" : 
+                                                (iconColor ? iconColor : _currentContentColor)
                 fillMode:                   Image.PreserveAspectFit
                 antialiasing:               true
                 sourceSize.height:          height

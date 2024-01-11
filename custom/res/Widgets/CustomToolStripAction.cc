@@ -106,3 +106,11 @@ void CustomToolStripAction::setButtonColor(const QString& buttonColor)
         emit buttonColorChanged(buttonColor);
     }
 }
+
+void CustomToolStripAction::setIconColor(const QString& iconColor)
+{
+    if (iconColor != _iconColor) {
+        _iconColor = iconColor;
+        emit iconColorChanged(iconColor);
+    }
+}
