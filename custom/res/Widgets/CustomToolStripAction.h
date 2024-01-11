@@ -29,6 +29,8 @@ public:
     Q_PROPERTY(QString          iconSource          READ iconSource             WRITE setIconSource             NOTIFY iconSourceChanged)
     Q_PROPERTY(QString          alternateIconSource READ alternateIconSource    WRITE setAlternateIconSource    NOTIFY alternateIconSourceChanged)
     Q_PROPERTY(QQmlComponent*   dropPanelComponent  READ dropPanelComponent     WRITE setDropPanelComponent     NOTIFY dropPanelComponentChanged)
+    Q_PROPERTY(bool             iconTrueColor       READ iconTrueColor          WRITE setIconTrueColor          NOTIFY iconTrueColorChanged)
+    Q_PROPERTY(QString          buttonColor         READ buttonColor            WRITE setButtonColor            NOTIFY buttonColorChanged)
 
     bool            enabled             (void) const { return _enabled; }
     bool            visible             (void) const { return _visible; }
@@ -38,7 +40,9 @@ public:
     QString         text                (void) const { return _text; }
     QString         iconSource          (void) const { return _iconSource; }
     QString         alternateIconSource (void) const { return _alternateIconSource; }
-    QQmlComponent* dropPanelComponent   (void) const { return _dropPanelComponent; }
+    QQmlComponent*  dropPanelComponent  (void) const { return _dropPanelComponent; }
+    bool            iconTrueColor           (void) const { return _iconTrueColor; }
+    QString         buttonColor         (void) const { return _buttonColor; }
 
     void setEnabled             (bool enabled);
     void setVisible             (bool visible);
@@ -49,6 +53,8 @@ public:
     void setIconSource          (const QString& iconSource);
     void setAlternateIconSource (const QString& alternateIconSource);
     void setDropPanelComponent  (QQmlComponent* dropPanelComponent);
+    void setIconTrueColor       (bool iconTrueColor);
+    void setButtonColor         (const QString& buttonColor);
 
 signals:
     void enabledChanged             (bool enabled);
@@ -61,6 +67,8 @@ signals:
     void alternateIconSourceChanged (QString alternateIconSource);
     void triggered                  (QObject* source);
     void dropPanelComponentChanged  (void);
+    void iconTrueColorChanged       (bool iconTrueColor);
+    void buttonColorChanged         (QString buttonColor);
 
 protected:
     bool            _enabled =              true;
@@ -72,4 +80,6 @@ protected:
     QString         _iconSource;
     QString         _alternateIconSource;
     QQmlComponent*  _dropPanelComponent =   nullptr;
+    bool            _iconTrueColor =        false; 
+    QString         _buttonColor;
 };

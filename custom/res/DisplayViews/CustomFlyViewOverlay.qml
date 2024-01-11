@@ -335,16 +335,19 @@ Item {
         ToolStripActionList {
             id: rightSide_toolStripActionList
             model: [
-                ToolStripAction {
+                CustomToolStripAction {
                     text:           _activeVehicle ? qsTr("Connected"):qsTr("Disconn")
                     iconSource:     _activeVehicle ? "/qmlimages/Connect.svg" : "/qmlimages/Disconnect.svg"
-                    enabled:        false
+                    enabled:        _activeVehicle
+                    iconTrueColor:  true
+                    buttonColor:    _activeVehicle ? "green" : qgcPal.toolbarBackground
                 },
-                ToolStripAction {
+                CustomToolStripAction {
                     text:           _activeVehicle ? (_activeVehicle.armed ? qsTr("Armed") : qsTr("Disarmed")) : qsTr("Disarmed")
                     iconSource:     _activeVehicle ? (_activeVehicle.armed ? "/qmlimages/Armed.svg" : "/qmlimages/Disarmed.svg") : "/qmlimages/Disarmed.svg"
                     onTriggered:    _activeVehicle.armed ? _guidedController.confirmAction(_guidedController.actionDisarm, 1) : _guidedController.confirmAction(_guidedController.actionArm, 1)
                     enabled:        _activeVehicle
+                    iconTrueColor:  true
                 },
                 ToolStripAction {
                     text:               _activeVehicle ? _activeVehicle.flightMode : qsTr("N/A") 

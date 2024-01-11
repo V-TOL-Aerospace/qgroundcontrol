@@ -90,3 +90,19 @@ void CustomToolStripAction::setDropPanelComponent(QQmlComponent* dropPanelCompon
     _dropPanelComponent = dropPanelComponent;
     emit dropPanelComponentChanged();
 }
+
+void CustomToolStripAction::setIconTrueColor(bool iconTrueColor)
+{
+    if (iconTrueColor != _iconTrueColor) {
+        _iconTrueColor = iconTrueColor;
+        emit iconTrueColorChanged(iconTrueColor);
+    }
+}
+
+void CustomToolStripAction::setButtonColor(const QString& buttonColor)
+{
+    if (buttonColor != _buttonColor) {
+        _buttonColor = buttonColor;
+        emit buttonColorChanged(buttonColor);
+    }
+}
