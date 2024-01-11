@@ -23,10 +23,10 @@ Button {
     width:          contentLayoutItem.contentWidth + (contentMargins * 2)
     // height:         width
     hoverEnabled:   true
-    enabled:        toolStripAction.enabled
+    enabled:        isBlankButton ? false : toolStripAction.enabled
     visible:        toolStripAction.visible
-    imageSource:    toolStripAction.showAlternateIcon ? modelData.alternateIconSource : modelData.iconSource
-    text:           toolStripAction.text
+    imageSource:    isBlankButton ? "" : (toolStripAction.showAlternateIcon ? modelData.alternateIconSource : modelData.iconSource)
+    text:           isBlankButton ? qsTr(" ") : toolStripAction.text
     checked:        toolStripAction.checked
     checkable:      toolStripAction.dropPanelComponent || modelData.checkable
 
@@ -42,6 +42,7 @@ Button {
     property bool   iconTrueColor:      toolStripAction.iconTrueColor!=null ? toolStripAction.iconTrueColor : false
     property var    iconColor:          toolStripAction.iconColor
     property var    buttonColor:        toolStripAction.buttonColor
+    property bool   isBlankButton:      toolStripAction.isBlankButton!=null ? toolStripAction.isBlankButton : false
     
     // Should be an enum but that get's into the whole problem of creating a singleton which isn't worth the effort
     readonly property int dropLeft:     1

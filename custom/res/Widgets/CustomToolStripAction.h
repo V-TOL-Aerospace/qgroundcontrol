@@ -32,6 +32,7 @@ public:
     Q_PROPERTY(bool             iconTrueColor       READ iconTrueColor          WRITE setIconTrueColor          NOTIFY iconTrueColorChanged)
     Q_PROPERTY(QString          iconColor           READ iconColor              WRITE setIconColor              NOTIFY iconColorChanged)
     Q_PROPERTY(QString          buttonColor         READ buttonColor            WRITE setButtonColor            NOTIFY buttonColorChanged)
+    Q_PROPERTY(bool             isBlankButton       READ isBlankButton          WRITE setIsBlankButton          NOTIFY isBlankButtonChanged)
 
     bool            enabled             (void) const { return _enabled; }
     bool            visible             (void) const { return _visible; }
@@ -45,6 +46,7 @@ public:
     bool            iconTrueColor       (void) const { return _iconTrueColor; }
     QString         iconColor           (void) const { return _iconColor; }
     QString         buttonColor         (void) const { return _buttonColor; }
+    bool            isBlankButton       (void) const { return _isBlankButton; }
 
     void setEnabled             (bool enabled);
     void setVisible             (bool visible);
@@ -58,6 +60,7 @@ public:
     void setIconTrueColor       (bool iconTrueColor);
     void setIconColor           (const QString& iconColor);
     void setButtonColor         (const QString& buttonColor);
+    void setIsBlankButton       (bool isBlankButton);
 
 signals:
     void enabledChanged             (bool enabled);
@@ -73,6 +76,7 @@ signals:
     void iconTrueColorChanged       (bool iconTrueColor);
     void iconColorChanged           (QString iconColor);
     void buttonColorChanged         (QString buttonColor);
+    void isBlankButtonChanged       (bool isBlankButton);
 
 protected:
     bool            _enabled =              true;
@@ -87,4 +91,5 @@ protected:
     bool            _iconTrueColor =        false; 
     QString         _iconColor;
     QString         _buttonColor;
+    bool            _isBlankButton =        false;
 };
