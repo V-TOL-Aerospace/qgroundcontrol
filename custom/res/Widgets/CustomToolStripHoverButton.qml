@@ -39,7 +39,8 @@ Button {
     property alias  fontPointSize:      innerText.font.pointSize
     property alias  imageSource:        innerImage.source
     property alias  contentWidth:       innerText.contentWidth
-    property bool   grayscale:          true
+    property bool   iconTrueColor:      toolStripAction.iconTrueColor!=null ? toolStripAction.iconTrueColor : false
+    property var    buttonColor:        toolStripAction.buttonColor
     
     // Should be an enum but that get's into the whole problem of creating a singleton which isn't worth the effort
     readonly property int dropLeft:     1
@@ -94,7 +95,7 @@ Button {
                 smooth:                     true
                 mipmap:                     true
                 // color:                      _currentContentColor
-                color:                      grayscale ? _currentContentColor: "transparent"
+                color:                      iconTrueColor ? "transparent" : _currentContentColor
                 fillMode:                   Image.PreserveAspectFit
                 antialiasing:               true
                 sourceSize.height:          height
@@ -117,7 +118,8 @@ Button {
         implicitHeight: ScreenTools.implicitButtonHeight
         border.width:   showBorder ? 1 : 0
         border.color:   qgcPal.buttonText
-        color:          (control.checked || control.pressed) ?
+        color:          buttonColor ? buttonColor : 
+                        (control.checked || control.pressed) ?
                             qgcPal.buttonHighlight :
                             (control.hovered ? qgcPal.toolStripHoverColor : qgcPal.toolbarBackground)
         anchors.fill:   parent
