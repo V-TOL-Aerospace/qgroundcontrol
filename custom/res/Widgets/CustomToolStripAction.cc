@@ -114,3 +114,11 @@ void CustomToolStripAction::setIconColor(const QString& iconColor)
         emit iconColorChanged(iconColor);
     }
 }
+
+void CustomToolStripAction::setIsBlankButton(bool isBlankButton)
+{
+    if (isBlankButton != _isBlankButton) {
+        _isBlankButton = isBlankButton;
+        emit isBlankButtonChanged(isBlankButton);
+    }
+}
