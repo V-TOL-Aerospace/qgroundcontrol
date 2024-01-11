@@ -376,7 +376,7 @@ Item {
                     enabled:        false
                 },
                 ToolStripAction {
-                    text:           qsTr("dropDir: ") + rightSide_toolStrip.dropDirection
+                    text:           qsTr(" ")
                     enabled:        false
                 }
             ]
@@ -541,10 +541,6 @@ Item {
                     onTriggered:    mainWindow.showPlanView()
                 },
                 ToolStripAction {
-                    text:           qsTr("dropDir: ") + leftSide_toolStrip.dropDirection //qsTr(" ")
-                    enabled:        false
-                },
-                ToolStripAction {
                     text:           qsTr(" ")
                     enabled:        false
                 },
@@ -557,9 +553,14 @@ Item {
                     enabled:        false
                 },
                 ToolStripAction {
+                    text:           qsTr(" ")
+                    enabled:        false
+                },
+                CustomToolStripAction {
                     text:               qsTr("Messages")
                     iconSource:         "/qmlimages/Megaphone.svg"
                     dropPanelComponent: messageDropPanel
+                    iconColor:          getMessageColor()
                 },
                 ToolStripAction {
                     text:               qsTr("Vehicle")
@@ -980,6 +981,25 @@ Item {
     }
 
     // MESSAGE INDICATOR
+    // Extracted function from messageIndicator.qml for use in Side ToolStrip. 
+    function getMessageColor() {
+        if (_activeVehicle) {
+            if (_activeVehicle.messageTypeNone)
+                return qgcPal.colorGrey
+            if (_activeVehicle.messageTypeNormal)
+                return qgcPal.colorBlue;
+            if (_activeVehicle.messageTypeWarning)
+                return qgcPal.colorOrange;
+            if (_activeVehicle.messageTypeError)
+                return qgcPal.colorRed;
+            // Cannot be so make make it obnoxious to show error
+            console.warn("MessageIndicator.qml:getMessageColor Invalid vehicle message type", _activeVehicle.messageTypeNone)
+            return "purple";
+        }
+        //-- It can only get here when closing (vehicle gone while window active)
+        return qgcPal.colorGrey
+    }
+
     Component {
         id: messageDropPanel
         ColumnLayout {
