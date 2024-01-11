@@ -591,6 +591,7 @@ Item {
                 CustomToolStripAction {
                     text:               qsTr("Messages")
                     iconSource:         "/qmlimages/Megaphone.svg"
+                    enabled:            _activeVehicle
                     dropPanelComponent: messageDropPanel
                     iconColor:          getMessageColor()
                 },
