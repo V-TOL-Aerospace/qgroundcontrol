@@ -685,7 +685,7 @@ Item {
                         enabled:                !_planMasterController.offline && !_planMasterController.syncInProgress && _planMasterController.containsItems
                         visible:                !QGroundControl.corePlugin.options.disableVehicleConnection
                         onTriggered:            _planMasterController.upload()
-                        buttonColor:            _planMasterController.dirty ? statusWarningColorHEX : statusHealthyColorHEX //qgcPal.toolbarBackground
+                        buttonColor:            globals.activeVehicle ? (_planMasterController.dirty ? statusWarningColorHEX : statusHealthyColorHEX) : qgcPal.toolbarBackground
                     },
                     CustomToolStripAction {
                         text:               qsTr("Takeoff")
