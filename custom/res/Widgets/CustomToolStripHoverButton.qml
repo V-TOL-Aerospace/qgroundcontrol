@@ -126,5 +126,15 @@ Button {
                             qgcPal.buttonHighlight :
                             (control.hovered ? qgcPal.toolStripHoverColor : qgcPal.toolbarBackground)
         anchors.fill:   parent
+        states: [
+            State{
+                name: "on_mouse"; when: (control.checked || control.pressed || control.hovered) && _showHighlight
+                PropertyChanges {
+                    target: buttonBkRect; 
+                    color:  (control.checked || control.pressed) ? 
+                        qgcPal.buttonHighlight : (control.hovered ? qgcPal.toolStripHoverColor : qgcPal.toolbarBackground)
+                }
+            }
+        ]
     }
 }

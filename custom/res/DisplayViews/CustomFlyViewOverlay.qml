@@ -65,7 +65,7 @@ Item {
 
     property string statusHealthyColorHEX:  "#1b8539"
     property string statusWarningColorHEX:  "#a88714"
-    property string statusCriticalColorHEX: "#931010"
+    property string statusCriticalColorHEX: "#c33838"
     
     // property var planController:            _planController
     // property var guidedController:          _guidedController
@@ -345,6 +345,7 @@ Item {
                     enabled:        _activeVehicle
                     iconTrueColor:  true
                     buttonColor:    _activeVehicle ? statusHealthyColorHEX : qgcPal.toolbarBackground
+                    hoverEnabled:   false
                 },
                 CustomToolStripAction {
                     text:           _activeVehicle ? (_activeVehicle.armed ? qsTr("Armed") : qsTr("Disarmed")) : qsTr("Disarmed")
@@ -360,7 +361,7 @@ Item {
                     dropPanelComponent: flightModeSelectDropPanel
                 },
                 ToolStripAction {
-                    text:           qsTr("Takeoff")
+                    text:           qsTr("Set Takeoff")
                     iconSource:     "/res/takeoff.svg"
                     enabled:        _activeVehicle ? (_activeVehicle.armed ? false:true): false
                     onTriggered:    _activeVehicle.setCurrentMissionSequence(1)
@@ -555,38 +556,16 @@ Item {
                 CustomToolStripAction {
                     text:               qsTr("Sensors")
                     enabled:            _activeVehicle
-                    // iconSource: inster iconSource
+                    iconSource:         "/InstrumentValueIcons/align-left.svg"
                     dropPanelComponent: statusSenrosDropPanel
+                    buttonColor:        getSensorsStatusColor()
                 },
                 CustomToolStripAction {
-                    id:                 toolStrip_GPSStatus
                     text:               (_activeVehicle && _activeVehicle.gps.count.value >= 0) ? qsTr("GPS Status") : qsTr("NO GPS")
                     enabled:            _activeVehicle
+                    iconSource:         "/InstrumentValueIcons/radar.svg"
                     dropPanelComponent: statusGPSDropPanel
-                    // iconSource:  insert iconSource
-                    // buttonColor:    _activeVehicle ? qgcPal.toolbarBackground
-                    // status: [
-                    //     State {
-                    //         name: "on_mouse"; when: onMouseHighlight && showOnMouseHighlight
-                    //         PropertyChanges {
-                    //             target:         toolStrip_GPSStatus; 
-                    //             buttonColor:    onMouseHighlight ? 
-                    //                 qgcPal.buttonHighlight : (primary ? qgcPal.primaryButton : qgcPal.button)
-                    //         }
-                    //     },
-                    //     State {
-                    //         name: "Normal"; when: statusActivity == statusNormal
-                    //         PropertyChanges {target: toolStrip_GPSStatus; buttonColor: statusHealthyColorHEX}//qgcPal.buttonHighlight}
-                    //     },
-                    //     State {
-                    //         name: "Error"; when: statusActivity == statusError
-                    //         PropertyChanges {target: toolStrip_GPSStatus; buttonColor: statusCriticalColorHEX}
-                    //     },
-                    //     State {
-                    //         name: "Disabled"; when: statusActivity == statusDisabled
-                    //         PropertyChanges {target: toolStrip_GPSStatus; buttonColor: qgcPal.toolbarBackground}
-                    //     }
-                    // ]
+                    buttonColor:        getGPSStatusColor()
                 },
                 CustomToolStripAction {
                     text:               qsTr("Messages")
@@ -1070,7 +1049,7 @@ Item {
         }
     }
 
-    // GPS DROP Component
+    // GPS Status Drop Panel Component
     Component {
         id: statusGPSDropPanel
         CustomMavStatusGPSDropPanel {
@@ -1078,10 +1057,35 @@ Item {
         }
     }
 
+    function getGPSStatusColor() {
+        if (_activeVehicle) {
+            if (_unhealthySensors & Vehicle.SysStatusSensorGPS) {
+                return statusCriticalColorHEX;
+            }
+            else {
+                return statusHealthyColorHEX;
+            }
+        }
+        return qgcPal.toolbarBackground;
+    }
+
+    // Sensors Drop Panel Component
     Component {
         id: statusSenrosDropPanel
         CustomMavStatusSensorsDropPanel {
             activeVehicle: _activeVehicle
         }
+    }
+
+    function getSensorsStatusColor() {
+        if (_activeVehicle) {
+            if (_activeVehicle.allSensorsHealthy) {
+                return statusHealthyColorHEX;
+            }
+            else {
+                return statusCriticalColorHEX;
+            }
+        }
+        return qgcPal.toolbarBackground;
     }
 }
