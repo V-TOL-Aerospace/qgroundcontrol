@@ -345,7 +345,6 @@ Item {
                     enabled:        _activeVehicle
                     iconTrueColor:  true
                     buttonColor:    _activeVehicle ? statusHealthyColorHEX : qgcPal.toolbarBackground
-                    hoverEnabled:   false
                 },
                 CustomToolStripAction {
                     text:           _activeVehicle ? (_activeVehicle.armed ? qsTr("Armed") : qsTr("Disarmed")) : qsTr("Disarmed")
@@ -549,9 +548,10 @@ Item {
                     text:           qsTr(" ")
                     enabled:        false
                 },
-                ToolStripAction {
-                    text:           qsTr(" ")
-                    enabled:        false
+                CustomToolStripAction {
+                    text:           qsTr("Battery")
+                    iconSource:     getBatteryIcon()
+                    buttonColor:    getBatteryColor()
                 },
                 CustomToolStripAction {
                     text:               qsTr("Sensors")
@@ -1087,5 +1087,40 @@ Item {
             }
         }
         return qgcPal.toolbarBackground;
+    }
+
+    // Battery Indicator
+    property var    _batteryGroup:          _activeVehicle && _activeVehicle.batteries.count ? _activeVehicle.batteries.get(0) : undefined
+    property var    _batteryValue:          _batteryGroup ? _batteryGroup.percentRemaining.value : 0
+    property var    _batPercentRemaining:   isNaN(_batteryValue) ? 0 : _batteryValue
+
+    function getBatteryColor() {
+        if(_activeVehicle) {
+            if(_batPercentRemaining > 75) {
+                return qgcPal.colorGreen;
+            }
+            if(_batPercentRemaining > 50) {
+                return qgcPal.colorOrange;
+            }
+            if(_batPercentRemaining > 0.1) {
+                return qgcPal.colorRed;
+            }
+        }
+        return  qgcPal.toolbarBackground;//qgcPal.colorGrey
+    }
+
+    function getBatteryIcon() {
+        if(_activeVehicle) {
+            if(_batPercentRemaining > 75) {
+                return "/InstrumentValueIcons/battery-full.svg";
+            }
+            if(_batPercentRemaining > 50) {
+                return "/InstrumentValueIcons/battery-half.svg";
+            }
+            if(_batPercentRemaining > 0.1) {
+                return "/InstrumentValueIcons/battery-low.svg";
+            }
+        }
+        return "/InstrumentValueIcons/battery-low.svg"
     }
 }
