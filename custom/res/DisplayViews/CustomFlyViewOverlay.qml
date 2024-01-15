@@ -547,17 +547,19 @@ Item {
                 ToolStripAction {
                     text:           qsTr("Swap Display")
                     iconSource:     "/InstrumentValueIcons/view-carousel.svg"
+                    enabled:        _activeVehicle
                     onTriggered:    swapFlightDisplay()
                 },
                 CustomToolStripAction {
                     text:           qsTr("Battery")
+                    enabled:        _activeVehicle
                     iconSource:     getBatteryIcon()
                     buttonColor:    getBatteryColor()
                 },
                 CustomToolStripAction {
                     text:               qsTr("Sensors")
-                    enabled:            _activeVehicle
                     iconSource:         "/InstrumentValueIcons/align-left.svg"
+                    enabled:            _activeVehicle
                     dropPanelComponent: statusSenrosDropPanel
                     buttonColor:        getSensorsStatusColor()
                 },
@@ -573,7 +575,7 @@ Item {
                     iconSource:         "/qmlimages/Megaphone.svg"
                     enabled:            _activeVehicle
                     dropPanelComponent: messageDropPanel
-                    iconColor:          getMessageColor()
+                    buttonColor:        getMessageColor()
                 },
                 ToolStripAction {
                     text:               qsTr("Vehicle")
@@ -1011,7 +1013,7 @@ Item {
     function getMessageColor() {
         if (_activeVehicle) {
             if (_activeVehicle.messageTypeNone)
-                return qgcPal.colorGrey
+                return qgcPal.toolbarBackground // qgcPal.colorGrey
             if (_activeVehicle.messageTypeNormal)
                 return qgcPal.colorBlue;
             if (_activeVehicle.messageTypeWarning)
@@ -1023,7 +1025,7 @@ Item {
             return "purple";
         }
         //-- It can only get here when closing (vehicle gone while window active)
-        return qgcPal.colorGrey
+        return qgcPal.toolbarBackground // qgcPal.colorGrey
     }
 
     Component {
