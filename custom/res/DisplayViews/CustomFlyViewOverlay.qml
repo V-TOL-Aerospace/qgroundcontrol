@@ -96,7 +96,7 @@ Item {
         rightEdgeBottomInset:   parent.width - compassBackground.x
     }
 
-    // TOP RECTANGLE WARNING PANELS AREA
+    // TOP RECTANGLE WARNING PANELS AREA (OLD)
     Rectangle {
         id:         topWarningDisplay_boarder
         visible:    false
@@ -545,8 +545,9 @@ Item {
                     onTriggered:    mainWindow.showPlanView()
                 },
                 ToolStripAction {
-                    text:           qsTr(" ")
-                    enabled:        false
+                    text:           qsTr("Swap Display")
+                    iconSource:     "/InstrumentValueIcons/view-carousel.svg"
+                    onTriggered:    swapFlightDisplay()
                 },
                 CustomToolStripAction {
                     text:           qsTr("Battery")
@@ -741,7 +742,7 @@ Item {
         visible:            false
         anchors {
             topMargin:      _toolsMargin
-            left:           leftSideButtonControls_Boarder.right
+            left:           leftSide_toolStrip.right //leftSideButtonControls_Boarder.right
         }
         height:             Window.height
         width:              Window.width * 0.2
@@ -750,20 +751,56 @@ Item {
             anchors.fill:   parent
         }
     }
+    
+    //-------------------------------------------------------------------------
+    // MAIN FLIGHT ATTITUDE INDICATOR
+    property bool _flightDisplayOnMainWindow: false
+    function swapFlightDisplay() {
+        _flightDisplayOnMainWindow = !_flightDisplayOnMainWindow
+    }    
+
+    Rectangle {
+        id:                     attitudeIndicator
+        MouseArea {
+            anchors.fill: parent
+        }
+        anchors {
+            top:                compassBar.bottom
+            left:               leftSide_toolStrip.right
+        }
+        width:                  flightControlRectangle.width // ScreenTools.defaultFontPixelHeight * 6
+        height:                 width * 0.65
+        radius:                 height * 0.5
+        color:                  qgcPal.windowShade
+        visible:                true
+
+        CustomAttitudeWidget {
+            // size:               parent.height * 0.95
+            size_width:         parent.width
+            size_height:        parent.height
+            vehicle:            _activeVehicle
+            showHeading:        true
+            anchors.centerIn:   parent
+            visible:            !_flightDisplayOnMainWindow
+        }
+    }   
 
     //-------------------------------------------------------------------------
     // HEADING INTDICATOR 1 - HORIZONTAL HEADING TAPE
     Rectangle {
         id:                         compassBar
-        height:                     ScreenTools.defaultFontPixelHeight * 1.5
-        width:                      flightControlRectangle.width - _toolsMargin * 2// ScreenTools.defaultFontPixelWidth  * 50
+        height:                     _flightDisplayOnMainWindow ? parent.height * 0.05 : ScreenTools.defaultFontPixelHeight * 1.5
+        width:                      _flightDisplayOnMainWindow ? parent.width * 0.9 : flightControlRectangle.width //- _toolsMargin * 2// ScreenTools.defaultFontPixelWidth  * 50
         color:                      "#DEDEDE"
-        radius:                     2
+        // radius:                     2
         clip:                       true
+        MouseArea {
+            anchors.fill: parent
+        }
         anchors {
             top:                    parent.top
-            topMargin:              _toolsMargin
-            horizontalCenter:       attitudeIndicator.horizontalCenter
+            // topMargin:              _toolsMargin
+            horizontalCenter:       _flightDisplayOnMainWindow ? parent.horizontalCenter : attitudeIndicator.horizontalCenter
         }
         // anchors.top:                parent.top //flightControlRectangle.top
         // anchors.topMargin:          _toolsMargin //-headingIndicator.height / 2
@@ -830,34 +867,9 @@ Item {
             }
         }
     }
-    
-    // MAIN FLIGHT ATTITUDE INDICATOR
-    Rectangle {
-        id:                     attitudeIndicator
-        anchors {
-            top:                compassBar.bottom
-            rightMargin:        _toolsMargin
-            leftMargin:         _toolsMargin
-            // bottom:             parent.bottom
-            horizontalCenter:  flightControlRectangle.horizontalCenter
-        }
-        width:                 flightControlRectangle.width // ScreenTools.defaultFontPixelHeight * 6
-        height:                width *0.65
-        // radius:             height * 0.5
-        color:                 qgcPal.windowShade
-        visible:               _test_visible
 
-        CustomAttitudeWidget {
-            // size:               parent.height * 0.95
-            size_width:         parent.width
-            size_height:        parent.height
-            vehicle:            _activeVehicle
-            showHeading:        true
-            anchors.centerIn:   parent
-        }
-    }
-
-    // HEADING INDICATOR 2 - RADIAL HEADING INDICATOR (VISIBILITY HAS BEEN SET TO FALSE)
+    //-------------------------------------------------------------------------
+    // HEADING INDICATOR 2 - RADIAL HEADING INDICATOR (VISIBILITY SET TO FALSE)
     Rectangle {
         id:                     compassBackground
         anchors {
@@ -943,7 +955,8 @@ Item {
         }
     }
 
-    // GPS STATUS INDICATOR
+    //-------------------------------------------------------------------------
+    // GPS STATUS INDICATOR - Rectangular Section (VISIBILITY SET TO FALSE, LEGACY LAYOUT FROM NEURON V3)
     Rectangle {
         //copied from GPSIndicator.qml
         id:                         gps_info_window
@@ -992,8 +1005,9 @@ Item {
         }
     }
 
-    // MESSAGE INDICATOR
-    // Extracted function from messageIndicator.qml for use in Side ToolStrip. 
+    //-------------------------------------------------------------------------
+    // MAV MESSAGE INDICATOR
+    // function from messageIndicator.qml for use in Side ToolStrip
     function getMessageColor() {
         if (_activeVehicle) {
             if (_activeVehicle.messageTypeNone)
@@ -1028,13 +1042,9 @@ Item {
         }
     }
 
-    Component {
-        id: flightModeSelectDropPanel
-        CustomFlightModeSelectDropPanel {
-            activeVehicle:      _activeVehicle
-        }
-    }
-
+    //-------------------------------------------------------------------------
+    // MAV MESSAGE INDICATOR (LEGACY LAYOUT FROM NEURON V3
+    // function from messageIndicator.qml for use in Side ToolStrip
     CustomMavMessageWidget {
         property real height_gps_info:       Window.height - compassBar.height - attitudeIndicator.height - gps_info_window.height - _toolsMargin
         property real height_no_gps_info:    Window.height - compassBar.height - attitudeIndicator.height - _toolsMargin
@@ -1049,7 +1059,17 @@ Item {
         }
     }
 
-    // GPS Status Drop Panel Component
+    //-------------------------------------------------------------------------
+    // FLIGHT SELECT DROP PANEL
+    Component {
+        id: flightModeSelectDropPanel
+        CustomFlightModeSelectDropPanel {
+            activeVehicle:      _activeVehicle
+        }
+    }
+
+    //-------------------------------------------------------------------------
+    // GPS DROP PANEL COMPONENT
     Component {
         id: statusGPSDropPanel
         CustomMavStatusGPSDropPanel {
@@ -1069,7 +1089,8 @@ Item {
         return qgcPal.toolbarBackground;
     }
 
-    // Sensors Drop Panel Component
+    //-------------------------------------------------------------------------
+    // SENSORS STATUS DROP PANEL COMPONENT
     Component {
         id: statusSenrosDropPanel
         CustomMavStatusSensorsDropPanel {
@@ -1089,7 +1110,8 @@ Item {
         return qgcPal.toolbarBackground;
     }
 
-    // Battery Indicator
+    //-------------------------------------------------------------------------
+    // BATTERY INDICATOR COMPONENT
     property var    _batteryGroup:          _activeVehicle && _activeVehicle.batteries.count ? _activeVehicle.batteries.get(0) : undefined
     property var    _batteryValue:          _batteryGroup ? _batteryGroup.percentRemaining.value : 0
     property var    _batPercentRemaining:   isNaN(_batteryValue) ? 0 : _batteryValue
