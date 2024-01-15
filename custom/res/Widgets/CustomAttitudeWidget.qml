@@ -15,12 +15,13 @@ import Custom.Widgets 1.0
 Item {
     id: root
 
-    property bool showPitch:    true
-    property var  vehicle:      null
+    property bool showPitch:        true
+    property var  vehicle:          null
     property real size_width
     property real size_height 
-    property real size:         size_width
-    property bool showHeading:  true
+    property real size:             size_width
+    property bool showHeading:      true
+    property bool showBackground:   true
 
     property real _rollAngle:       vehicle ? vehicle.roll.rawValue  : 0
     property real _pitchAngle:      vehicle ? vehicle.pitch.rawValue : 0
@@ -57,6 +58,7 @@ Item {
             groundColor1:       vehicle ? "#897459" : qgcPal.windowShadeDark
             groundColor2:       vehicle ? "#4b3820" : qgcPal.windowShadeDark
             anchors.fill:       parent
+            visible:            showBackground
         }
         //----------------------------------------------------
         //-- Instrument Dial
@@ -109,7 +111,7 @@ Item {
             fillMode:           Image.PreserveAspectFit
         }
         //----------------------------------------------------
-        //-- Relative Altitude Number
+        //-- INDICATED RELATIVE ALTITUDE
         Rectangle{
             id: altitude_info_rectangle
             anchors.right: parent.right
@@ -129,7 +131,7 @@ Item {
             }
         }
         //----------------------------------------------------
-        //-- Air Speed Number
+        //-- INDICATED AIR SPEED
         Rectangle{
             id:                         airspeed_info_rectangle
             anchors.left:               parent.left
@@ -141,15 +143,17 @@ Item {
 
             QGCLabel{
                 id: airspeed_info
-                anchors.horizontalCenter:   parent.horizontalCenter
-                anchors.verticalCenter:     parent.verticalCenter
-                anchors.leftMargin: _toolsMargin + 5
-                text: _airSpeed_string
-                color: "white"
+                anchors {
+                    horizontalCenter:   parent.horizontalCenter
+                    verticalCenter:     parent.verticalCenter
+                    leftMargin:         _toolsMargin + 5
+                }
+                text:                   _airSpeed_string
+                color:                  "white"
             }
         }
         //----------------------------------------------------
-        //-- Indicated Flight Mode
+        //-- INDICATED FLIGHT MODE SELECTED
         Rectangle{
             id: flightMode_info_rectangle
             anchors {
@@ -195,7 +199,7 @@ Item {
             }
         }
         //----------------------------------------------------
-        //-- CLIMBRATE
+        //-- INDICATED CLIMBRATE
         Rectangle{
             id: climbRate_info_rectangle
             anchors {
@@ -219,7 +223,7 @@ Item {
             }
         }
         //----------------------------------------------------
-        //-- Heading Number 
+        //-- INDICATED HEADING 
         Rectangle{
             id:                         heading_info_rectangle
             anchors.bottom:             parent.bottom
@@ -248,7 +252,7 @@ Item {
         anchors.fill:   instrument
         // radius:         width * 0.5
         color:          "black"
-        visible:        true
+        visible:        showBackground
     }
 
     OpacityMask {

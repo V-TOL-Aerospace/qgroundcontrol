@@ -13,12 +13,19 @@ import QGroundControl               1.0
 import QGroundControl.Controls      1.0
 import QGroundControl.Controllers   1.0
 import QGroundControl.ScreenTools   1.0
+import QGroundControl.FlightDisplay 1.0
 
 Item {
     id:         _root
     visible:    QGroundControl.videoManager.hasVideo
 
-    property Item pipState: videoPipState
+    property Item pipState:         videoPipState
+    property bool showPFD:          true
+    property bool showBackground:   true
+
+    property real _rollAngle:       _activeVehicle ? _activeVehicle.roll.rawValue  : 0
+    property real _pitchAngle:      _activeVehicle ? _activeVehicle.pitch.rawValue : 0
+
     QGCPipState {
         id:         videoPipState
         pipOverlay: _pipOverlay
@@ -48,9 +55,22 @@ Item {
         repeat:       false
         onTriggered:  QGroundControl.videoManager.startVideo()
     }
-
+    
+    //----------------------------------------------------
+    //-- Artificial Horizon - behind video stream
+    CustomArtificialHorizon {
+        rollAngle:          _rollAngle
+        pitchAngle:         _pitchAngle
+        skyColor1:          _activeVehicle ? "#0a2e50" : qgcPal.windowShade
+        skyColor2:          _activeVehicle ? "#2f85d4" : qgcPal.windowShade
+        groundColor1:       _activeVehicle ? "#897459" : qgcPal.windowShadeDark
+        groundColor2:       _activeVehicle ? "#4b3820" : qgcPal.windowShadeDark
+        anchors.fill:       parent
+        visible:            showBackground && showPFD
+    }
+    
     //-- Video Streaming
-    FlightDisplayViewVideo {
+    CustomFlightDisplayViewVideo {
         id:             videoStreaming
         anchors.fill:   parent
         useSmallFont:   _root.pipState.state !== _root.pipState.fullState
@@ -62,6 +82,15 @@ Item {
         anchors.fill:   parent
         visible:        !QGroundControl.videoManager.isGStreamer
         source:         QGroundControl.videoManager.uvcEnabled ? "qrc:/qml/FlightDisplayViewUVC.qml" : "qrc:/qml/FlightDisplayViewDummy.qml"
+    }
+
+    CustomAttitudeWidget {
+        vehicle:            _activeVehicle
+        showBackground:     false
+        anchors.fill:       parent
+        visible:            true
+        size_width:         parent.width
+        size_height:        parent.height
     }
 
     QGCLabel {
