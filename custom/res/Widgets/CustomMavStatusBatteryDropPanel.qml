@@ -74,7 +74,7 @@ ColumnLayout {
                         },
                         State {
                             name: "Critical"; when: _batteryPercentRemaining > 0.1 
-                            PropertyChanges {target: batteryInfoRect_Percentage; color: qgcPal.colorOrange} 
+                            PropertyChanges {target: batteryInfoRect_Percentage; color: qgcPal.colorRed} 
                         }
                     ]
                 }
@@ -101,7 +101,7 @@ ColumnLayout {
                         },
                         State {
                             name: "Critical"; when: _batteryPercentRemaining > 0.1 
-                            PropertyChanges {target: batteryInfoRect_Voltage; color: qgcPal.colorOrange} 
+                            PropertyChanges {target: batteryInfoRect_Voltage; color: qgcPal.colorRed} 
                         }
                     ]
                 }
@@ -128,7 +128,7 @@ ColumnLayout {
                         },
                         State {
                             name: "Critical"; when: _batteryPercentRemaining > 0.1 
-                            PropertyChanges {target: batteryInfoRect_Current; color: qgcPal.colorOrange} 
+                            PropertyChanges {target: batteryInfoRect_Current; color: qgcPal.colorRed} 
                         }
                     ]
                 }
