@@ -32,6 +32,7 @@
         <file alias="Custom/Widgets/CustomMavStatusIndicator.qml">res/Widgets/CustomMavStatusIndicator.qml</file>
         <file alias="Custom/Widgets/CustomMavStatusSensorsDropPanel.qml">res/Widgets/CustomMavStatusSensorsDropPanel.qml</file>
         <file alias="Custom/Widgets/CustomOnOffSwitch.qml">res/Widgets/CustomOnOffSwitch.qml</file>
+        <file alias="Custom/Widgets/CustomQGCPipOverlay.qml">res/Widgets/CustomQGCPipOverlay.qml</file>
         <file alias="Custom/Widgets/CustomQGCPitchIndicator.qml">res/Widgets/CustomQGCPitchIndicator.qml</file>
         <file alias="Custom/Widgets/CustomQuickButton.qml">res/Widgets/CustomQuickButton.qml</file>
         <file alias="Custom/Widgets/CustomSignalStrength.qml">res/Widgets/CustomSignalStrength.qml</file>
