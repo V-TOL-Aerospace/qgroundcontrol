@@ -545,10 +545,12 @@ Item {
                     onTriggered:    mainWindow.showPlanView()
                 },
                 ToolStripAction {
-                    text:           qsTr("Swap Display")
-                    iconSource:     "/InstrumentValueIcons/view-carousel.svg"
-                    enabled:        _activeVehicle
-                    onTriggered:    swapFlightDisplay()
+                    text:           qsTr(" ")
+                    enabled:        false
+                    // text:           qsTr("Swap Display")
+                    // iconSource:     "/InstrumentValueIcons/view-carousel.svg"
+                    // enabled:        _activeVehicle
+                    // onTriggered:    swapFlightDisplay()
                 },
                 CustomToolStripAction {
                     text:           qsTr("Battery")
@@ -1012,13 +1014,13 @@ Item {
     function getMessageColor() {
         if (_activeVehicle) {
             if (_activeVehicle.messageTypeNone)
-                return qgcPal.toolbarBackground // qgcPal.colorGrey
+                return statusHealthyColorHEX // qgcPal.toolbarBackground // qgcPal.colorGrey
             if (_activeVehicle.messageTypeNormal)
                 return qgcPal.colorBlue;
             if (_activeVehicle.messageTypeWarning)
-                return qgcPal.colorOrange;
+                return statusWarningColorHEX // qgcPal.colorOrange;
             if (_activeVehicle.messageTypeError)
-                return qgcPal.colorRed;
+                return statusCriticalColorHEX // qgcPal.colorRed;
             // Cannot be so make make it obnoxious to show error
             console.warn("MessageIndicator.qml:getMessageColor Invalid vehicle message type", _activeVehicle.messageTypeNone)
             return "purple";
