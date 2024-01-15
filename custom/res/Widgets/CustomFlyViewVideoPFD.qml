@@ -66,7 +66,7 @@ Item {
         groundColor1:       _activeVehicle ? "#897459" : qgcPal.windowShadeDark
         groundColor2:       _activeVehicle ? "#4b3820" : qgcPal.windowShadeDark
         anchors.fill:       parent
-        visible:            showBackground && showPFD
+        visible:            QGroundControl.videoManager.isGStreamer && showBackground && showPFD
     }
     
     //-- Video Streaming
@@ -88,7 +88,7 @@ Item {
         vehicle:            _activeVehicle
         showBackground:     false
         anchors.fill:       parent
-        visible:            true
+        visible:            QGroundControl.videoManager.isGStreamer && showPFD
         size_width:         parent.width
         size_height:        parent.height
     }
