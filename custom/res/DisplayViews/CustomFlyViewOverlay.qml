@@ -553,16 +553,17 @@ Item {
                     // onTriggered:    swapFlightDisplay()
                 },
                 CustomToolStripAction {
-                    text:           qsTr("Battery")
-                    enabled:        _activeVehicle
-                    iconSource:     getBatteryIcon()
-                    buttonColor:    getBatteryColor()
+                    text:               qsTr("Battery")
+                    enabled:            _activeVehicle && _batteryGroup
+                    iconSource:         getBatteryIcon()
+                    buttonColor:        getBatteryColor()
+                    dropPanelComponent: statusBatteryDropPanel
                 },
                 CustomToolStripAction {
                     text:               qsTr("Sensors")
                     iconSource:         "/InstrumentValueIcons/align-left.svg"
                     enabled:            _activeVehicle
-                    dropPanelComponent: statusSenrosDropPanel
+                    dropPanelComponent: statusSenorsDropPanel
                     buttonColor:        getSensorsStatusColor()
                 },
                 CustomToolStripAction {
@@ -1095,7 +1096,7 @@ Item {
     //-------------------------------------------------------------------------
     // SENSORS STATUS DROP PANEL COMPONENT
     Component {
-        id: statusSenrosDropPanel
+        id: statusSenorsDropPanel
         CustomMavStatusSensorsDropPanel {
             activeVehicle: _activeVehicle
         }
@@ -1115,9 +1116,16 @@ Item {
 
     //-------------------------------------------------------------------------
     // BATTERY INDICATOR COMPONENT
-    property var    _batteryGroup:          _activeVehicle && _activeVehicle.batteries.count ? _activeVehicle.batteries.get(0) : undefined
+    property var    _batteryGroup:          _activeVehicle && _activeVehicle.batteries.count ? _activeVehicle.batteries.get(0) : false
     property var    _batteryValue:          _batteryGroup ? _batteryGroup.percentRemaining.value : 0
     property var    _batPercentRemaining:   isNaN(_batteryValue) ? 0 : _batteryValue
+
+    Component {
+        id: statusBatteryDropPanel
+        CustomMavStatusBatteryDropPanel {
+            activeVehicle: _activeVehicle
+        }
+    }
 
     function getBatteryColor() {
         if(_activeVehicle) {

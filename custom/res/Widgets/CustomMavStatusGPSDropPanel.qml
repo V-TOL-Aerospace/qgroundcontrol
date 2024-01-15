@@ -47,7 +47,7 @@ ColumnLayout {
                 // anchors.margins:            ScreenTools.defaultFontPixelHeight
                 columnSpacing:              ScreenTools.defaultFontPixelWidth
                 anchors.horizontalCenter:   parent.horizontalCenter
-                columns: 3
+                columns:                    3
 
                 QGCLabel { text: qsTr("GPS Count:") }
                 QGCLabel { text: _activeVehicle ? _activeVehicle.gps.count.valueString : qsTr("N/A", "No data to display") }
@@ -62,11 +62,11 @@ ColumnLayout {
                             PropertyChanges {target: gps_count_state_rect; color: "red"}//color: qgcPal.button}
                         },
                         State {
-                            name: "Error"; when: _activeVehicle.gps.count.rawValue > 7
+                            name: "Normal"; when: _activeVehicle.gps.count.rawValue > 7
                             PropertyChanges {target: gps_count_state_rect; color: "green"}
                         },
                         State {
-                            name: "Normal"; when: _activeVehicle.gps.count.rawValue > 3 
+                            name: "Warning"; when: _activeVehicle.gps.count.rawValue > 3 
                             PropertyChanges {target: gps_count_state_rect; color: "yellow"}//qgcPal.buttonHighlight}
                         }
                     ]
