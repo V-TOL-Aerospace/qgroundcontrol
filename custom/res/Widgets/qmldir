@@ -12,6 +12,7 @@ CustomMavStatusButton           1.0     CustomMavStatusButton.qml
 CustomMavStatusGPSButton        1.0     CustomMavStatusGPSButton.qml
 CustomMavStatusGPSDropPanel     1.0     CustomMavStatusGPSDropPanel.qml
 CustomMavStatusSensorsDropPanel 1.0     CustomMavStatusSensorsDropPanel.qml
+CustomQGCPipOverlay             1.0     CustomQGCPipOverlay.qml
 CustomOnOffSwitch               1.0     CustomOnOffSwitch.qml
 CustomQGCPitchIndicator         1.0     CustomQGCPitchIndicator.qml
 CustomQuickButton               1.0     CustomQuickButton.qml
