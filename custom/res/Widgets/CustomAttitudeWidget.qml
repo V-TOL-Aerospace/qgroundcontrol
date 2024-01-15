@@ -18,7 +18,7 @@ Item {
     property bool showPitch:    true
     property var  vehicle:      null
     property real size_width
-    property real size_height
+    property real size_height 
     property real size:         size_width
     property bool showHeading:  true
 
@@ -246,7 +246,7 @@ Item {
     Rectangle {
         id:             mask
         anchors.fill:   instrument
-        // radius:         width / 2
+        // radius:         width * 0.5
         color:          "black"
         visible:        true
     }
@@ -260,7 +260,7 @@ Item {
     Rectangle {
         id:             borderRect
         anchors.fill:   parent
-        // radius:         width / 2
+        // radius:         width * 0.5
         color:          Qt.rgba(0,0,0,0)
         border.color:   "#000"
         border.width:   1
