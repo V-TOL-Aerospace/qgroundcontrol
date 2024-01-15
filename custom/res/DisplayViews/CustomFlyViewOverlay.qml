@@ -781,7 +781,6 @@ Item {
             size_width:         parent.width
             size_height:        parent.height
             vehicle:            _activeVehicle
-            showHeading:        true
             anchors.centerIn:   parent
             visible:            !_flightDisplayOnMainWindow
         }

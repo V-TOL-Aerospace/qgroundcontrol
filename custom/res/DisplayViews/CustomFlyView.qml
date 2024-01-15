@@ -147,7 +147,7 @@ Item {
         mapName:                "FlightDisplayView"
     }
 
-    FlyViewVideo {
+    CustomFlyViewVideoPFD {
         id: videoControl
     }
 
