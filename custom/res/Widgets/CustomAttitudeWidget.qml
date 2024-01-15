@@ -78,15 +78,17 @@ Item {
         //----------------------------------------------------
         //-- Pointer
         Image {
-            id:                 pointer
-            height:             size * 0.0625
-            width:              height
-            source:             "/custom/img/attitude_pointer.svg"
-            antialiasing:       true
-            fillMode:           Image.PreserveAspectFit
-            sourceSize.height:  height
-            anchors.top:        parent.top
-            anchors.horizontalCenter: parent.horizontalCenter
+            id:                     pointer
+            height:                 size * 0.0625
+            width:                  height
+            source:                 "/custom/img/attitude_pointer.svg"
+            antialiasing:           true
+            fillMode:               Image.PreserveAspectFit
+            sourceSize.height:      height
+            anchors {
+                top:                parent.top
+                horizontalCenter:   parent.horizontalCenter
+            }
         }
         //----------------------------------------------------
         //-- Pitch
@@ -94,7 +96,9 @@ Item {
             id:                 pitchWidget
             visible:            root.showPitch
             size:               root.size * 0.5
-            anchors.verticalCenter: parent.verticalCenter
+            anchors {
+                verticalCenter: parent.verticalCenter
+            }
             pitchAngle:         _pitchAngle
             rollAngle:          _rollAngle
             color:              Qt.rgba(0,0,0,0)
@@ -113,21 +117,25 @@ Item {
         //----------------------------------------------------
         //-- INDICATED RELATIVE ALTITUDE
         Rectangle{
-            id: altitude_info_rectangle
-            anchors.right: parent.right
-            anchors.rightMargin: _toolsMargin
-            anchors.verticalCenter: parent.verticalCenter
-            color:                      qgcPal.windowShadeDark
-            height:                     ScreenTools.defaultFontPixelHeight
-            width:                      (Window.width > 1000) ? ScreenTools.defaultFontPixelWidth * 11 : ScreenTools.defaultFontPixelWidth * 6
+            id:                 altitude_info_rectangle
+            anchors {
+                right:          parent.right
+                rightMargin:    _toolsMargin
+                verticalCenter: parent.verticalCenter
+            }
+            color:              qgcPal.windowShadeDark
+            height:             ScreenTools.defaultFontPixelHeight
+            width:              (Window.width > 1000) ? ScreenTools.defaultFontPixelWidth * 11 : ScreenTools.defaultFontPixelWidth * 6
 
             QGCLabel{
-                id: altitude_info
-                anchors.horizontalCenter:   parent.horizontalCenter
-                anchors.verticalCenter:     parent.verticalCenter
-                anchors.leftMargin: _toolsMargin + 5
-                text: _altitudeRelative_string
-                color: "white"
+                id:                     altitude_info
+                anchors {
+                    horizontalCenter:   parent.horizontalCenter
+                    verticalCenter:     parent.verticalCenter
+                    leftMargin:         _toolsMargin + 5
+                }
+                text:                   _altitudeRelative_string
+                color:                  "white"
             }
         }
         //----------------------------------------------------
@@ -155,7 +163,7 @@ Item {
         //----------------------------------------------------
         //-- INDICATED FLIGHT MODE SELECTED
         Rectangle{
-            id: flightMode_info_rectangle
+            id:                 flightMode_info_rectangle
             anchors {
                 right:          altitude_info_rectangle.right
                 top:            heading_info_rectangle.top
@@ -165,7 +173,7 @@ Item {
             width:              (Window.width > 1000) ? ScreenTools.defaultFontPixelWidth * 11 : ScreenTools.defaultFontPixelWidth * 6
 
             QGCLabel{
-                id: flightMode_info
+                id:                     flightMode_info
                 anchors {
                     horizontalCenter:   parent.horizontalCenter
                     verticalCenter:     parent.verticalCenter
@@ -178,7 +186,7 @@ Item {
         //----------------------------------------------------
         //-- CURRENT WAYPOINT
         Rectangle{
-            id: currentWaypoint_info_rectangle
+            id:                 currentWaypoint_info_rectangle
             anchors {
                 left:           airspeed_info_rectangle.left           
                 top:            heading_info_rectangle.top
@@ -188,7 +196,7 @@ Item {
             width:              ScreenTools.defaultFontPixelWidth * 5
 
             QGCLabel{
-                id: currentWaypoint_info
+                id:                     currentWaypoint_info
                 anchors {
                     horizontalCenter:   parent.horizontalCenter
                     verticalCenter:     parent.verticalCenter
@@ -201,7 +209,7 @@ Item {
         //----------------------------------------------------
         //-- INDICATED CLIMBRATE
         Rectangle{
-            id: climbRate_info_rectangle
+            id:                 climbRate_info_rectangle
             anchors {
                 left:           altitude_info_rectangle.left           
                 top:            altitude_info_rectangle.bottom
@@ -212,7 +220,7 @@ Item {
             width:              (Window.width > 1000) ? ScreenTools.defaultFontPixelWidth * 11 : ScreenTools.defaultFontPixelWidth * 6
 
             QGCLabel{
-                id: climbRate_info
+                id:                     climbRate_info
                 anchors {
                     horizontalCenter:   parent.horizontalCenter
                     verticalCenter:     parent.verticalCenter

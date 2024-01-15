@@ -31,7 +31,7 @@ import Custom.Widgets 1.0
 Item {
     property bool showIndicator: true
     property var parentToolInsets                       // These insets tell you what screen real estate is available for positioning the controls in your overlay
-    property var totalToolInsets:   _totalToolInsets    // The insets updated for the custom overlay additions
+    property var totalToolInsets:           compassBar.totalToolInsets// _totalToolInsets    // The insets updated for the custom overlay additions
     property var mapControl
 
     readonly property string noGPS:                 qsTr("NO GPS")
@@ -88,12 +88,6 @@ Item {
         if (minutes < 10) {minutes = "0"+minutes;}
         if (seconds < 10) {seconds = "0"+seconds;}
         return hours+':'+minutes+':'+seconds;
-    }
-
-    QGCToolInsets {
-        id:                     _totalToolInsets
-        topEdgeCenterInset:     compassArrowIndicator.y + compassArrowIndicator.height
-        rightEdgeBottomInset:   parent.width - compassBackground.x
     }
 
     // TOP RECTANGLE WARNING PANELS AREA (OLD)
@@ -759,11 +753,6 @@ Item {
     
     //-------------------------------------------------------------------------
     // MAIN FLIGHT ATTITUDE INDICATOR
-    property bool _flightDisplayOnMainWindow: false
-    function swapFlightDisplay() {
-        _flightDisplayOnMainWindow = !_flightDisplayOnMainWindow
-    }    
-
     Rectangle {
         id:                     attitudeIndicator
         MouseArea {
@@ -785,91 +774,21 @@ Item {
             size_height:        parent.height
             vehicle:            _activeVehicle
             anchors.centerIn:   parent
-            visible:            !_flightDisplayOnMainWindow
+            visible:            true
         }
     }   
 
     //-------------------------------------------------------------------------
     // HEADING INTDICATOR 1 - HORIZONTAL HEADING TAPE
-    Rectangle {
-        id:                         compassBar
-        height:                     _flightDisplayOnMainWindow ? parent.height * 0.05 : ScreenTools.defaultFontPixelHeight * 1.5
-        width:                      _flightDisplayOnMainWindow ? parent.width * 0.9 : flightControlRectangle.width //- _toolsMargin * 2// ScreenTools.defaultFontPixelWidth  * 50
-        color:                      "#DEDEDE"
-        // radius:                     2
-        clip:                       true
-        MouseArea {
-            anchors.fill: parent
-        }
+    CustomCompassBar {
+        id:             compassBar
+        activeVehicle:  _activeVehicle
         anchors {
             top:                    parent.top
-            // topMargin:              _toolsMargin
-            horizontalCenter:       _flightDisplayOnMainWindow ? parent.horizontalCenter : attitudeIndicator.horizontalCenter
+            horizontalCenter:       attitudeIndicator.horizontalCenter
         }
-        // anchors.top:                parent.top //flightControlRectangle.top
-        // anchors.topMargin:          _toolsMargin //-headingIndicator.height / 2
-        // anchors.left:               flightControlRectangle.right
-        // anchors.horizontalCenter:   flightControlRectangle.horizontalCenter
-        Repeater {
-            model: 720
-            QGCLabel {
-                function _normalize(degrees) {
-                    var a = degrees % 360
-                    if (a < 0) a += 360
-                    return a
-                }
-                property int _startAngle: modelData + 180 + _heading
-                property int _angle: _normalize(_startAngle)
-                anchors.verticalCenter: parent.verticalCenter
-                x:              visible ? ((modelData * (compassBar.width / 360)) - (width * 0.5)) : 0
-                visible:        _angle % 45 == 0
-                color:          "#75505565"
-                font.pointSize: ScreenTools.smallFontPointSize
-                text: {
-                    switch(_angle) {
-                    case 0:     return "N"
-                    case 45:    return "NE"
-                    case 90:    return "E"
-                    case 135:   return "SE"
-                    case 180:   return "S"
-                    case 225:   return "SW"
-                    case 270:   return "W"
-                    case 315:   return "NW"
-                    }
-                    return ""
-                }
-            }
-        }
-        Rectangle {
-            id:                     headingIndicator
-            height:                 ScreenTools.defaultFontPixelHeight
-            width:                  ScreenTools.defaultFontPixelWidth * 4
-            color:                  qgcPal.windowShadeDark
-            anchors {
-                bottom:             compassBar.top
-                horizontalCenter:   compassBar.horizontalCenter
-                // topMargin:          _toolsMargin
-            }
-            QGCLabel {
-                text:               _heading
-                color:              qgcPal.text
-                font.pointSize:     ScreenTools.smallFontPointSize
-                anchors.centerIn:   parent
-            }
-        }
-        Image {
-            id:                     compassArrowIndicator
-            height:                 _indicatorsHeight
-            width:                  height
-            source:                 "/custom/img/compass_pointer.svg"
-            fillMode:               Image.PreserveAspectFit
-            sourceSize.height:      height
-            anchors {
-                top:                compassBar.bottom
-                topMargin:          -height / 2
-                horizontalCenter:   compassBar.horizontalCenter
-            }
-        }
+        height:                     ScreenTools.defaultFontPixelHeight * 1.5
+        width:                      flightControlRectangle.width 
     }
 
     //-------------------------------------------------------------------------
