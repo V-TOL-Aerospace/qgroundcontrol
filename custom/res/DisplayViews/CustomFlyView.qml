@@ -27,6 +27,8 @@ import QGroundControl.Palette       1.0
 import QGroundControl.ScreenTools   1.0
 import QGroundControl.Vehicle       1.0
 
+import Custom.Widgets               1.0
+
 Item {
     id: _root
 
@@ -149,11 +151,14 @@ Item {
         id: videoControl
     }
 
-    QGCPipOverlay {
+    CustomQGCPipOverlay {
         id:                     _pipOverlay
-        anchors.left:           parent.left
-        anchors.bottom:         parent.bottom
-        anchors.margins:        _toolsMargin
+        // anchors.left:           parent.left
+        anchors {
+            horizontalCenter:   parent.horizontalCenter
+            bottom:             parent.bottom
+            margins:            _toolsMargin
+        }
         item1IsFullSettingsKey: "MainFlyWindowIsMap"
         item1:                  mapControl
         item2:                  QGroundControl.videoManager.hasVideo ? videoControl : null
