@@ -28,6 +28,7 @@
         <file alias="Custom/Widgets/CustomFlyViewVideoPFD.qml">res/Widgets/CustomFlyViewVideoPFD.qml</file>
         <file alias="Custom/Widgets/CustomIconButton.qml">res/Widgets/CustomIconButton.qml</file>
         <file alias="Custom/Widgets/CustomMavMessageWidget.qml">res/Widgets/CustomMavMessageWidget.qml</file>
+        <file alias="Custom/Widgets/CustomMavStatusBatteryDropPanel.qml">res/Widgets/CustomMavStatusBatteryDropPanel.qml</file>
         <file alias="Custom/Widgets/CustomMavStatusButton.qml">res/Widgets/CustomMavStatusButton.qml</file>
         <file alias="Custom/Widgets/CustomMavStatusGPSButton.qml">res/Widgets/CustomMavStatusGPSButton.qml</file>
         <file alias="Custom/Widgets/CustomMavStatusGPSDropPanel.qml">res/Widgets/CustomMavStatusGPSDropPanel.qml</file>
