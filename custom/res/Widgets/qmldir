@@ -5,6 +5,7 @@ CustomAttitudeWidget            1.0     CustomAttitudeWidget.qml
 CustomDropPanel                 1.0     CustomDropPanel.qml
 CustomFlightModeButton          1.0     CustomFlightModeButton.qml
 CustomFlightModeSelectDropPanel 1.0     CustomFlightModeSelectDropPanel.qml
+CustomFlyViewVideoPFD           1.0     CustomFlyViewVideoPFD.qml
 CustomIconButton                1.0     CustomIconButton.qml
 CustomMavMessageWidget          1.0     CustomMavMessageWidget.qml
 CustomMavStatusIndicator        1.0     CustomMavStatusIndicator.qml
