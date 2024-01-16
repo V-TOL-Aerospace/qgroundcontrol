@@ -16,10 +16,10 @@ import QGroundControl.Vehicle           1.0
 import Custom.Widgets                   1.0
 
 Rectangle {
-    id:                         compassBar
-    property var activeVehicle
-    property real _heading
-    property var totalToolInsets:   _totalToolInsets    // The insets updated for the custom overlay additions
+    id:             compassBar
+    property var    _activeVehicle:         QGroundControl.multiVehicleManager.activeVehicle
+    property real   _heading:               _activeVehicle   ? _activeVehicle.heading.rawValue : 0
+    property var    totalToolInsets:        _totalToolInsets    // The insets updated for the custom overlay additions
     // height:                     _flightDisplayOnMainWindow ? parent.height * 0.05 : ScreenTools.defaultFontPixelHeight * 1.5
     // width:                      _flightDisplayOnMainWindow ? parent.width * 0.9 : flightControlRectangle.width //- _toolsMargin * 2// ScreenTools.defaultFontPixelWidth  * 50
     color:                      "#DEDEDE"

@@ -30,8 +30,8 @@ import Custom.Widgets 1.0
 
 Item {
     property bool showIndicator: true
-    property var parentToolInsets                       // These insets tell you what screen real estate is available for positioning the controls in your overlay
-    property var totalToolInsets:           compassBar.totalToolInsets// _totalToolInsets    // The insets updated for the custom overlay additions
+    property var parentToolInsets                               // These insets tell you what screen real estate is available for positioning the controls in your overlay
+    property var totalToolInsets:           _totalToolInsets    // The insets updated for the custom overlay additions
     property var mapControl
 
     readonly property string noGPS:                 qsTr("NO GPS")
@@ -88,6 +88,12 @@ Item {
         if (minutes < 10) {minutes = "0"+minutes;}
         if (seconds < 10) {seconds = "0"+seconds;}
         return hours+':'+minutes+':'+seconds;
+    }
+
+    QGCToolInsets {
+        id:                     _totalToolInsets
+        topEdgeCenterInset:     0
+        rightEdgeCenterInset:   parent.width - rightSide_toolStrip.x
     }
 
     // TOP RECTANGLE WARNING PANELS AREA (OLD)
@@ -782,7 +788,6 @@ Item {
     // HEADING INTDICATOR 1 - HORIZONTAL HEADING TAPE
     CustomCompassBar {
         id:             compassBar
-        activeVehicle:  _activeVehicle
         anchors {
             top:                    parent.top
             horizontalCenter:       attitudeIndicator.horizontalCenter
