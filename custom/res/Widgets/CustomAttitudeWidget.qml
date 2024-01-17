@@ -36,18 +36,28 @@ Item {
     property string _airspeed_string_with_unit:     vehicle ? _airSpeed.toFixed(0) + ' ' + QGroundControl.unitsConversion.appSettingsSpeedUnitsString : "0 " + QGroundControl.unitsConversion.appSettingsSpeedUnitsString
     property string _climbRate_string_with_unit:    vehicle ? _climbRate.toFixed(1) + ' ' + QGroundControl.unitsConversion.appSettingsSpeedUnitsString : "0 " + QGroundControl.unitsConversion.appSettingsSpeedUnitsString
 
-    property string _altitudeRelative_string:       (Window.width < 1000) ? _altitudeRelative_with_unit: qsTr("ALT: ") + _altitudeRelative_with_unit 
-    property string _airSpeed_string:               (Window.width < 1000) ? _airspeed_string_with_unit : qsTr("AS: ") + _airspeed_string_with_unit 
-    property string _climbRate_string:              (Window.width < 1000) ? _climbRate_string_with_unit : qsTr("VS: ") + _climbRate_string_with_unit 
+    property string _altitudeRelative_string:       isPFDSize400 ? qsTr("ALT: ")    + _altitudeRelative_with_unit   : _altitudeRelative_with_unit
+    property string _airSpeed_string:               isPFDSize400 ? qsTr("AS: ")     + _airspeed_string_with_unit    : _airspeed_string_with_unit
+    property string _climbRate_string:              isPFDSize400 ? qsTr("VS: ")     + _climbRate_string_with_unit   : _climbRate_string_with_unit
 
     width:  size_width
     height: size_height
+
+    property bool isPFDSize400:     root.width > 400
+    property var dynamicFontSize:   isPFDSize400 ? ScreenTools.defaultFontPointSize     * 1.5   : ScreenTools.defaultFontPointSize // TODO: IF STATEMENT FOR IF root.size is of certain size
+    property var dynamicFontWidth:  isPFDSize400 ? ScreenTools.defaultFontPixelWidth    * 15    : ScreenTools.defaultFontPixelWidth * 6
+    property var dynamicFontHeight: isPFDSize400 ? ScreenTools.defaultFontPixelHeight   * 1.5   : ScreenTools.defaultFontPixelHeight
+
+    property var scalingFontSize:   isPFDSize400 ? ScreenTools.defaultFontPointSize    * width * 0.00375    : ScreenTools.defaultFontPointSize
+    property var scalingFontWidth:  isPFDSize400 ? ScreenTools.defaultFontPixelWidth   * width * 0.035      : ScreenTools.defaultFontPixelWidth * 6
+    property var scalingFontHeight: isPFDSize400 ? ScreenTools.defaultFontPixelHeight  * width * 0.00375    : ScreenTools.defaultFontPixelHeight
 
     Item {
         id:             instrument
         anchors.fill:   parent
         visible:        false
 
+        //-- INSTRUMENT ICONS
         //----------------------------------------------------
         //-- Artificial Horizon
         CustomArtificialHorizon {
@@ -70,8 +80,8 @@ Item {
             anchors.fill:       parent
             sourceSize.height:  parent.height
             transform: Rotation {
-                origin.x:       root.width  / 2
-                origin.y:       root.height / 2
+                origin.x:       root.width  * 0.5
+                origin.y:       root.height * 0.5
                 angle:          -_rollAngle
             }
         }
@@ -102,6 +112,7 @@ Item {
             pitchAngle:         _pitchAngle
             rollAngle:          _rollAngle
             color:              Qt.rgba(0,0,0,0)
+            _fontSize:          scalingFontSize
         }
         //----------------------------------------------------
         //-- Cross Hair
@@ -114,18 +125,46 @@ Item {
             sourceSize.width:   width
             fillMode:           Image.PreserveAspectFit
         }
+        
+        //-- LABEL INDICATORS - FOR DEBUGGING ONLY
+        Rectangle {
+            id:                     devRootSizeDisplay // For dev reference and debugging of attitude window size. 
+            anchors {
+                top:                parent.top
+                horizontalCenter:   parent.horizontalCenter
+                topMargin:          _toolsMargin
+            }
+            color:                  qgcPal.windowShadeDark
+            height:                 scalingFontHeight   
+            width:                  scalingFontWidth
+            visible:                true
+
+            QGCLabel {
+                id:                 devRootSizeDisplayLabel
+                anchors {
+                    horizontalCenter:   parent.horizontalCenter
+                    verticalCenter:     parent.verticalCenter
+                    leftMargin:         _toolsMargin + 5
+                }
+                text:               root.width + qsTr(" >> ") + (root.width * 0.01)
+                color:              qgcPal.text
+                font.pointSize:     scalingFontSize
+                visible:            true
+            }
+        }
+
         //----------------------------------------------------
-        //-- INDICATED RELATIVE ALTITUDE
-        Rectangle{
+        //-- INDICATED RELATIVE ALTITUDE 
+        Rectangle {
             id:                 altitude_info_rectangle
             anchors {
-                right:          parent.right
-                rightMargin:    _toolsMargin
                 verticalCenter: parent.verticalCenter
+                right:          parent.right 
+                rightMargin:    _toolsMargin + instrument.width * 0.05
             }
             color:              qgcPal.windowShadeDark
-            height:             ScreenTools.defaultFontPixelHeight
-            width:              (Window.width > 1000) ? ScreenTools.defaultFontPixelWidth * 11 : ScreenTools.defaultFontPixelWidth * 6
+            height:             scalingFontHeight   
+            width:              scalingFontWidth //(Window.width > 1000) ? ScreenTools.defaultFontPixelWidth * 11 : ScreenTools.defaultFontPixelWidth * 6
 
             QGCLabel{
                 id:                     altitude_info
@@ -135,19 +174,22 @@ Item {
                     leftMargin:         _toolsMargin + 5
                 }
                 text:                   _altitudeRelative_string
-                color:                  "white"
+                color:                  qgcPal.text
+                font.pointSize:     scalingFontSize
             }
         }
         //----------------------------------------------------
         //-- INDICATED AIR SPEED
         Rectangle{
             id:                         airspeed_info_rectangle
-            anchors.left:               parent.left
-            anchors.leftMargin:         _toolsMargin
-            anchors.verticalCenter:     parent.verticalCenter
+            anchors {
+                verticalCenter:         parent.verticalCenter
+                left:                   parent.left
+                leftMargin:             _toolsMargin + instrument.width * 0.05
+            }
             color:                      qgcPal.windowShadeDark
-            height:                     ScreenTools.defaultFontPixelHeight
-            width:                      (Window.width > 1000) ? ScreenTools.defaultFontPixelWidth * 11 : ScreenTools.defaultFontPixelWidth * 5
+            height:                     scalingFontHeight   
+            width:                      scalingFontWidth  // (Window.width > 1000) ? ScreenTools.defaultFontPixelWidth * 11 : ScreenTools.defaultFontPixelWidth * 6
 
             QGCLabel{
                 id: airspeed_info
@@ -157,7 +199,8 @@ Item {
                     leftMargin:         _toolsMargin + 5
                 }
                 text:                   _airSpeed_string
-                color:                  "white"
+                color:                  qgcPal.text
+                font.pointSize:     scalingFontSize
             }
         }
         //----------------------------------------------------
@@ -169,8 +212,8 @@ Item {
                 top:            heading_info_rectangle.top
             }
             color:              qgcPal.windowShadeDark
-            height:             ScreenTools.defaultFontPixelHeight
-            width:              (Window.width > 1000) ? ScreenTools.defaultFontPixelWidth * 11 : ScreenTools.defaultFontPixelWidth * 6
+            height:             scalingFontHeight   
+            width:              scalingFontWidth //(Window.width > 1000) ? ScreenTools.defaultFontPixelWidth * 11 : ScreenTools.defaultFontPixelWidth * 6
 
             QGCLabel{
                 id:                     flightMode_info
@@ -180,7 +223,8 @@ Item {
                     leftMargin:         _toolsMargin + 5
                 }
                 text: _flightMode
-                color: "white"
+                color: qgcPal.text
+                font.pointSize:     scalingFontSize
             }
         }
         //----------------------------------------------------
@@ -192,8 +236,8 @@ Item {
                 top:            heading_info_rectangle.top
             }
             color:              qgcPal.windowShadeDark
-            height:             ScreenTools.defaultFontPixelHeight
-            width:              ScreenTools.defaultFontPixelWidth * 5
+            height:             scalingFontHeight   
+            width:              scalingFontWidth
 
             QGCLabel{
                 id:                     currentWaypoint_info
@@ -203,7 +247,8 @@ Item {
                     leftMargin:         _toolsMargin + 5
                 }
                 text: _currentIndex
-                color: "white"
+                color: qgcPal.text
+                font.pointSize:     scalingFontSize
             }
         }
         //----------------------------------------------------
@@ -216,8 +261,8 @@ Item {
                 topMargin:      _toolsMargin
             }
             color:              qgcPal.windowShadeDark
-            height:             ScreenTools.defaultFontPixelHeight
-            width:              (Window.width > 1000) ? ScreenTools.defaultFontPixelWidth * 11 : ScreenTools.defaultFontPixelWidth * 6
+            height:             scalingFontHeight   
+            width:              scalingFontWidth //(Window.width > 1000) ? ScreenTools.defaultFontPixelWidth * 11 : ScreenTools.defaultFontPixelWidth * 6
 
             QGCLabel{
                 id:                     climbRate_info
@@ -227,7 +272,8 @@ Item {
                     leftMargin:         _toolsMargin + 5
                 }
                 text: _climbRate_string
-                color: "white"
+                color: qgcPal.text
+                font.pointSize:     scalingFontSize
             }
         }
         //----------------------------------------------------
@@ -238,19 +284,20 @@ Item {
             anchors.bottomMargin:       _toolsMargin
             anchors.horizontalCenter:   parent.horizontalCenter
             color:                      qgcPal.windowShadeDark
-            height:                     ScreenTools.defaultFontPixelHeight
-            width:                      ScreenTools.defaultFontPixelWidth * 5
+            height:                     scalingFontHeight   
+            width:                      scalingFontWidth // ScreenTools.defaultFontPixelWidth * 5
 
             QGCLabel {
+                property string _headingString:     vehicle ? vehicle.heading.rawValue.toFixed(0) : "OFF"
+                property string _headingString2:    _headingString.length  === 1 ? "0" + _headingString  : _headingString
+                property string _headingString3:    _headingString2.length === 2 ? "0" + _headingString2 : _headingString2
                 anchors.horizontalCenter:   parent.horizontalCenter
                 anchors.verticalCenter:     parent.verticalCenter
                 text:                       _headingString3
-                color:                      "white"
+                color:                      qgcPal.text
                 visible:                    showHeading
                 // font.pointSize:             ScreenTools.smallFontPointSize
-                property string _headingString: vehicle ? vehicle.heading.rawValue.toFixed(0) : "OFF"
-                property string _headingString2: _headingString.length  === 1 ? "0" + _headingString  : _headingString
-                property string _headingString3: _headingString2.length === 2 ? "0" + _headingString2 : _headingString2
+                font.pointSize:     scalingFontSize
             }
         }
     }

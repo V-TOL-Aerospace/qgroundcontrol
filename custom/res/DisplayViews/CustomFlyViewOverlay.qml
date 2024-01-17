@@ -772,7 +772,7 @@ Item {
         height:                 width * 0.65
         radius:                 height * 0.5
         color:                  qgcPal.windowShade
-        visible:                true
+        visible:                false
 
         CustomAttitudeWidget {
             // size:               parent.height * 0.95
@@ -780,20 +780,21 @@ Item {
             size_height:        parent.height
             vehicle:            _activeVehicle
             anchors.centerIn:   parent
-            visible:            true
+            visible:            parent.visible
         }
     }   
 
     //-------------------------------------------------------------------------
     // HEADING INTDICATOR 1 - HORIZONTAL HEADING TAPE
     CustomCompassBar {
-        id:             compassBar
+        id:                         compassBar
         anchors {
             top:                    parent.top
             horizontalCenter:       attitudeIndicator.horizontalCenter
         }
         height:                     ScreenTools.defaultFontPixelHeight * 1.5
         width:                      flightControlRectangle.width 
+        visible:                    attitudeIndicator.visible
     }
 
     //-------------------------------------------------------------------------
