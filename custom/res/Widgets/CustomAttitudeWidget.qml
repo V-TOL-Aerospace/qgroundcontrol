@@ -18,7 +18,7 @@ Item {
     property bool showPitch:        true
     property var  vehicle:          null
     property real size_width
-    property real size_height 
+    property real size_height
     property real size:             size_width
     property bool showHeading:      true
     property bool showBackground:   true
@@ -121,12 +121,13 @@ Item {
         //-- Cross Hair
         Image {
             id:                 crossHair
-            anchors.centerIn:   parent
             source:             "/custom/img/attitude_crosshair_v2.svg"
             mipmap:             true
             width:              size * 0.75
             sourceSize.width:   width
             fillMode:           Image.PreserveAspectFit
+            anchors.horizontalCenter:   parent.horizontalCenter
+            anchors.top: parent.verticalCenter
         }
         
         //-- LABEL INDICATORS - FOR DEBUGGING ONLY
@@ -243,7 +244,7 @@ Item {
         Rectangle{
             id:                 currentWaypoint_info_rectangle
             anchors {
-                left:           airspeed_info_rectangle.left           
+                left:           airspeed_info_rectangle.left
                 top:            heading_info_rectangle.top
             }
             color:              qgcPal.windowShadeDark
@@ -269,7 +270,7 @@ Item {
         Rectangle{
             id:                 climbRate_info_rectangle
             anchors {
-                left:           altitude_info_rectangle.left           
+                left:           altitude_info_rectangle.left
                 top:            altitude_info_rectangle.bottom
                 topMargin:      _toolsMargin
             }
@@ -292,7 +293,7 @@ Item {
             }
         }
         //----------------------------------------------------
-        //-- INDICATED HEADING 
+        //-- INDICATED HEADING
         Rectangle{
             id:                         heading_info_rectangle
             anchors.bottom:             parent.bottom

@@ -38,31 +38,26 @@ Item {
 
     property double _thermalHeightFactor: 0.85 //-- TODO
 
-        Image {
-            id:             noVideo
-            anchors.fill:   parent
-            source:         "/res/NoVideoBackground.jpg"
-            fillMode:       Image.PreserveAspectCrop
-            visible:        !(QGroundControl.videoManager.decoding)
+    Rectangle {
+        id:                 noVideoLabelBackground
+        width:              noVideoLabel.contentWidth + ScreenTools.defaultFontPixelHeight
+        height:             noVideoLabel.contentHeight + ScreenTools.defaultFontPixelHeight
+        radius:             ScreenTools.defaultFontPixelWidth / 2
+        color:              "black"
+        opacity:            0.5
+        anchors.horizontalCenter:   parent.horizontalCenter
+        anchors.bottom: parent.verticalCenter
+    }
 
-            Rectangle {
-                anchors.centerIn:   parent
-                width:              noVideoLabel.contentWidth + ScreenTools.defaultFontPixelHeight
-                height:             noVideoLabel.contentHeight + ScreenTools.defaultFontPixelHeight
-                radius:             ScreenTools.defaultFontPixelWidth / 2
-                color:              "black"
-                opacity:            0.5
-            }
-
-            QGCLabel {
-                id:                 noVideoLabel
-                text:               QGroundControl.settingsManager.videoSettings.streamEnabled.rawValue ? qsTr("WAITING FOR VIDEO") : qsTr("VIDEO DISABLED")
-                font.family:        ScreenTools.demiboldFontFamily
-                color:              "white"
-                font.pointSize:     useSmallFont ? ScreenTools.smallFontPointSize : ScreenTools.largeFontPointSize
-                anchors.centerIn:   parent
-            }
-        }
+    QGCLabel {
+        id:                 noVideoLabel
+        text:               QGroundControl.settingsManager.videoSettings.streamEnabled.rawValue ? qsTr("WAITING FOR VIDEO") : qsTr("VIDEO DISABLED")
+        font.family:        ScreenTools.demiboldFontFamily
+        color:              "white"
+        font.pointSize:     useSmallFont ? ScreenTools.smallFontPointSize : ScreenTools.largeFontPointSize
+        anchors.horizontalCenter:   parent.horizontalCenter
+        anchors.centerIn: noVideoLabelBackground
+    }
 
     Rectangle {
         anchors.fill:   parent
