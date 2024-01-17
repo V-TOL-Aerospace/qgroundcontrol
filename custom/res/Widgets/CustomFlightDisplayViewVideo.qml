@@ -47,6 +47,7 @@ Item {
         opacity:            0.5
         anchors.horizontalCenter:   parent.horizontalCenter
         anchors.bottom: parent.verticalCenter
+        visible: false
     }
 
     QGCLabel {
@@ -57,6 +58,7 @@ Item {
         font.pointSize:     useSmallFont ? ScreenTools.smallFontPointSize : ScreenTools.largeFontPointSize
         anchors.horizontalCenter:   parent.horizontalCenter
         anchors.centerIn: noVideoLabelBackground
+        visible: false
     }
 
     Rectangle {

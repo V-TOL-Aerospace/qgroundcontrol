@@ -52,8 +52,9 @@ Item {
     property var scalingFontWidth:  isPFDSize400 ? ScreenTools.defaultFontPixelWidth   * width * 0.035      : ScreenTools.defaultFontPixelWidth * 6
     property var scalingFontHeight: isPFDSize400 ? ScreenTools.defaultFontPixelHeight  * width * 0.00375    : ScreenTools.defaultFontPixelHeight
 
-    property var _borderColor:      qgcPal.text
-    property var _borderWidth:      isPFDSize400 ? ScreenTools.defaultFontPointSize    * width * 0.000375    : 0.5
+    property var _borderColor:          qgcPal.text
+    property var _borderWidth:          isPFDSize400 ? ScreenTools.defaultFontPointSize    * width * 0.000375    : 0.5
+    property var _labelBackgroundColor: qgcPal.toolbarBackground
 
     Item {
         id:             instrument
@@ -126,36 +127,35 @@ Item {
             width:              size * 0.75
             sourceSize.width:   width
             fillMode:           Image.PreserveAspectFit
-            anchors.horizontalCenter:   parent.horizontalCenter
-            anchors.top: parent.verticalCenter
+            anchors.centerIn:   parent
         }
         
         //-- LABEL INDICATORS - FOR DEBUGGING ONLY
         Rectangle {
-            id:                     devRootSizeDisplay // For dev reference and debugging of attitude window size. 
+            id:                         devRootSizeDisplay // For dev reference and debugging of attitude window size. 
             anchors {
-                top:                parent.top
-                horizontalCenter:   parent.horizontalCenter
-                topMargin:          _toolsMargin
+                top:                    parent.top
+                horizontalCenter:       parent.horizontalCenter
+                topMargin:              _toolsMargin
             }
-            color:                  qgcPal.windowShadeDark
-            height:                 scalingFontHeight   
-            width:                  scalingFontWidth
-            visible:                false
-            border.color:           _borderColor
-            border.width:           _borderWidth
+            color:                      _labelBackgroundColor
+            height:                     scalingFontHeight   
+            width:                      scalingFontWidth
+            visible:                    false
+            border.color:               _borderColor
+            border.width:               _borderWidth
 
             QGCLabel {
-                id:                 devRootSizeDisplayLabel
+                id:                     devRootSizeDisplayLabel
                 anchors {
                     horizontalCenter:   parent.horizontalCenter
                     verticalCenter:     parent.verticalCenter
                     leftMargin:         _toolsMargin + 5
                 }
-                text:               root.width + qsTr(" >> ") + (root.width * 0.01)
-                color:              qgcPal.text
-                font.pointSize:     scalingFontSize
-                visible:            false
+                text:                   root.width + qsTr(" >> ") + (root.width * 0.01)
+                color:                  qgcPal.text
+                font.pointSize:         scalingFontSize
+                visible:                false
             }
         }
 
@@ -168,11 +168,11 @@ Item {
                 right:          parent.right 
                 rightMargin:    _toolsMargin + instrument.width * 0.05
             }
-            color:              qgcPal.windowShadeDark
+            color:              _labelBackgroundColor
             height:             scalingFontHeight   
             width:              scalingFontWidth //(Window.width > 1000) ? ScreenTools.defaultFontPixelWidth * 11 : ScreenTools.defaultFontPixelWidth * 6
-            border.color:           _borderColor
-            border.width:           _borderWidth
+            border.color:       _borderColor
+            border.width:       _borderWidth
 
             QGCLabel{
                 id:                     altitude_info
@@ -183,7 +183,7 @@ Item {
                 }
                 text:                   _altitudeRelative_string
                 color:                  qgcPal.text
-                font.pointSize:     scalingFontSize
+                font.pointSize:         scalingFontSize
             }
         }
         //----------------------------------------------------
@@ -195,14 +195,14 @@ Item {
                 left:                   parent.left
                 leftMargin:             _toolsMargin + instrument.width * 0.05
             }
-            color:                      qgcPal.windowShadeDark
+            color:                      _labelBackgroundColor
             height:                     scalingFontHeight   
             width:                      scalingFontWidth  // (Window.width > 1000) ? ScreenTools.defaultFontPixelWidth * 11 : ScreenTools.defaultFontPixelWidth * 6
-            border.color:           _borderColor
-            border.width:           _borderWidth
+            border.color:               _borderColor
+            border.width:               _borderWidth
 
             QGCLabel{
-                id: airspeed_info
+                id:                     airspeed_info
                 anchors {
                     horizontalCenter:   parent.horizontalCenter
                     verticalCenter:     parent.verticalCenter
@@ -210,22 +210,22 @@ Item {
                 }
                 text:                   _airSpeed_string
                 color:                  qgcPal.text
-                font.pointSize:     scalingFontSize
+                font.pointSize:         scalingFontSize
             }
         }
         //----------------------------------------------------
         //-- INDICATED FLIGHT MODE SELECTED
         Rectangle{
-            id:                 flightMode_info_rectangle
+            id:                         flightMode_info_rectangle
             anchors {
-                right:          altitude_info_rectangle.right
-                top:            heading_info_rectangle.top
+                right:                  altitude_info_rectangle.right
+                top:                    heading_info_rectangle.top
             }
-            color:              qgcPal.windowShadeDark
-            height:             scalingFontHeight   
-            width:              scalingFontWidth //(Window.width > 1000) ? ScreenTools.defaultFontPixelWidth * 11 : ScreenTools.defaultFontPixelWidth * 6
-            border.color:           _borderColor
-            border.width:           _borderWidth
+            color:                      _labelBackgroundColor
+            height:                     scalingFontHeight   
+            width:                      scalingFontWidth //(Window.width > 1000) ? ScreenTools.defaultFontPixelWidth * 11 : ScreenTools.defaultFontPixelWidth * 6
+            border.color:               _borderColor
+            border.width:               _borderWidth
 
             QGCLabel{
                 id:                     flightMode_info
@@ -236,22 +236,22 @@ Item {
                 }
                 text: _flightMode
                 color: qgcPal.text
-                font.pointSize:     scalingFontSize
+                font.pointSize:         scalingFontSize
             }
         }
         //----------------------------------------------------
         //-- CURRENT WAYPOINT
         Rectangle{
-            id:                 currentWaypoint_info_rectangle
+            id:                         currentWaypoint_info_rectangle
             anchors {
-                left:           airspeed_info_rectangle.left
-                top:            heading_info_rectangle.top
+                left:                   airspeed_info_rectangle.left
+                top:                    heading_info_rectangle.top
             }
-            color:              qgcPal.windowShadeDark
-            height:             scalingFontHeight   
-            width:              scalingFontWidth
-            border.color:           _borderColor
-            border.width:           _borderWidth
+            color:                      _labelBackgroundColor
+            height:                     scalingFontHeight   
+            width:                      scalingFontWidth
+            border.color:               _borderColor
+            border.width:               _borderWidth
 
             QGCLabel{
                 id:                     currentWaypoint_info
@@ -260,25 +260,25 @@ Item {
                     verticalCenter:     parent.verticalCenter
                     leftMargin:         _toolsMargin + 5
                 }
-                text: _currentIndex
-                color: qgcPal.text
-                font.pointSize:     scalingFontSize
+                text:                   _currentIndex
+                color:                  qgcPal.text
+                font.pointSize:         scalingFontSize
             }
         }
         //----------------------------------------------------
         //-- INDICATED CLIMBRATE
         Rectangle{
-            id:                 climbRate_info_rectangle
+            id:                         climbRate_info_rectangle
             anchors {
-                left:           altitude_info_rectangle.left
-                top:            altitude_info_rectangle.bottom
-                topMargin:      _toolsMargin
+                left:                   altitude_info_rectangle.left
+                top:                    altitude_info_rectangle.bottom
+                topMargin:              _toolsMargin
             }
-            color:              qgcPal.windowShadeDark
-            height:             scalingFontHeight   
-            width:              scalingFontWidth //(Window.width > 1000) ? ScreenTools.defaultFontPixelWidth * 11 : ScreenTools.defaultFontPixelWidth * 6
-            border.color:           _borderColor
-            border.width:           _borderWidth
+            color:                      _labelBackgroundColor
+            height:                     scalingFontHeight   
+            width:                      scalingFontWidth //(Window.width > 1000) ? ScreenTools.defaultFontPixelWidth * 11 : ScreenTools.defaultFontPixelWidth * 6
+            border.color:               _borderColor
+            border.width:               _borderWidth
 
             QGCLabel{
                 id:                     climbRate_info
@@ -287,9 +287,9 @@ Item {
                     verticalCenter:     parent.verticalCenter
                     leftMargin:         _toolsMargin + 5
                 }
-                text: _climbRate_string
-                color: qgcPal.text
-                font.pointSize:     scalingFontSize
+                text:                   _climbRate_string
+                color:                  qgcPal.text
+                font.pointSize:         scalingFontSize
             }
         }
         //----------------------------------------------------
@@ -299,23 +299,24 @@ Item {
             anchors.bottom:             parent.bottom
             anchors.bottomMargin:       _toolsMargin
             anchors.horizontalCenter:   parent.horizontalCenter
-            color:                      qgcPal.windowShadeDark
+            color:                      _labelBackgroundColor
             height:                     scalingFontHeight   
             width:                      scalingFontWidth // ScreenTools.defaultFontPixelWidth * 5
-            border.color:           _borderColor
-            border.width:           _borderWidth
+            border.color:               _borderColor
+            border.width:               _borderWidth
 
             QGCLabel {
                 property string _headingString:     vehicle ? vehicle.heading.rawValue.toFixed(0) : "OFF"
                 property string _headingString2:    _headingString.length  === 1 ? "0" + _headingString  : _headingString
                 property string _headingString3:    _headingString2.length === 2 ? "0" + _headingString2 : _headingString2
+
                 anchors.horizontalCenter:   parent.horizontalCenter
                 anchors.verticalCenter:     parent.verticalCenter
                 text:                       _headingString3
                 color:                      qgcPal.text
                 visible:                    showHeading
                 // font.pointSize:             ScreenTools.smallFontPointSize
-                font.pointSize:     scalingFontSize
+                font.pointSize:             scalingFontSize
             }
         }
     }

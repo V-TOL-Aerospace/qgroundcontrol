@@ -37,7 +37,7 @@ Item {
     property bool   _isExpanded:        true
     property real   _pipSize:           parent.width * 0.2
     property real   _maxSize:           0.75                // Percentage of parent control size
-    property real   _minSize:           0.10
+    property real   _minSize:           0.25
     property bool   _componentComplete: false
 
     Component.onCompleted: {

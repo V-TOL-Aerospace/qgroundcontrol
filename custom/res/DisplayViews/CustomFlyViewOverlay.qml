@@ -802,22 +802,22 @@ Item {
     Rectangle {
         id:                     compassBackground
         anchors {
-            top:                attitudeIndicator.bottom
-            topMargin:          _toolsMargin //-attitudeIndicator.width / 2
-            horizontalCenter:   flightControlRectangle.horizontalCenter
+            bottom:             parent.bottom
+            // topMargin:          _toolsMargin //-attitudeIndicator.width / 2
+            horizontalCenter:   parent.horizontalCenter
         }
-        width:                  flightControlRectangle.width //-anchors.rightMargin + compassBezel.width + (_toolsMargin * 2)
-        height:                 attitudeIndicator.height
-        radius:                 2
-        color:                  qgcPal.windowShade //qgcPal.window
-        visible: false
+        width:                  Window.width * 0.1 // flightControlRectangle.width //-anchors.rightMargin + compassBezel.width + (_toolsMargin * 2)
+        height:                 width //attitudeIndicator.height
+        radius:                 width * 0.5
+        color:                  qgcPal.toolbarBackground // qgcPal.windowShade //qgcPal.window
+        border.color:           qgcPal.text
+        border.width:           0.5
+        visible: true
 
         Rectangle {
             id:                     compassBezel
             anchors {
-                verticalCenter:     parent.verticalCenter
-                leftMargin:         _toolsMargin
-                left:               parent.left
+                centerIn:           parent
             }
             width:                  height
             height:                 parent.height - (northLabelBackground.height / 2) - (headingLabelBackground.height / 2)
