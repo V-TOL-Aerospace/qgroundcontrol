@@ -18,7 +18,7 @@ Item {
     property bool showPitch:        true
     property var  vehicle:          null
     property real size_width
-    property real size_height 
+    property real size_height
     property real size:             size_width
     property bool showHeading:      true
     property bool showBackground:   true
@@ -36,9 +36,9 @@ Item {
     property string _airspeed_string_with_unit:     vehicle ? _airSpeed.toFixed(0) + ' ' + QGroundControl.unitsConversion.appSettingsSpeedUnitsString : "0 " + QGroundControl.unitsConversion.appSettingsSpeedUnitsString
     property string _climbRate_string_with_unit:    vehicle ? _climbRate.toFixed(1) + ' ' + QGroundControl.unitsConversion.appSettingsSpeedUnitsString : "0 " + QGroundControl.unitsConversion.appSettingsSpeedUnitsString
 
-    property string _altitudeRelative_string:       (Window.width < 1000) ? _altitudeRelative_with_unit: qsTr("ALT: ") + _altitudeRelative_with_unit 
-    property string _airSpeed_string:               (Window.width < 1000) ? _airspeed_string_with_unit : qsTr("AS: ") + _airspeed_string_with_unit 
-    property string _climbRate_string:              (Window.width < 1000) ? _climbRate_string_with_unit : qsTr("VS: ") + _climbRate_string_with_unit 
+    property string _altitudeRelative_string:       (Window.width < 1000) ? _altitudeRelative_with_unit: qsTr("ALT: ") + _altitudeRelative_with_unit
+    property string _airSpeed_string:               (Window.width < 1000) ? _airspeed_string_with_unit : qsTr("AS: ") + _airspeed_string_with_unit
+    property string _climbRate_string:              (Window.width < 1000) ? _climbRate_string_with_unit : qsTr("VS: ") + _climbRate_string_with_unit
 
     width:  size_width
     height: size_height
@@ -107,12 +107,13 @@ Item {
         //-- Cross Hair
         Image {
             id:                 crossHair
-            anchors.centerIn:   parent
             source:             "/custom/img/attitude_crosshair_v2.svg"
             mipmap:             true
             width:              size * 0.75
             sourceSize.width:   width
             fillMode:           Image.PreserveAspectFit
+            anchors.horizontalCenter:   parent.horizontalCenter
+            anchors.top: parent.verticalCenter
         }
         //----------------------------------------------------
         //-- INDICATED RELATIVE ALTITUDE
@@ -188,7 +189,7 @@ Item {
         Rectangle{
             id:                 currentWaypoint_info_rectangle
             anchors {
-                left:           airspeed_info_rectangle.left           
+                left:           airspeed_info_rectangle.left
                 top:            heading_info_rectangle.top
             }
             color:              qgcPal.windowShadeDark
@@ -211,7 +212,7 @@ Item {
         Rectangle{
             id:                 climbRate_info_rectangle
             anchors {
-                left:           altitude_info_rectangle.left           
+                left:           altitude_info_rectangle.left
                 top:            altitude_info_rectangle.bottom
                 topMargin:      _toolsMargin
             }
@@ -231,7 +232,7 @@ Item {
             }
         }
         //----------------------------------------------------
-        //-- INDICATED HEADING 
+        //-- INDICATED HEADING
         Rectangle{
             id:                         heading_info_rectangle
             anchors.bottom:             parent.bottom
