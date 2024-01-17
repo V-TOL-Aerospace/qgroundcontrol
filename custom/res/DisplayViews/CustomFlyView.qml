@@ -11,10 +11,10 @@ import QtQuick                  2.12
 import QtQuick.Controls         2.4
 import QtQuick.Dialogs          1.3
 import QtQuick.Layouts          1.12
+import QtQuick.Window           2.2
 
 import QtLocation               5.3
 import QtPositioning            5.3
-import QtQuick.Window           2.2
 import QtQml.Models             2.1
 
 import QGroundControl               1.0
@@ -155,9 +155,9 @@ Item {
         id:                     _pipOverlay
         // anchors.left:           parent.left
         anchors {
-            horizontalCenter:   parent.horizontalCenter
-            bottom:             parent.bottom
-            margins:            _toolsMargin
+            top:                parent.top
+            left:               parent.left
+            leftMargin:         _toolsMargin + Window.width * 0.05
         }
         item1IsFullSettingsKey: "MainFlyWindowIsMap"
         item1:                  mapControl

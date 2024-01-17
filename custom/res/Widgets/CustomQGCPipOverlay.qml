@@ -120,8 +120,57 @@ Item {
         hoverEnabled:   true
         onClicked:      _swapPip()
     }
+    // MouseArea to drag in order to resize the PiP area (BOTTOM RIGHT)
+    MouseArea {
+        id:             pipResize_bottomRight
+        anchors.bottom:    parent.bottom
+        anchors.right:  parent.right
+        height:         ScreenTools.minTouchPixels
+        width:          height
 
-    // MouseArea to drag in order to resize the PiP area
+        property real initialX:     0
+        property real initialWidth: 0
+
+        // When we push the mouse button down, we un-anchor the mouse area to prevent a resizing loop
+        onPressed: {
+            pipResize_bottomRight.anchors.bottom = undefined // bottom doesn't seem to 'detach'
+            pipResize_bottomRight.anchors.right = undefined // This one works right, which is what we really need
+            pipResize_bottomRight.initialX = mouse.x
+            pipResize_bottomRight.initialWidth = _root.width
+        }
+
+        // When we let go of the mouse button, we re-anchor the mouse area in the correct position
+        onReleased: {
+            pipResize_bottomRight.anchors.bottom = _root.bottom
+            pipResize_bottomRight.anchors.right = _root.right
+        }
+
+        // Drag
+        onPositionChanged: {
+            if (pipResize_bottomRight.pressed) {
+                var parentWidth = _root.parent.width
+                var newWidth = pipResize_bottomRight.initialWidth + mouse.x - pipResize_bottomRight.initialX
+                if (newWidth < parentWidth * _maxSize && newWidth > parentWidth * _minSize) {
+                    _pipSize = newWidth
+                }
+            }
+        }
+    }
+
+    // Resize icon
+    Image {
+        source:         "/custom/img/pipResize_BottomRight.svg"
+        fillMode:       Image.PreserveAspectFit
+        mipmap: true
+        anchors.right:  parent.right
+        anchors.bottom:    parent.bottom
+        visible:        _isExpanded && (ScreenTools.isMobile || pipMouseArea.containsMouse)
+        height:         ScreenTools.defaultFontPixelHeight * 2.5
+        width:          ScreenTools.defaultFontPixelHeight * 2.5
+        sourceSize.height:  height
+    }
+
+    // MouseArea to drag in order to resize the PiP area (TOP RIGHT)
     MouseArea {
         id:             pipResize
         anchors.top:    parent.top

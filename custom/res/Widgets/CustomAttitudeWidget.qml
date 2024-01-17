@@ -52,6 +52,9 @@ Item {
     property var scalingFontWidth:  isPFDSize400 ? ScreenTools.defaultFontPixelWidth   * width * 0.035      : ScreenTools.defaultFontPixelWidth * 6
     property var scalingFontHeight: isPFDSize400 ? ScreenTools.defaultFontPixelHeight  * width * 0.00375    : ScreenTools.defaultFontPixelHeight
 
+    property var _borderColor:      qgcPal.text
+    property var _borderWidth:      isPFDSize400 ? ScreenTools.defaultFontPointSize    * width * 0.000375    : 0.5
+
     Item {
         id:             instrument
         anchors.fill:   parent
@@ -138,6 +141,8 @@ Item {
             height:                 scalingFontHeight   
             width:                  scalingFontWidth
             visible:                false
+            border.color:           _borderColor
+            border.width:           _borderWidth
 
             QGCLabel {
                 id:                 devRootSizeDisplayLabel
@@ -165,6 +170,8 @@ Item {
             color:              qgcPal.windowShadeDark
             height:             scalingFontHeight   
             width:              scalingFontWidth //(Window.width > 1000) ? ScreenTools.defaultFontPixelWidth * 11 : ScreenTools.defaultFontPixelWidth * 6
+            border.color:           _borderColor
+            border.width:           _borderWidth
 
             QGCLabel{
                 id:                     altitude_info
@@ -190,6 +197,8 @@ Item {
             color:                      qgcPal.windowShadeDark
             height:                     scalingFontHeight   
             width:                      scalingFontWidth  // (Window.width > 1000) ? ScreenTools.defaultFontPixelWidth * 11 : ScreenTools.defaultFontPixelWidth * 6
+            border.color:           _borderColor
+            border.width:           _borderWidth
 
             QGCLabel{
                 id: airspeed_info
@@ -214,6 +223,8 @@ Item {
             color:              qgcPal.windowShadeDark
             height:             scalingFontHeight   
             width:              scalingFontWidth //(Window.width > 1000) ? ScreenTools.defaultFontPixelWidth * 11 : ScreenTools.defaultFontPixelWidth * 6
+            border.color:           _borderColor
+            border.width:           _borderWidth
 
             QGCLabel{
                 id:                     flightMode_info
@@ -238,6 +249,8 @@ Item {
             color:              qgcPal.windowShadeDark
             height:             scalingFontHeight   
             width:              scalingFontWidth
+            border.color:           _borderColor
+            border.width:           _borderWidth
 
             QGCLabel{
                 id:                     currentWaypoint_info
@@ -263,6 +276,8 @@ Item {
             color:              qgcPal.windowShadeDark
             height:             scalingFontHeight   
             width:              scalingFontWidth //(Window.width > 1000) ? ScreenTools.defaultFontPixelWidth * 11 : ScreenTools.defaultFontPixelWidth * 6
+            border.color:           _borderColor
+            border.width:           _borderWidth
 
             QGCLabel{
                 id:                     climbRate_info
@@ -286,6 +301,8 @@ Item {
             color:                      qgcPal.windowShadeDark
             height:                     scalingFontHeight   
             width:                      scalingFontWidth // ScreenTools.defaultFontPixelWidth * 5
+            border.color:           _borderColor
+            border.width:           _borderWidth
 
             QGCLabel {
                 property string _headingString:     vehicle ? vehicle.heading.rawValue.toFixed(0) : "OFF"
