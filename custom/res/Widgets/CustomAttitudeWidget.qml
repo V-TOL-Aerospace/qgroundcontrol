@@ -137,7 +137,7 @@ Item {
             color:                  qgcPal.windowShadeDark
             height:                 scalingFontHeight   
             width:                  scalingFontWidth
-            visible:                true
+            visible:                false
 
             QGCLabel {
                 id:                 devRootSizeDisplayLabel
@@ -149,7 +149,7 @@ Item {
                 text:               root.width + qsTr(" >> ") + (root.width * 0.01)
                 color:              qgcPal.text
                 font.pointSize:     scalingFontSize
-                visible:            true
+                visible:            false
             }
         }
 
