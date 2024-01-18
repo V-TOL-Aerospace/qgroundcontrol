@@ -545,12 +545,10 @@ Item {
                     onTriggered:    mainWindow.showPlanView()
                 },
                 ToolStripAction {
-                    text:           qsTr(" ")
-                    enabled:        false
-                    // text:           qsTr("Swap Display")
-                    // iconSource:     "/InstrumentValueIcons/view-carousel.svg"
-                    // enabled:        _activeVehicle
-                    // onTriggered:    swapFlightDisplay()
+                    text:           _pipOverlay._isExpanded ? qsTr("Hide PFD") : qsTr("Show PFD")
+                    iconSource:     "/InstrumentValueIcons/view-carousel.svg"
+                    enabled:        true
+                    onTriggered:    _pipOverlay._setPipIsExpanded(!isPipOverlayExpanded)
                 },
                 CustomToolStripAction {
                     text:               qsTr("Battery")
