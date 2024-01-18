@@ -234,6 +234,14 @@ Item {
             border.width:               _borderWidth
             states: [
                 State {
+                            name: "CriticalPositive"; when: _climbRate > 5
+                            PropertyChanges {target: climbRate_info_ladder; color: qgcPal.colorRed} 
+                },
+                State {
+                            name: "CriticalNegative"; when: _climbRate < -5
+                            PropertyChanges {target: climbRate_info_ladder; color: qgcPal.colorRed} 
+                },
+                State {
                             name: "HighPositive"; when: _climbRate > 2.5
                             PropertyChanges {target: climbRate_info_ladder; color: qgcPal.colorOrange} 
                 },
