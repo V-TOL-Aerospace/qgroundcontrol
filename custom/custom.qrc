@@ -3,6 +3,7 @@
         <file alias="altitude.svg">res/Images/altitude.svg</file>
         <file alias="attitude_crosshair.svg">res/Images/attitude_crosshair.svg</file>
         <file alias="attitude_crosshair_v2.svg">res/Images/attitude_crosshair_v2.svg</file>
+        <file alias="attitude_crosshair_v3.svg">res/Images/attitude_crosshair_v3.svg</file>
         <file alias="attitude_dial.svg">res/Images/attitude_dial.svg</file>
         <file alias="attitude_pointer.svg">res/Images/attitude_pointer.svg</file>
         <file alias="chronometer.svg">res/Images/chronometer.svg</file>
@@ -13,6 +14,7 @@
         <file alias="microSD.svg">res/Images/microSD.svg</file>
         <file alias="odometer.svg">res/Images/odometer.svg</file>
         <file alias="pipResize_BottomRight.svg">res/Images/pipResize_BottomRight.svg</file>
+        <file alias="vector_crosshair_v1.svg">res/Images/vector_crosshair_v1.svg</file>
         <file alias="vertical_speed.svg">res/Images/vertical_speed.svg</file>
         <file alias="CustomAppIcon.png">res/Images/CustomAppIcon.png</file>
     </qresource>
