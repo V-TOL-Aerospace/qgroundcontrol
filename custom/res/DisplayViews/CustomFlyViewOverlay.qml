@@ -561,13 +561,6 @@ Item {
                     dropPanelComponent: statusBatteryDropPanel
                 },
                 CustomToolStripAction {
-                    text:               qsTr("Sensors")
-                    iconSource:         "/InstrumentValueIcons/align-left.svg"
-                    enabled:            _activeVehicle
-                    dropPanelComponent: statusSenorsDropPanel
-                    buttonColor:        getSensorsStatusColor()
-                },
-                CustomToolStripAction {
                     text:               (_activeVehicle && _activeVehicle.gps.count.value >= 0) ? qsTr("GPS Status") : qsTr("NO GPS")
                     enabled:            _activeVehicle
                     iconSource:         "/InstrumentValueIcons/radar.svg"
@@ -580,6 +573,13 @@ Item {
                     enabled:            _activeVehicle
                     dropPanelComponent: messageDropPanel
                     buttonColor:        getMessageColor()
+                },
+                CustomToolStripAction {
+                    text:               qsTr("Sensors")
+                    iconSource:         "/InstrumentValueIcons/align-left.svg"
+                    enabled:            _activeVehicle
+                    dropPanelComponent: statusSenorsDropPanel
+                    buttonColor:        getSensorsStatusColor()
                 },
                 ToolStripAction {
                     text:               qsTr("Vehicle")
