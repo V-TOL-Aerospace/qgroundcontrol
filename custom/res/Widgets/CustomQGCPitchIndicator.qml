@@ -28,6 +28,7 @@ Rectangle {
     property real _reticleSlot:     _reticleSpacing + _reticleHeight
     property real _longDash:        size * 0.35
     property real _shortDash:       size * 0.25
+    property real _centerDash:      size * 10
     property real _fontSize:        ScreenTools.defaultFontPointSize * 0.75
 
     height: size
@@ -38,7 +39,7 @@ Rectangle {
     Item {
         height: parent.height
         width:  parent.width
-        Column{
+        Column {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter:   parent.verticalCenter
             spacing: _reticleSpacing
@@ -47,7 +48,7 @@ Rectangle {
                 Rectangle {
                     property int _pitch: -(modelData * 5 - 90)
                     anchors.horizontalCenter: parent.horizontalCenter
-                    width: (_pitch % 10) === 0 ? _longDash : _shortDash
+                    width: (_pitch == 0) ? _centerDash : ((_pitch % 10) === 0 ? _longDash : _shortDash)
                     height: _reticleHeight
                     color: "white"
                     antialiasing: true

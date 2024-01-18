@@ -30,7 +30,7 @@ Item {
 
     property real _altitudeRelative:    vehicle ? vehicle.altitudeRelative.rawValue : 0
     property real _airSpeed:            vehicle ? vehicle.airSpeed.rawValue : 0
-    property real _climbRate:           vehicle ? vehicle.climbRate.rawValue : 0
+    property real _climbRate:           vehicle ? ((vehicle.climbRate.rawValue < 0.1 && vehicle.climbRate.rawValue > -0.1) ? 0 : vehicle.climbRate.rawValue) : 0
 
     property string _altitudeRelative_with_unit:    vehicle ? _altitudeRelative.toFixed(0) + ' ' + QGroundControl.unitsConversion.appSettingsVerticalDistanceUnitsString : "0 " + QGroundControl.unitsConversion.appSettingsVerticalDistanceUnitsString
     property string _airspeed_string_with_unit:     vehicle ? _airSpeed.toFixed(0) + ' ' + QGroundControl.unitsConversion.appSettingsSpeedUnitsString : "0 " + QGroundControl.unitsConversion.appSettingsSpeedUnitsString
@@ -122,7 +122,7 @@ Item {
         //-- Cross Hair
         Image {
             id:                 crossHair
-            source:             "/custom/img/attitude_crosshair_v2.svg"
+            source:             "/custom/img/attitude_crosshair_v3.svg"
             mipmap:             true
             width:              size * 0.75
             sourceSize.width:   width
@@ -164,7 +164,7 @@ Item {
         Rectangle {
             id:                 altitude_info_rectangle
             anchors {
-                bottom:         parent.verticalCenter
+                verticalCenter: parent.verticalCenter
                 right:          parent.right 
                 rightMargin:    _toolsMargin + instrument.width * 0.05
             }
@@ -174,7 +174,7 @@ Item {
             border.color:       _borderColor
             border.width:       _borderWidth
 
-            QGCLabel{
+            QGCLabel {
                 id:                     altitude_info
                 anchors {
                     horizontalCenter:   parent.horizontalCenter
@@ -188,12 +188,12 @@ Item {
         }        
         //----------------------------------------------------
         //-- INDICATED CLIMBRATE (VERTICAL SPEED)
-        Rectangle{
+        Rectangle {
             id:                         climbRate_info_rectangle
             anchors {
                 left:                   altitude_info_rectangle.left
-                top:                    altitude_info_rectangle.bottom
-                // topMargin:              _toolsMargin
+                top:                    parent.top
+                topMargin:              _toolsMargin
             }
             color:                      _labelBackgroundColor
             height:                     scalingFontHeight   
@@ -201,7 +201,7 @@ Item {
             border.color:               _borderColor
             border.width:               _borderWidth
 
-            QGCLabel{
+            QGCLabel {
                 id:                     climbRate_info
                 anchors {
                     horizontalCenter:   parent.horizontalCenter
@@ -215,10 +215,90 @@ Item {
         }
         //----------------------------------------------------
         // -- ALTITUDE CLIMBRATE LADDER/BAR
+        Rectangle {
+            id:                         climbRate_info_ladder
+            readonly property bool      isPositiveClimb: (_climbRate > 0 )
+            anchors {
+                top:                    isPositiveClimb ? undefined : altitude_info_rectangle.bottom
+                bottom:                 isPositiveClimb ? altitude_info_rectangle.top : undefined
+                right:                  climbRate_info_ladder_boundary.right
+                topMargin:              -border.width
+                bottomMargin:           -border.width
+            }
+            width:                      altitude_info_rectangle.width * 0.2
+            height:                     isPositiveClimb ? 
+                (climbRate_info_ladder_boundary.height * 0.5 - altitude_info_rectangle.height * 0.5) * (_climbRate / 5) :
+                (climbRate_info_ladder_boundary.height * 0.5 - altitude_info_rectangle.height * 0.5) * -(_climbRate / 5) 
+            color:                      qgcPal.toolbarBackground 
+            border.color:               qgcPal.text
+            border.width:               _borderWidth
+            states: [
+                State {
+                            name: "HighPositive"; when: _climbRate > 2.5
+                            PropertyChanges {target: climbRate_info_ladder; color: qgcPal.colorOrange} 
+                },
+                State {
+                            name: "HighNegative"; when: _climbRate < -2.5
+                            PropertyChanges {target: climbRate_info_ladder; color: qgcPal.colorOrange} 
+                },
+                State {
+                            name: "Normal"; when: _climbRate > -2.5
+                            PropertyChanges {target: climbRate_info_ladder; color: "#1b14e0"} 
+                }
+            ]
+        }
+        Rectangle {
+            id:                 climbRate_info_ladder_boundary
+            anchors {
+                right:          altitude_info_rectangle.right
+                verticalCenter: instrument.verticalCenter
+            }
+            width:              _borderWidth < 1 ? 1 : _borderWidth
+            height:             flightMode_info_rectangle.y - flightMode_info_rectangle.height * 2
+            color:              qgcPal.text
+            Rectangle {
+                anchors {
+                    right:       parent.right
+                    bottom:     parent.bottom
+                }
+                width:          climbRate_info_ladder.width
+                height:         _borderWidth < 1 ? 1 : _borderWidth
+                color:          qgcPal.text
+            }
+            Rectangle {
+                anchors {
+                    right:           parent.right
+                    top:            parent.top
+                    topMargin:      (parent.height * 0.5 - altitude_info_rectangle.height * 0.5) * 0.5
+                }
+                width:          climbRate_info_ladder.width * 0.5
+                height:         _borderWidth < 1 ? 1 : _borderWidth
+                color:          qgcPal.text
+            }
+            Rectangle {
+                anchors {
+                    right:       parent.right
+                    bottom:     parent.top
+                }
+                width:          climbRate_info_ladder.width 
+                height:         _borderWidth < 1 ? 1 : _borderWidth
+                color:          qgcPal.text
+            }
+            Rectangle {
+                anchors {
+                    right:               parent.right
+                    bottom:             parent.bottom
+                    bottomMargin:       (parent.height * 0.5 - altitude_info_rectangle.height * 0.5) * 0.5
+                }
+                width:          climbRate_info_ladder.width * 0.5
+                height:         _borderWidth < 1 ? 1 : _borderWidth
+                color:          qgcPal.text
+            }
+        }
 
         //----------------------------------------------------
         //-- INDICATED AIR SPEED
-        Rectangle{
+        Rectangle {
             id:                         airspeed_info_rectangle
             anchors {
                 verticalCenter:         parent.verticalCenter
@@ -231,7 +311,7 @@ Item {
             border.color:               _borderColor
             border.width:               _borderWidth
 
-            QGCLabel{
+            QGCLabel {
                 id:                     airspeed_info
                 anchors {
                     horizontalCenter:   parent.horizontalCenter
@@ -245,7 +325,7 @@ Item {
         }
         //----------------------------------------------------
         //-- INDICATED FLIGHT MODE SELECTED
-        Rectangle{
+        Rectangle {
             id:                         flightMode_info_rectangle
             anchors {
                 right:                  altitude_info_rectangle.right
@@ -257,7 +337,7 @@ Item {
             border.color:               _borderColor
             border.width:               _borderWidth
 
-            QGCLabel{
+            QGCLabel {
                 id:                     flightMode_info
                 anchors {
                     horizontalCenter:   parent.horizontalCenter
@@ -271,7 +351,7 @@ Item {
         }
         //----------------------------------------------------
         //-- CURRENT WAYPOINT
-        Rectangle{
+        Rectangle {
             id:                         currentWaypoint_info_rectangle
             anchors {
                 left:                   airspeed_info_rectangle.left
@@ -283,7 +363,7 @@ Item {
             border.color:               _borderColor
             border.width:               _borderWidth
 
-            QGCLabel{
+            QGCLabel {
                 id:                     currentWaypoint_info
                 anchors {
                     horizontalCenter:   parent.horizontalCenter
@@ -297,7 +377,7 @@ Item {
         }
         //----------------------------------------------------
         //-- INDICATED HEADING
-        Rectangle{
+        Rectangle {
             id:                         heading_info_rectangle
             anchors.bottom:             parent.bottom
             anchors.bottomMargin:       _toolsMargin
