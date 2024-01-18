@@ -164,7 +164,7 @@ Item {
         Rectangle {
             id:                 altitude_info_rectangle
             anchors {
-                verticalCenter: parent.verticalCenter
+                bottom:         parent.verticalCenter
                 right:          parent.right 
                 rightMargin:    _toolsMargin + instrument.width * 0.05
             }
@@ -185,7 +185,37 @@ Item {
                 color:                  qgcPal.text
                 font.pointSize:         scalingFontSize
             }
+        }        
+        //----------------------------------------------------
+        //-- INDICATED CLIMBRATE (VERTICAL SPEED)
+        Rectangle{
+            id:                         climbRate_info_rectangle
+            anchors {
+                left:                   altitude_info_rectangle.left
+                top:                    altitude_info_rectangle.bottom
+                // topMargin:              _toolsMargin
+            }
+            color:                      _labelBackgroundColor
+            height:                     scalingFontHeight   
+            width:                      scalingFontWidth //(Window.width > 1000) ? ScreenTools.defaultFontPixelWidth * 11 : ScreenTools.defaultFontPixelWidth * 6
+            border.color:               _borderColor
+            border.width:               _borderWidth
+
+            QGCLabel{
+                id:                     climbRate_info
+                anchors {
+                    horizontalCenter:   parent.horizontalCenter
+                    verticalCenter:     parent.verticalCenter
+                    leftMargin:         _toolsMargin + 5
+                }
+                text:                   _climbRate_string
+                color:                  qgcPal.text
+                font.pointSize:         scalingFontSize
+            }
         }
+        //----------------------------------------------------
+        // -- ALTITUDE CLIMBRATE LADDER/BAR
+
         //----------------------------------------------------
         //-- INDICATED AIR SPEED
         Rectangle{
@@ -261,33 +291,6 @@ Item {
                     leftMargin:         _toolsMargin + 5
                 }
                 text:                   _currentIndex
-                color:                  qgcPal.text
-                font.pointSize:         scalingFontSize
-            }
-        }
-        //----------------------------------------------------
-        //-- INDICATED CLIMBRATE
-        Rectangle{
-            id:                         climbRate_info_rectangle
-            anchors {
-                left:                   altitude_info_rectangle.left
-                top:                    altitude_info_rectangle.bottom
-                topMargin:              _toolsMargin
-            }
-            color:                      _labelBackgroundColor
-            height:                     scalingFontHeight   
-            width:                      scalingFontWidth //(Window.width > 1000) ? ScreenTools.defaultFontPixelWidth * 11 : ScreenTools.defaultFontPixelWidth * 6
-            border.color:               _borderColor
-            border.width:               _borderWidth
-
-            QGCLabel{
-                id:                     climbRate_info
-                anchors {
-                    horizontalCenter:   parent.horizontalCenter
-                    verticalCenter:     parent.verticalCenter
-                    leftMargin:         _toolsMargin + 5
-                }
-                text:                   _climbRate_string
                 color:                  qgcPal.text
                 font.pointSize:         scalingFontSize
             }

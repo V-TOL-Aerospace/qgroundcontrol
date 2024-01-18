@@ -157,7 +157,7 @@ Item {
         anchors {
             top:                parent.top
             left:               parent.left
-            leftMargin:         _toolsMargin + Window.width * 0.05
+            leftMargin:         customOverlay.leftSide_toolStrip_margin //_toolsMargin + Window.width * 0.05
         }
         item1IsFullSettingsKey: "MainFlyWindowIsMap"
         item1:                  mapControl

@@ -79,6 +79,9 @@ Item {
     readonly property int dropUp:       3
     readonly property int dropDown:     4
 
+    readonly property var leftSide_toolStrip_margin:        leftSide_toolStrip.width
+    readonly property var rightSide_toolStrip_margin:       rightSide_toolStrip.width
+
     function secondsToHHMMSS(timeS) {
         var sec_num = parseInt(timeS, 10);
         var hours   = Math.floor(sec_num / 3600);
@@ -548,7 +551,7 @@ Item {
                     text:           _pipOverlay._isExpanded ? qsTr("Hide PFD") : qsTr("Show PFD")
                     iconSource:     "/InstrumentValueIcons/view-carousel.svg"
                     enabled:        true
-                    onTriggered:    _pipOverlay._setPipIsExpanded(!isPipOverlayExpanded)
+                    onTriggered:    _pipOverlay._setPipIsExpanded(!_pipOverlay._isExpanded)
                 },
                 CustomToolStripAction {
                     text:               qsTr("Battery")
