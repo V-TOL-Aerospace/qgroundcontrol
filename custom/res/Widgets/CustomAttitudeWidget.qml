@@ -397,13 +397,42 @@ Item {
             border.width:               _borderWidth
 
             QGCLabel {
+                property int    _heading:           vehicle ? vehicle.heading.rawValue : 0
                 property string _headingString:     vehicle ? vehicle.heading.rawValue.toFixed(0) : "OFF"
                 property string _headingString2:    _headingString.length  === 1 ? "0" + _headingString  : _headingString
                 property string _headingString3:    _headingString2.length === 2 ? "0" + _headingString2 : _headingString2
 
+                property string _compassHeadingString: {
+                    if (_heading >= 337.5 && _heading <= 22.5) {
+                        return "N"
+                    }
+                    else if (_heading >= 22.5 && _heading <= 67.5) {
+                        return "NE"
+                    }
+                    else if (_heading >= 67.5 && _heading <= 112.5) {
+                        return "E"
+                    }
+                    else if (_heading >= 112.5 && _heading <= 157.5) {
+                        return "SE"
+                    }
+                    else if (_heading >= 157.5 && _heading <= 202.5) {
+                        return "S"
+                    }
+                    else if (_heading >= 202.5 && _heading <= 247.5) {
+                        return "SW"
+                    }
+                    else if (_heading >= 247.5 && _heading <= 292.5) {
+                        return "W"
+                    }
+                    else if (_heading >= 292.5 && _heading <= 337.5) {
+                        return "NW"
+                    }
+                    return ""
+                }
+
                 anchors.horizontalCenter:   parent.horizontalCenter
                 anchors.verticalCenter:     parent.verticalCenter
-                text:                       _headingString3
+                text:                       _headingString3 + " " + _compassHeadingString
                 color:                      qgcPal.text
                 visible:                    showHeading
                 // font.pointSize:             ScreenTools.smallFontPointSize
@@ -434,5 +463,4 @@ Item {
         border.color:   "#000"
         border.width:   1
     }
-
 }

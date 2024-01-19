@@ -375,7 +375,8 @@ Item {
                     onTriggered:    _guidedController.confirmAction(_guidedController.actionRTL, 1)
                 },
                 ToolStripAction {
-                    text:           qsTr(" ")
+                    text:           qsTr("Follow Me")
+                    iconSource:     "/InstrumentValueIcons/travel-walk.svg"
                     enabled:        false
                 },
                 ToolStripAction {
@@ -813,7 +814,7 @@ Item {
         color:                  qgcPal.toolbarBackground // qgcPal.windowShade //qgcPal.window
         border.color:           qgcPal.text
         border.width:           0.5
-        visible: true
+        visible:                false
 
         Rectangle {
             id:                     compassBezel
