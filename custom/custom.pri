@@ -35,18 +35,18 @@ message(Custom QGC Version: $${CUSTOM_QGC_VERSION})
 DEFINES += CUSTOMHEADER=\"\\\"CustomPlugin.h\\\"\"
 DEFINES += CUSTOMCLASS=CustomPlugin
 
-TARGET   = CustomQGroundControl
-DEFINES += QGC_APPLICATION_NAME='"\\\"Custom QGroundControl\\\""'
+TARGET   = NeuronGCS
+DEFINES += QGC_APPLICATION_NAME='"\\\"Neuron GCS v4\\\""'
 
 DEFINES += QGC_ORG_NAME=\"\\\"qgroundcontrol.org\\\"\"
 DEFINES += QGC_ORG_DOMAIN=\"\\\"org.qgroundcontrol\\\"\"
 
-QGC_APP_NAME        = "Custom QGroundControl"
-QGC_BINARY_NAME     = "CustomQGroundControl"
-QGC_ORG_NAME        = "Custom"
-QGC_ORG_DOMAIN      = "org.custom"
-QGC_ANDROID_PACKAGE = "org.custom.qgroundcontrol"
-QGC_APP_DESCRIPTION = "Custom QGroundControl"
+QGC_APP_NAME        = "Neuron GCS v4"
+QGC_BINARY_NAME     = "NeuronGCS"
+QGC_ORG_NAME        = "V-TOL Aerospace Pty Limited"
+QGC_ORG_DOMAIN      = ""
+QGC_ANDROID_PACKAGE = "org.custom.neurongcs"
+QGC_APP_DESCRIPTION = "Neuron GCS v4 - A Custom UI Overlay for QGroundControl"
 QGC_APP_COPYRIGHT   = "Copyright (C) 2020 QGroundControl Development Team. All rights reserved."
 
 # Our own, custom resources
