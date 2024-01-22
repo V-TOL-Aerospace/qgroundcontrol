@@ -398,7 +398,7 @@ Item {
 
             QGCLabel {
                 property int    _heading:           vehicle ? vehicle.heading.rawValue : 0
-                property string _headingString:     vehicle ? vehicle.heading.rawValue.toFixed(0) : "OFF"
+                property string _headingString:     vehicle ? vehicle.heading.rawValue.toFixed(0) : "000"
                 property string _headingString2:    _headingString.length  === 1 ? "0" + _headingString  : _headingString
                 property string _headingString3:    _headingString2.length === 2 ? "0" + _headingString2 : _headingString2
 
@@ -432,7 +432,7 @@ Item {
 
                 anchors.horizontalCenter:   parent.horizontalCenter
                 anchors.verticalCenter:     parent.verticalCenter
-                text:                       _headingString3 + " " + _compassHeadingString
+                text:                       vehicle ? _headingString3 + " " + _compassHeadingString : "000 N"
                 color:                      qgcPal.text
                 visible:                    showHeading
                 // font.pointSize:             ScreenTools.smallFontPointSize
