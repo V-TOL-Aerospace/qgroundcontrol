@@ -439,6 +439,25 @@ Item {
                 font.pointSize:             scalingFontSize
             }
         }
+        Rectangle {
+            id: flightTime_info_rectangle
+            anchors.bottom:             currentWaypoint_info_rectangle.top
+            anchors.bottomMargin:       _toolsMargin
+            anchors.horizontalCenter:   currentWaypoint_info_rectangle.horizontalCenter
+            color:                      _labelBackgroundColor
+            height:                     scalingFontHeight   
+            width:                      scalingFontWidth // ScreenTools.defaultFontPixelWidth * 5
+            border.color:               _borderColor
+            border.width:               _borderWidth
+
+            QGCLabel {
+                anchors.horizontalCenter:   parent.horizontalCenter
+                anchors.verticalCenter:     parent.verticalCenter
+                text:                       "00:00"
+                color:                      qgcPal.text
+                font.pointSize:             scalingFontSize
+            }
+        }
     }
 
     Rectangle {
