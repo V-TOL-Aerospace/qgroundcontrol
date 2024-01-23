@@ -65,11 +65,13 @@ Rectangle {
     }
 
     Component.onCompleted: {
-        messageText.text = formatMessage(_activeVehicle.formattedMessages)
-        //-- Hack to scroll to last message
-        for (var i = 0; i <= _activeVehicle.messageCount; i++)
-            messageFlick.flick(0,-5000)
-        _activeVehicle.resetAllMessages()
+        if (activeVehicle) {
+            messageText.text = activeVehicle ? formatMessage(activeVehicle.formattedMessages) : undefined
+            //-- Hack to scroll to last message
+            for (var i = 0; i <= activeVehicle.messageCount; i++)
+                messageFlick.flick(0,-5000)
+            activeVehicle.resetAllMessages()
+        } else { messageText.text = "" }
     }
 
     //-- Clear Messages
