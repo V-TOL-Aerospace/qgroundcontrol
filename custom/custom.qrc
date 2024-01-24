@@ -32,6 +32,7 @@
         <file alias="Custom/Widgets/CustomFlightModeSelectDropPanel.qml">res/Widgets/CustomFlightModeSelectDropPanel.qml</file>
         <file alias="Custom/Widgets/CustomFlyViewVideoPFD.qml">res/Widgets/CustomFlyViewVideoPFD.qml</file>
         <file alias="Custom/Widgets/CustomIconButton.qml">res/Widgets/CustomIconButton.qml</file>
+        <file alias="Custom/Widgets/CustomMavAddInfoDropPanel.qml">res/Widgets/CustomMavAddInfoDropPanel.qml</file>
         <file alias="Custom/Widgets/CustomMavMessageWidget.qml">res/Widgets/CustomMavMessageWidget.qml</file>
         <file alias="Custom/Widgets/CustomMavStatusBatteryDropPanel.qml">res/Widgets/CustomMavStatusBatteryDropPanel.qml</file>
         <file alias="Custom/Widgets/CustomMavStatusButton.qml">res/Widgets/CustomMavStatusButton.qml</file>
