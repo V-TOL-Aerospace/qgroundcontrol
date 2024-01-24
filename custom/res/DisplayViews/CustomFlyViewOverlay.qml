@@ -53,7 +53,7 @@ Item {
     property bool   _test_visible:          true
 
     property real   scalable_button_height:         Window.height/8 - _toolsMargin
-    property real   scalable_warnings_panel_width:  topWarningDisplay.width/7 - _toolsMargin
+    // property real   scalable_warnings_panel_width:  topWarningDisplay.width/7 - _toolsMargin
 
     property real   _tabWidth:              (Window.width < 1000) ? (Window.width * 0.05) : (Window.width * 0.04)// ScreenTools.defaultFontPixelWidth * 12      
     property int    _unhealthySensors:      _activeVehicle ? _activeVehicle.sensorsUnhealthyBits : 1
@@ -97,234 +97,6 @@ Item {
         id:                     _totalToolInsets
         topEdgeCenterInset:     0
         rightEdgeCenterInset:   parent.width - rightSide_toolStrip.x
-    }
-
-    // TOP RECTANGLE WARNING PANELS AREA (OLD)
-    Rectangle {
-        id:         topWarningDisplay_boarder
-        visible:    false
-        anchors {
-            top:    parent.top
-            left:   attitudeIndicator.right // flightControlRectangle.right
-            right:  rightSide_toolStrip.left // rightSideButtonControls_Boarder.left
-        }
-        color:      qgcPal.windowShadeDark
-        height:     parent.height * 0.08
-        MouseArea {
-            anchors.fill: parent
-        }
-        Rectangle {
-            id:                     topWarningDisplay
-            anchors {
-                top:                parent.top
-                right:              parent.right
-            }
-            height:                 parent.height - _toolsMargin
-            width:                  parent.width - _toolsMargin
-            color:                  qgcPal.windowShade
-            CustomMavStatusButton {
-                id:             warning_panel_0
-                enabled:        _activeVehicle
-                anchors {
-                    top:        parent.top
-                    topMargin:  _toolsMargin
-                    left:       parent.left
-                    leftMargin: _toolsMargin
-                }
-                // text:                   qsTr("SENSORS")
-                height:                 parent.height - _toolsMargin
-                width:                  scalable_warnings_panel_width
-                showBorder:             true
-                activeVehicle:          _activeVehicle
-                statusActivity:         _activeVehicle ? (_activeVehicle.allSensorsHealthy ? statusNormal : statusError ) : statusDisabled
-                showOnMouseHighlight:   true
-            }
-            // CustomMavStatusIndicator {
-            //     id:             warning_panel_1
-            //     anchors {
-            //         top:        warning_panel_0.bottom
-            //         topMargin:  _toolsMargin
-            //         left:       parent.left
-            //         leftMargin: _toolsMargin
-            //     }
-            //     text:           _activeVehicle ? (_activeVehicle.armed ? qsTr("ARMED") : qsTr("DISARMED")) : qsTr("DISARMED")
-            //     height:         parent.height - _toolsMargin
-            //     width:          scalable_warnings_panel_width
-            //     showBorder:     true
-            //     statusActivity: _activeVehicle ? (_activeVehicle.armed ? statusNormal : statusError) : statusDisabled
-            //     visible:        false
-            // }
-
-            CustomMavStatusGPSButton {
-                id:                 warning_panel_2
-                enabled:            _activeVehicle
-                anchors {
-                    top:            parent.top
-                    topMargin:      _toolsMargin
-                    left:           warning_panel_0.right
-                    leftMargin:     _toolsMargin
-                }
-                // text:                   _activeVehicle ? _activeVehicle.gps.lock.enumStringValue : qsTr("GPS: N/A")
-                height:                 parent.height - _toolsMargin
-                width:                  scalable_warnings_panel_width
-                showBorder:             true
-                statusActivity:         _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensorGPS) ? statusError : statusNormal) : statusDisabled
-                showOnMouseHighlight:   true
-            }
-
-            CustomMavStatusIndicator {
-                id:             warning_panel_4
-                enabled:        _activeVehicle
-                anchors {
-                    top:        parent.top
-                    topMargin:  _toolsMargin
-                    left:       warning_panel_2.right
-                    leftMargin: _toolsMargin
-                }
-                text:           qsTr("MAG")
-                height:         parent.height - _toolsMargin
-                width:          scalable_warnings_panel_width
-                showBorder:     true
-                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensor3dMag) ? statusError : statusNormal) : statusDisabled
-            }
-            // CustomMavStatusIndicator {
-            //     id:             warning_panel_5
-            //     anchors {
-            //         top:        warning_panel_4.bottom
-            //         topMargin:  _toolsMargin
-            //         left:       warning_panel_2.right
-            //         leftMargin: _toolsMargin
-            //     }
-            //     text:           qsTr("NOT IN USE")
-            //     height:         parent.height * 0.5 - _toolsMargin
-            //     width:          scalable_warnings_panel_width
-            //     showBorder:     true
-            //     statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensor3dGyro) ? statusError : statusNormal) : statusDisabled
-            //     visible:        false
-            // }
-
-            CustomMavStatusIndicator {
-                id:             warning_panel_6
-                enabled:        _activeVehicle
-                anchors {
-                    top:        parent.top
-                    topMargin:  _toolsMargin
-                    left:       warning_panel_4.right
-                    leftMargin: _toolsMargin
-                }
-                text:           qsTr("ACCEL")
-                height:         parent.height - _toolsMargin
-                width:          scalable_warnings_panel_width
-                showBorder:     true
-                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensor3dAccel) ? statusError : statusNormal) : statusDisabled
-            }
-            // CustomMavStatusIndicator {
-            //     id:             warning_panel_7
-            //     anchors {
-            //         top:        warning_panel_6.bottom
-            //         topMargin:  _toolsMargin
-            //         left:       warning_panel_4.right
-            //         leftMargin: _toolsMargin
-            //     }
-            //     text:           qsTr(" ")
-            //     height:         parent.height * 0.5 - _toolsMargin
-            //     width:          scalable_warnings_panel_width
-            //     showBorder:     true
-            //     enabled:        false
-            //     visible:        false
-            // }
-
-            CustomMavStatusIndicator {
-                id:             warning_panel_8
-                enabled:        _activeVehicle
-                anchors {
-                    top:        parent.top
-                    topMargin:  _toolsMargin
-                    left:       warning_panel_6.right
-                    leftMargin: _toolsMargin
-                }
-                text:           qsTr("GYRO")
-                height:         parent.height - _toolsMargin
-                width:          scalable_warnings_panel_width
-                showBorder:     true
-                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensor3dGyro) ? statusError : statusNormal) : statusDisabled
-            }
-            // CustomMavStatusIndicator {
-            //     id:             warning_panel_9
-            //     anchors {
-            //         top:        warning_panel_8.bottom
-            //         topMargin:  _toolsMargin
-            //         left:       warning_panel_6.right
-            //         leftMargin: _toolsMargin
-            //     }
-            //     text:           qsTr(" ")
-            //     height:         parent.height * 0.5 - _toolsMargin
-            //     width:          scalable_warnings_panel_width
-            //     showBorder:     true
-            //     enabled:        false
-            //     visible:        false
-            // }
-
-            CustomMavStatusIndicator {
-                id:             warning_panel_10
-                enabled:        _activeVehicle
-                anchors {
-                    top:        parent.top
-                    topMargin:  _toolsMargin
-                    left:       warning_panel_8.right
-                    leftMargin: _toolsMargin
-                }
-                text:           qsTr("AHRS")
-                height:         parent.height - _toolsMargin
-                width:          scalable_warnings_panel_width
-                showBorder:     true
-                statusActivity: _activeVehicle ? ((_unhealthySensors & Vehicle.SysStatusSensorAHRS) ? statusError : statusNormal) : statusDisabled
-            }
-            // CustomMavStatusIndicator {
-            //     id:             warning_panel_11
-            //     anchors {
-            //         top:        warning_panel_10.bottom
-            //         topMargin:  _toolsMargin
-            //         left:       warning_panel_8.right
-            //         leftMargin: _toolsMargin
-            //     }
-            //     text:           qsTr(" ")
-            //     height:         parent.height * 0.5 - _toolsMargin
-            //     width:          scalable_warnings_panel_width
-            //     showBorder:     true
-            //     enabled:        false
-            //     visible:        false
-            // }
-
-            CustomMavStatusIndicator {
-                id:             warning_panel_12
-                anchors {
-                    top:        parent.top
-                    topMargin:  _toolsMargin
-                    left:       warning_panel_10.right
-                    leftMargin: _toolsMargin
-                }
-                text:           Window.width
-                height:         parent.height * 0.5 - _toolsMargin
-                width:          scalable_warnings_panel_width
-                showBorder:     true
-                enabled:        false
-            }
-            CustomMavStatusIndicator {
-                id:             warning_panel_13
-                anchors {
-                    top:        warning_panel_12.bottom
-                    topMargin:  _toolsMargin
-                    left:       warning_panel_10.right
-                    leftMargin: _toolsMargin
-                }
-                text:           Window.height
-                height:         parent.height * 0.5 - _toolsMargin
-                width:          scalable_warnings_panel_width
-                showBorder:     true
-                enabled:        false
-            }
-        }
     }
 
     // RIGHT SIDE BUTTON TOOL STRIP
@@ -380,8 +152,10 @@ Item {
                     enabled:        false
                 },
                 ToolStripAction {
-                    text:           qsTr(" ")
-                    enabled:        false
+                    text:               qsTr("Extra Info")
+                    enabled:            _activeVehicle
+                    iconSource:         "/InstrumentValueIcons/align-justified.svg"
+                    dropPanelComponent: additionalInfoDropPanel
                 },
                 ToolStripAction {
                     text:           qsTr(" ")
@@ -390,142 +164,6 @@ Item {
             ]
         }
         model: rightSide_toolStripActionList.model
-    }
-
-
-    // RIGHT SIDE BUTTON CONTROLS - OLD
-    Rectangle {
-        id:                     rightSideButtonControls_Boarder
-        anchors {
-            topMargin:      _toolsMargin
-            right:          parent.right
-        }
-        height:             Screen.height
-        width:              _tabWidth +  _toolsMargin
-        color:              qgcPal.windowShadeDark
-        visible:            false
-        MouseArea {
-            anchors.fill:   parent
-        }
-        Rectangle {
-            id:                     rightSideButtonControls
-            anchors {
-                right:              parent.right
-            }
-            height:                 parent.height
-            width:                  _tabWidth 
-            color:                  qgcPal.windowShade
-            visible:                _test_visible
-            CustomMavStatusIndicator {
-                id:             right_button_0
-                height:         scalable_button_height 
-                width:          parent.width
-                showBorder:     true
-                anchors {
-                    top:        parent.top
-                    topMargin:  _toolsMargin
-                }
-                text:           _activeVehicle ? qsTr("Connected"):qsTr("Disconn")
-                iconSource:     _activeVehicle ? "/qmlimages/Connect.svg" : "/qmlimages/Disconnect.svg"
-                // onClicked:      _activeVehicle.closeVehicle()
-                // enabled:        false
-                statusActivity:   _activeVehicle ? "Normal" : "Disabled"
-            }
-            CustomIconButton {
-                id:             right_button_1
-                height:         scalable_button_height 
-                width:          parent.width
-                showBorder:     true
-                anchors {
-                    top:        right_button_0.bottom
-                    topMargin:  _toolsMargin
-                }
-                text:           _activeVehicle ? (_activeVehicle.armed ? qsTr("ARMED") : qsTr("DISARMED")) : qsTr("DISARMED")
-                iconSource:     _activeVehicle ? (_activeVehicle.armed ? "/qmlimages/Armed.svg" : "/qmlimages/Disarmed.svg") : "/qmlimages/Disarmed.svg"
-                onClicked:      _activeVehicle.armed ? _guidedController.confirmAction(_guidedController.actionDisarm, 1) : _guidedController.confirmAction(_guidedController.actionArm, 1) //_activeVehicle.armed ? _activeVehicle.armed = false : _activeVehicle.armed = true
-                enabled:        _activeVehicle
-                grayscale:      false
-            }
-            CustomFlightModeButton {
-                id:             right_button_2
-                height:         scalable_button_height 
-                width:          parent.width
-                showBorder:     true
-                anchors {
-                    top:        right_button_1.bottom
-                    topMargin:  _toolsMargin
-                }
-                text:           qsTr(" ")
-                enabled:        _activeVehicle
-                activeVehicle: _activeVehicle
-            }
-            CustomIconButton {
-                id:             right_button_3
-                height:         scalable_button_height 
-                width:          parent.width
-                showBorder:     true
-                anchors {
-                    top:        right_button_2.bottom
-                    topMargin:  _toolsMargin
-                }
-                text:           qsTr("Set Takeoff")
-                iconSource:     "/res/takeoff.svg"
-                enabled:        _activeVehicle ? (_activeVehicle.armed ? false:true): false
-                onClicked:      _activeVehicle.setCurrentMissionSequence(1) //_guidedController.confirmAction(_guidedController.actionSetWaypoint, 1)
-            }
-            CustomIconButton {
-                id:             right_button_4
-                height:         scalable_button_height 
-                width:          parent.width
-                showBorder:     true
-                anchors {
-                    top:        right_button_3.bottom
-                    topMargin:  _toolsMargin
-                }
-                text:           qsTr("RTL")
-                iconSource:     "/res/rtl.svg"
-                enabled:        _activeVehicle ? (_activeVehicle.armed ? true:false): false
-                onClicked:      _guidedController.confirmAction(_guidedController.actionRTL, 1)
-            }
-            CustomIconButton {
-                id:             right_button_5
-                height:         scalable_button_height 
-                width:          parent.width
-                showBorder:     true
-                anchors { 
-                    top:        right_button_4.bottom
-                    topMargin:  _toolsMargin
-                }
-                // text:           qsTr("WP ") + _guidedController._currentMissionIndex
-                enabled:        false // _activeVehicle
-                // onClicked:      _guidedController.confirmAction(_guidedController.actionSetWaypoint, _guidedController._currentMissionIndex + 1)
-            }
-            CustomIconButton {
-                id:             right_button_6
-                height:         scalable_button_height 
-                width:          parent.width
-                showBorder:     true
-                anchors {
-                    top:        right_button_5.bottom
-                    topMargin:  _toolsMargin
-                }
-                text:           qsTr(" ")
-                enabled:        false //_activeVehicle
-            }
-            CustomIconButton {
-                id:             right_button_7
-                height:         scalable_button_height 
-                width:          parent.width
-                showBorder:     true
-                anchors {
-                    top:            right_button_6.bottom
-                    topMargin:      _toolsMargin
-                    bottomMargin:   _toolsMargin
-                }
-                text:           qsTr(" ")
-                enabled:        false //_activeVehicle
-            }
-        }
     }
 
     // LEFT SIDE BUTTON TOOL STRIP
@@ -554,13 +192,19 @@ Item {
                     enabled:        true
                     onTriggered:    _pipOverlay._setPipIsExpanded(!_pipOverlay._isExpanded)
                 },
-                CustomToolStripAction {
-                    text:               qsTr("Battery")
-                    enabled:            _activeVehicle && _batteryGroup
-                    iconSource:         getBatteryIcon()
-                    buttonColor:        getBatteryColor()
-                    dropPanelComponent: statusBatteryDropPanel
+                ToolStripAction {
+                    text:               qsTr("Extra Info")
+                    enabled:            _activeVehicle
+                    iconSource:         "/InstrumentValueIcons/align-justified.svg"
+                    dropPanelComponent: additionalInfoDropPanel
                 },
+                // CustomToolStripAction {
+                //     text:               qsTr("Battery")
+                //     enabled:            _activeVehicle && _batteryGroup
+                //     iconSource:         getBatteryIcon()
+                //     buttonColor:        getBatteryColor()
+                //     dropPanelComponent: statusBatteryDropPanel
+                // },
                 CustomToolStripAction {
                     text:               (_activeVehicle && _activeVehicle.gps.count.value >= 0) ? qsTr("GPS Status") : qsTr("NO GPS")
                     enabled:            _activeVehicle
@@ -604,143 +248,6 @@ Item {
         }
         
         model: leftSide_toolStripActionList.model
-    }
-
-    // LEFT SIDE BUTTON CONTROLS - OLD
-    Rectangle {
-        id:                     leftSideButtonControls_Boarder
-        anchors {
-            topMargin:          _toolsMargin
-            left:               parent.left
-        }
-        height:                 parent.height
-        width:                  _tabWidth +  _toolsMargin
-        color:                  qgcPal.windowShadeDark
-        visible:                false
-        MouseArea {
-            anchors.fill: parent
-        }
-        Rectangle {
-            id:                 leftSideButtonControls
-            anchors {
-                left:           parent.left
-            }
-            height:             parent.height
-            width:              _tabWidth 
-            color:              qgcPal.windowShade
-            visible:            _test_visible
-            CustomIconButton {
-                id:             button_0
-                onClicked:      mainWindow.showPlanView()
-                height:         scalable_button_height 
-                width:          parent.width
-                showBorder:     true
-                anchors {
-                    top:        parent.top
-                    topMargin:  _toolsMargin
-                }
-                text:           qsTr("Plan")
-                iconSource:     "/qmlimages/Plan.svg"
-            }
-            CustomIconButton {
-                id:             button_1
-                text:           qsTr("Fly View")
-                height:         scalable_button_height 
-                width:          parent.width
-                showBorder:     true
-                anchors {
-                    top:        button_0.bottom
-                    topMargin:  _toolsMargin
-                }
-                iconSource:     "/qmlimages/PaperPlane.svg"
-                enabled: false
-            }
-            CustomIconButton {
-                id:             button_2
-                height:         scalable_button_height 
-                width:          parent.width
-                showBorder:     true
-                anchors {
-                    top:        button_1.bottom
-                    topMargin:  _toolsMargin
-                }
-                text:           qsTr("")
-                enabled:        false
-            }
-            CustomIconButton {
-                id:             button_3
-                height:         scalable_button_height 
-                width:          parent.width
-                showBorder:     true
-                anchors {
-                    top:        button_2.bottom
-                    topMargin:  _toolsMargin
-                }
-                text:           qsTr("")
-                enabled:        false
-            }
-            CustomIconButton {
-                id:             button_4
-                height:         scalable_button_height 
-                width:          parent.width
-                showBorder:     true
-                anchors {
-                    top:        button_3.bottom
-                    topMargin:  _toolsMargin
-                }
-                text:           qsTr("")
-                enabled:        false
-            }
-            CustomIconButton {
-                id:             button_5
-                height:         scalable_button_height 
-                width:          parent.width
-                showBorder:     true
-                anchors {
-                    top:        button_4.bottom
-                    topMargin:  _toolsMargin
-                }
-                text:           qsTr("")
-                enabled:        false
-            }
-            CustomIconButton {
-                id:             button_6
-                height:         scalable_button_height 
-                width:          parent.width
-                showBorder:     true
-                anchors {
-                    top:        button_5.bottom
-                    topMargin:  _toolsMargin
-                }
-                
-                text:           qsTr("Vehicle")
-                iconSource:     "/qmlimages/Gears.svg"
-                onClicked: {
-                    if (!mainWindow.preventViewSwitch()) {
-                        mainWindow.showSetupTool()
-                    }
-                }
-            }
-            CustomIconButton {
-                id:             button_7
-                height:         scalable_button_height 
-                width:          parent.width
-                showBorder:     true
-                anchors {
-                    top:        button_6.bottom
-                    topMargin:  _toolsMargin
-                    bottomMargin: _toolsMargin
-                }
-
-                text:           qsTr("App")
-                iconSource:     "/res/gear-white.svg"
-                onClicked: {
-                    if (!mainWindow.preventViewSwitch()) {
-                        mainWindow.showSettingsTool()
-                    }
-                }     //mainWindow.showToolSelectDialog()
-            }
-        }
     }
 
     // FLIGHT CONTROL AREA - PFD AND OTHER FLIGHT CRITICAL INFORMATION ARE ANCHORED TO THIS RECTANGLE
@@ -1082,5 +589,14 @@ Item {
             }
         }
         return "/InstrumentValueIcons/battery-low.svg"
+    }
+
+    //-------------------------------------------------------------------------
+    // ADDITIONAL INFORMATION DROP PANEL COMPONENT
+    Component {
+        id: additionalInfoDropPanel 
+        CustomMavAddInfoDropPanel {
+            activeVehicle: _activeVehicle
+        }
     }
 }
