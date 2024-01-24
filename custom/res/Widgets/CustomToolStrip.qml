@@ -122,6 +122,6 @@ Rectangle {
     CustomDropPanel {
         id:         dropPanel
         toolStrip:  _root
-        dropDirection: parent.dropDirection
+        // dropDirection: parent.dropDirection
     }
 }

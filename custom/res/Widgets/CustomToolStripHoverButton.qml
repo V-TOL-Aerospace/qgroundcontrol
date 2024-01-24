@@ -68,11 +68,12 @@ Button {
         } else if (checked) {
             if (control.dropDirection == dropRight) {
                 var panelEdgeTopPoint = mapToItem(_root, width, 0)
-                dropPanel.show(panelEdgeTopPoint, toolStripAction.dropPanelComponent, this)
+                dropPanel.show(panelEdgeTopPoint, toolStripAction.dropPanelComponent, this, dropDirection)
             }
             else if (control.dropDirection == dropLeft) {
-                var panelEdgeTopPoint = mapToItem(_root, -1.5*width - contentLayoutItem.width, 0)
-                dropPanel.show(panelEdgeTopPoint, toolStripAction.dropPanelComponent, this)
+                // var panelEdgeTopPoint = mapToItem(_root, -2*width - contentLayoutItem.width, 0)
+                var panelEdgeTopPoint = mapToItem(_root, 0, 0)
+                dropPanel.show(panelEdgeTopPoint, toolStripAction.dropPanelComponent, this, dropDirection)
             }
             checked = true
             control.dropped(index)

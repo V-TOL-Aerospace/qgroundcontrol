@@ -34,7 +34,8 @@ Item {
     readonly property int dropUp:       3
     readonly property int dropDown:     4
 
-    property int    dropDirection
+    // property int    dropDirection
+    property real   _dropDirection
 
     readonly property real _arrowBaseHeight:    radius             // Height of vertical side of arrow
     readonly property real _arrowPointWidth:    radius * 0.667     // Distance from vertical side to point
@@ -48,10 +49,11 @@ Item {
     property var    _dropPanelCancel
     property var    _parentButton
 
-    function show(panelEdgeTopPoint, panelComponent, parentButton) {
+    function show(panelEdgeTopPoint, panelComponent, parentButton, dropDirection) {
         _parentButton = parentButton
         _dropEdgeTopPoint = panelEdgeTopPoint
         _dropDownComponent = panelComponent
+        _dropDirection = dropDirection
         _calcPositions()
         visible = true
         _dropPanelCancel = dropPanelCancelComponent.createObject(toolStrip.parent)
@@ -73,7 +75,12 @@ Item {
         dropDownItem.width  = panelComponentWidth  + (_dropMargin * 2) + _arrowPointWidth
         dropDownItem.height = panelComponentHeight + (_dropMargin * 2)
 
-        dropDownItem.x = _dropEdgeTopPoint.x + _dropMargin
+        if ( dropDirection == dropRight ) {
+            dropDownItem.x = _dropEdgeTopPoint.x + _dropMargin
+        }
+        else if (dropDirection == dropLeft ) {
+            dropDownItem.x = _dropEdgeTopPoint.x - dropDownItem.width - _dropMargin
+        }
         dropDownItem.y = _dropEdgeTopPoint.y -(dropDownItem.height / 2) + radius
 
         // Validate that dropdown is within viewport
@@ -130,7 +137,7 @@ Item {
                 context.reset()
                 context.beginPath()
 
-                if (_root.dropDirection == dropRight) {
+                if (_dropDirection == dropRight) {
                     var panelX = _arrowPointWidth
                     var panelY = 0
 
@@ -145,7 +152,7 @@ Item {
                     // from the second base point of the triangular arrow, we return to the top left edge point once again. 
                     context.lineTo(panelX, panelY)                              // top left again
                 }
-                else if (_root.dropDirection == dropLeft) {
+                else if (_dropDirection == dropLeft) {
                     var panelX = 0
                     var panelY = 0
 
@@ -170,11 +177,12 @@ Item {
         QGCFlickable {
             id:                 panelItemFlickable
             anchors.margins:    _dropMargin
-            anchors.leftMargin: (_root.dropDirection == dropRight)? _dropMargin + _arrowPointWidth : _dropMargin
+            anchors.leftMargin: (_dropDirection == dropRight)? _dropMargin + _arrowPointWidth : _dropMargin
             anchors.fill:       parent
             flickableDirection: Flickable.VerticalFlick
             contentWidth:       panelLoader.width
             contentHeight:      panelLoader.height
+            visible:            true
 
             Loader {
                 id: panelLoader
