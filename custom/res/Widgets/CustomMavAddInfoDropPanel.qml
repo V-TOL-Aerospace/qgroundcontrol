@@ -9,6 +9,7 @@ import QGroundControl.Controls              1.0
 import QGroundControl.MultiVehicleManager   1.0
 import QGroundControl.ScreenTools           1.0
 import QGroundControl.Palette               1.0
+import QGroundControl.Vehicle               1.0
 
 ColumnLayout {
     id:             root
@@ -17,14 +18,62 @@ ColumnLayout {
 
     property string _distanceUnit:          QGroundControl.unitsConversion.appSettingsVerticalDistanceUnitsString
 
-    property real   _distanceToHomeRaw:     activeVehicle ? activeVehicle.distanceToHome.rawValue : 0
-    property real   _flightDistanceRaw:     activeVehicle ? activeVehicle.flightDistance.rawValue : 0
+    property real   _distanceToHomeRaw:     activeVehicle ? activeVehicle.distanceToHome.rawValue : 0 
+    property real   _flightDistanceRaw:     activeVehicle ? activeVehicle.flightDistance.rawValue : 0 
     property real   _headingToHome:         activeVehicle ? activeVehicle.headingToHome.rawValue  : 0 
-    property var    _hobbsMeasure:          activeVehicle ? activeVehicle.hobbs.rawValue  : "0000:00:00"
+    property var    _hobbsMeasure:          activeVehicle ? activeVehicle.hobbs.rawValue  : "0000:00:00" 
+    property real   _timeToHome:            activeVehicle ? activeVehicle.timeToHome.rawValue : 0
 
     property string _distanceToHomeStr:     _distanceToHomeRaw.toFixed(0) + " " + _distanceUnit
     property string _flightDistanceStr:     _flightDistanceRaw.toFixed(0) + " " + _distanceUnit
-    property string _headingToHomeStr:      _headingToHome ? _headingToHome.toFixed(0) : "At Home"
+    property string _timeToHomeStr:         secondsToHHMMSS(_timeToHome)
+    property var    _flightTime:            activeVehicle ? activeVehicle.flightTime.rawValue : 0 
+    property string _flightTimeStr:         secondsToHHMMSS(_flightTime)
+    
+    property string _headingToHomeStr:      _headingToHome ? _headingToHome.toFixed(0) : "At Home Position"
+    property string _headingString2:        _headingToHomeStr.length    === 1 ? "0" + _headingToHomeStr : _headingToHomeStr
+    property string _headingString3:        _headingString2.length      === 2 ? "0" + _headingString2   : _headingString2
+    property string _compassHeadingString:  compassHeadingStr(_headingToHome)
+    property string _headingToHomeStrFinal: activeVehicle ? (_headingString3 + " " + _compassHeadingString) : "No data to display"
+
+    function compassHeadingStr(compass_heading) {
+        if (compass_heading >= 337.5 || compass_heading <= 22.5) {
+            return "N"
+        }
+        else if (compass_heading >= 22.5 && compass_heading <= 67.5) {
+            return "NE"
+        }
+        else if (compass_heading >= 67.5 && compass_heading <= 112.5) {
+            return "E"
+        }
+        else if (compass_heading >= 112.5 && compass_heading <= 157.5) {
+            return "SE"
+        }
+        else if (compass_heading >= 157.5 && compass_heading <= 202.5) {
+            return "S"
+        }
+        else if (compass_heading >= 202.5 && compass_heading <= 247.5) {
+            return "SW"
+        }
+        else if (compass_heading >= 247.5 && compass_heading <= 292.5) {
+            return "W"
+        }
+        else if (compass_heading >= 292.5 && compass_heading <= 337.5) {
+            return "NW"
+        }
+        return ""
+    }
+
+    function secondsToHHMMSS(timeS) {
+        var sec_num = parseInt(timeS, 10);
+        var hours   = Math.floor(sec_num / 3600);
+        var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+        var seconds = sec_num - (hours * 3600) - (minutes * 60);
+        if (hours   < 10) {hours   = "0"+hours;}
+        if (minutes < 10) {minutes = "0"+minutes;}
+        if (seconds < 10) {seconds = "0"+seconds;}
+        return hours+':'+minutes+':'+seconds;
+    }
 
     Rectangle {
         id:                         additional_info_window
@@ -55,17 +104,26 @@ ColumnLayout {
                 anchors.horizontalCenter:   parent.horizontalCenter
                 columns:                    2
 
+                QGCLabel { text: qsTr("Current Date & Time")}
+                QGCLabel { text: activeVehicle ? Date().toString() : qsTr("No data to display")}
+
                 QGCLabel { text: qsTr("Hobbs Counter (HHHH:MM:SS):")}
-                QGCLabel { text: activeVehicle ? _hobbsMeasure : qsTr("N/A", "No data to display")}
+                QGCLabel { text: activeVehicle ? _hobbsMeasure : qsTr("No data to display")}
+                                
+                QGCLabel { text: qsTr("Flight Time Δt (HH:MM:SS): ")}
+                QGCLabel { text: _flightTimeStr}
 
                 QGCLabel { text: qsTr("Distance Traveled:") }
-                QGCLabel { text: activeVehicle ? _flightDistanceStr : qsTr("N/A", "No data to display") }
+                QGCLabel { text: activeVehicle ? _flightDistanceStr : qsTr("No data to display") }
 
                 QGCLabel { text: qsTr("Distance To Home:") }
-                QGCLabel { text: activeVehicle ? _distanceToHomeStr : qsTr("N/A", "No data to display") }
+                QGCLabel { text: activeVehicle ? _distanceToHomeStr : qsTr("No data to display") }
+
+                QGCLabel { text: qsTr("Est. Time To Home (HH:MM:SS):") }
+                QGCLabel { text: activeVehicle ? _timeToHomeStr : qsTr("No data to display") }
 
                 QGCLabel { text: qsTr("Heading To Home:") }
-                QGCLabel { text: activeVehicle ? _headingToHomeStr : qsTr("N/A", "No data to display") }
+                QGCLabel { text: _headingToHomeStrFinal }
             }
         }
     }
