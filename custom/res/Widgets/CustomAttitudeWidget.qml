@@ -40,6 +40,20 @@ Item {
     property string _airSpeed_string:               isPFDSize400 ? qsTr("AS: ")     + _airspeed_string_with_unit    : _airspeed_string_with_unit
     property string _climbRate_string:              isPFDSize400 ? qsTr("VS: ")     + _climbRate_string_with_unit   : _climbRate_string_with_unit
 
+    property var    _flightTime:        vehicle ?  vehicle.flightTime.rawValue : 0
+    property string _flightTimeStr:     secondsToHHMMSS(_flightTime)
+
+    function secondsToHHMMSS(timeS) {
+        var sec_num = parseInt(timeS, 10);
+        var hours   = Math.floor(sec_num / 3600);
+        var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+        var seconds = sec_num - (hours * 3600) - (minutes * 60);
+        if (hours   < 10) {hours   = "0"+hours;}
+        if (minutes < 10) {minutes = "0"+minutes;}
+        if (seconds < 10) {seconds = "0"+seconds;}
+        return hours+':'+minutes+':'+seconds;
+    }
+
     width:  size_width
     height: size_height
 
@@ -403,7 +417,7 @@ Item {
                 property string _headingString3:    _headingString2.length === 2 ? "0" + _headingString2 : _headingString2
 
                 property string _compassHeadingString: {
-                    if (_heading >= 337.5 && _heading <= 22.5) {
+                    if (_heading >= 337.5 || _heading <= 22.5) {
                         return "N"
                     }
                     else if (_heading >= 22.5 && _heading <= 67.5) {
@@ -439,8 +453,40 @@ Item {
                 font.pointSize:             scalingFontSize
             }
         }
+        //----------------------------------------------------
+        //-- INDICATED ELAPSED TIME
         Rectangle {
-            id: flightTime_info_rectangle
+            id:                         flightTime_info_rectangle
+            anchors.bottom:             airspeed_info_rectangle.top
+            anchors.bottomMargin:       _toolsMargin
+            anchors.horizontalCenter:   airspeed_info_rectangle.horizontalCenter
+            color:                      _labelBackgroundColor
+            height:                     scalingFontHeight   
+            width:                      scalingFontWidth // ScreenTools.defaultFontPixelWidth * 5
+            border.color:               _borderColor
+            border.width:               _borderWidth
+            visible:                    false
+
+            QGCLabel {
+                anchors.horizontalCenter:   parent.horizontalCenter
+                anchors.verticalCenter:     parent.verticalCenter
+                text:                       _flightTimeStr
+                color:                      qgcPal.text
+                font.pointSize:             scalingFontSize
+            }
+        }
+        QGCLabel {
+            anchors.bottom:             currentWaypoint_info_rectangle.top
+            anchors.bottomMargin:       _toolsMargin
+            anchors.left:               currentWaypoint_info_rectangle.left
+            text:                       qsTr("Δt: ") + _flightTimeStr
+            color:                      qgcPal.text
+            font.pointSize:             scalingFontSize
+        }
+        //----------------------------------------------------
+        //-- INDICATED FLIGHT DISTANCE
+        Rectangle {
+            id:                         flightDistance_info_rectangle
             anchors.bottom:             currentWaypoint_info_rectangle.top
             anchors.bottomMargin:       _toolsMargin
             anchors.horizontalCenter:   currentWaypoint_info_rectangle.horizontalCenter
@@ -449,11 +495,34 @@ Item {
             width:                      scalingFontWidth // ScreenTools.defaultFontPixelWidth * 5
             border.color:               _borderColor
             border.width:               _borderWidth
+            visible:                    false
 
             QGCLabel {
                 anchors.horizontalCenter:   parent.horizontalCenter
                 anchors.verticalCenter:     parent.verticalCenter
-                text:                       "00:00"
+                text:                       vehicle ? vehicle.flightDistance.rawValue.toFixed(0) + " " + QGroundControl.unitsConversion.appSettingsVerticalDistanceUnitsString : "0" + " " + QGroundControl.unitsConversion.appSettingsVerticalDistanceUnitsString
+                color:                      qgcPal.text
+                font.pointSize:             scalingFontSize
+            }
+        }
+        //----------------------------------------------------
+        //-- INDICATED DISTANCE FROM HOME
+        Rectangle {
+            id:                         distanceToHome_info_rectangle
+            anchors.bottom:             flightMode_info_rectangle.bottom
+            anchors.bottomMargin:       _toolsMargin
+            anchors.horizontalCenter:   flightMode_info_rectangle.horizontalCenter
+            color:                      _labelBackgroundColor
+            height:                     scalingFontHeight   
+            width:                      scalingFontWidth // ScreenTools.defaultFontPixelWidth * 5
+            border.color:               _borderColor
+            border.width:               _borderWidth
+            visible:                    false
+
+            QGCLabel {
+                anchors.horizontalCenter:   parent.horizontalCenter
+                anchors.verticalCenter:     parent.verticalCenter
+                text:                       vehicle ? vehicle.distanceToHome.rawValue.toFixed(0) + " " + QGroundControl.unitsConversion.appSettingsVerticalDistanceUnitsString : "0" + " " + QGroundControl.unitsConversion.appSettingsVerticalDistanceUnitsString
                 color:                      qgcPal.text
                 font.pointSize:             scalingFontSize
             }
