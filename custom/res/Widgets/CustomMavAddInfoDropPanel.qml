@@ -21,6 +21,7 @@ ColumnLayout {
     property real   _distanceToHomeRaw:     activeVehicle ? activeVehicle.distanceToHome.rawValue : 0 
     property real   _flightDistanceRaw:     activeVehicle ? activeVehicle.flightDistance.rawValue : 0 
     property real   _headingToHome:         activeVehicle ? activeVehicle.headingToHome.rawValue  : 0 
+    property real   _headingFromHome:       activeVehicle ? getHeadingFromHome(_headingToHome)    : 0
     property var    _hobbsMeasure:          activeVehicle ? activeVehicle.hobbs.rawValue  : "0000:00:00" 
     property real   _timeToHome:            activeVehicle ? activeVehicle.timeToHome.rawValue : 0
 
@@ -30,11 +31,8 @@ ColumnLayout {
     property var    _flightTime:            activeVehicle ? activeVehicle.flightTime.rawValue : 0 
     property string _flightTimeStr:         secondsToHHMMSS(_flightTime)
     
-    property string _headingToHomeStr:      _headingToHome ? _headingToHome.toFixed(0) : "At Home Position"
-    property string _headingString2:        _headingToHomeStr.length    === 1 ? "0" + _headingToHomeStr : _headingToHomeStr
-    property string _headingString3:        _headingString2.length      === 2 ? "0" + _headingString2   : _headingString2
-    property string _compassHeadingString:  compassHeadingStr(_headingToHome)
-    property string _headingToHomeStrFinal: activeVehicle ? (_headingString3 + " " + _compassHeadingString) : "No data to display"
+    property string _headingToHomeStr:      _headingToHome ? headingInThreeSpaces(_headingToHome.toFixed(0)) + " " + compassHeadingStr(_headingToHome) : "At Home Position"
+    property string _headingFromHomeStr:    _headingFromHome ? headingInThreeSpaces(_headingFromHome.toFixed(0)) + " " + compassHeadingStr(_headingFromHome) : "At Home Position"
 
     function compassHeadingStr(compass_heading) {
         if (compass_heading >= 337.5 || compass_heading <= 22.5) {
@@ -73,6 +71,20 @@ ColumnLayout {
         if (minutes < 10) {minutes = "0"+minutes;}
         if (seconds < 10) {seconds = "0"+seconds;}
         return hours+':'+minutes+':'+seconds;
+    }
+
+    function getHeadingFromHome(headingToHome) {
+        var headingFromHome = headingToHome - 180;
+        if (headingFromHome < 0) {
+            headingFromHome = 360 + headingFromHome;
+        }
+        return headingFromHome
+    }
+
+    function headingInThreeSpaces(heading1) {
+        var heading2 = heading1.length === 1 ? "0" + heading1 : heading1;
+        var heading3 = heading2.length === 2 ? "0" + heading2 : heading2;
+        return heading3
     }
 
     Rectangle {
@@ -123,7 +135,10 @@ ColumnLayout {
                 QGCLabel { text: activeVehicle ? _timeToHomeStr : qsTr("No data to display") }
 
                 QGCLabel { text: qsTr("Heading To Home:") }
-                QGCLabel { text: _headingToHomeStrFinal }
+                QGCLabel { text: _headingToHomeStr }
+
+                QGCLabel { text: qsTr("Heading From Home:") }
+                QGCLabel { text: _headingFromHomeStr }
             }
         }
     }
