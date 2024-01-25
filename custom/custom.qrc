@@ -6,6 +6,10 @@
         <file alias="attitude_crosshair_v3.svg">res/Images/attitude_crosshair_v3.svg</file>
         <file alias="attitude_dial.svg">res/Images/attitude_dial.svg</file>
         <file alias="attitude_pointer.svg">res/Images/attitude_pointer.svg</file>
+        <file alias="battery-25.svg">res/Images/battery-25.svg</file>
+        <file alias="battery-50.svg">res/Images/battery-50.svg</file>
+        <file alias="battery-75.svg">res/Images/battery-75.svg</file>
+        <file alias="battery-full.svg">res/Images/battery-full.svg</file>
         <file alias="chronometer.svg">res/Images/chronometer.svg</file>
         <file alias="compass_needle.svg">res/Images/compass_needle.svg</file>
         <file alias="compass_pointer.svg">res/Images/compass_pointer.svg</file>
