@@ -157,10 +157,17 @@ Item {
                     iconSource:         "/InstrumentValueIcons/align-justified.svg"
                     dropPanelComponent: additionalInfoDropPanel
                 },
-                ToolStripAction {
-                    text:           qsTr(" ")
-                    enabled:        false
+                CustomToolStripAction {
+                    text:               qsTr("Battery")
+                    enabled:            _activeVehicle && _batteryGroup
+                    iconSource:         getBatteryIcon()
+                    buttonColor:        getBatteryColor()
+                    dropPanelComponent: statusBatteryDropPanel
                 }
+                // ToolStripAction {
+                //     text:           qsTr(" ")
+                //     enabled:        false
+                // }
             ]
         }
         model: rightSide_toolStripActionList.model
@@ -193,11 +200,15 @@ Item {
                     onTriggered:    _pipOverlay._setPipIsExpanded(!_pipOverlay._isExpanded)
                 },
                 ToolStripAction {
-                    text:               qsTr("Extra Info")
-                    enabled:            _activeVehicle
-                    iconSource:         "/InstrumentValueIcons/align-justified.svg"
-                    dropPanelComponent: additionalInfoDropPanel
+                    text:           qsTr(" ")
+                    enabled:        false
                 },
+                // ToolStripAction {
+                //     text:               qsTr("Extra Info")
+                //     enabled:            _activeVehicle
+                //     iconSource:         "/InstrumentValueIcons/align-justified.svg"
+                //     dropPanelComponent: additionalInfoDropPanel
+                // },
                 // CustomToolStripAction {
                 //     text:               qsTr("Battery")
                 //     enabled:            _activeVehicle && _batteryGroup
@@ -579,16 +590,19 @@ Item {
     function getBatteryIcon() {
         if(_activeVehicle) {
             if(_batPercentRemaining > 75) {
-                return "/InstrumentValueIcons/battery-full.svg";
+                return "/custom/img/battery-full.svg"
             }
             if(_batPercentRemaining > 50) {
-                return "/InstrumentValueIcons/battery-half.svg";
+                return "/custom/img/battery-75.svg"
+            }
+            if(_batPercentRemaining > 25) {
+                return "/custom/img/battery-50.svg"
             }
             if(_batPercentRemaining > 0.1) {
-                return "/InstrumentValueIcons/battery-low.svg";
+                return "/custom/img/battery-25.svg"
             }
         }
-        return "/InstrumentValueIcons/battery-low.svg"
+        return "/custom/img/battery-25.svg"
     }
 
     //-------------------------------------------------------------------------
