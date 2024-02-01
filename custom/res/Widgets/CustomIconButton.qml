@@ -1,9 +1,14 @@
-import QtQuick                  2.3
+import QtQuick                  2.11
+// import QtQuick.Controls             2.4
 import QtQuick.Controls         2.12
 import QtQuick.Controls.Styles  1.4
 
-import QGroundControl.Palette 1.0
-import QGroundControl.ScreenTools 1.0
+import QGroundControl               1.0
+import QGroundControl.Controls      1.0
+import QGroundControl.Palette       1.0
+import QGroundControl.ScreenTools   1.0
+import QtGraphicalEffects           1.0
+
 
 Button {
     id:             control
@@ -21,9 +26,7 @@ Button {
     property real   backRadius:     0
     property real   heightFactor:   0.5
     property string iconSource
-
-    property alias wrapMode:            text.wrapMode
-    property alias horizontalAlignment: text.horizontalAlignment
+    property bool   grayscale:      true
 
     property bool   _showHighlight:     pressed | hovered | checked
 
@@ -45,32 +48,37 @@ Button {
     }
 
     contentItem: Item {
-        implicitWidth:  text.implicitWidth + icon.width
-        implicitHeight: text.implicitHeight
-        baselineOffset: text.y + text.baselineOffset
+        implicitWidth:  _text.implicitWidth + icon.width
+        implicitHeight: _text.implicitHeight
+        baselineOffset: _text.y + _text.baselineOffset
 
         QGCColoredImage {
             id:                     icon
             source:                 control.iconSource
-            height:                 source === "" ? 0 : text.height *2
+            height:                 source === "" ? 0 : _text.height *2
             width:                  height
-            color:                  text.color
+            color:                  grayscale ? _text.color: "transparent"
             fillMode:               Image.PreserveAspectFit
             sourceSize.height:      height
-            anchors.horizontalCenter: parent.horizontalCenter
-            // anchors.left:           control.iconLeft ? parent.left : undefined
-            // anchors.leftMargin:     control.iconLeft ? ScreenTools.defaultFontPixelWidth : undefined
-            // anchors.right:          !control.iconLeft ? parent.right : undefined
-            // anchors.rightMargin:    !control.iconLeft ? ScreenTools.defaultFontPixelWidth : undefined
-            anchors.verticalCenter: parent.verticalCenter
+            anchors {
+                horizontalCenter:   parent.horizontalCenter
+                verticalCenter:     parent.verticalCenter
+            }
         }
 
         Text {
-            id:                     text
-            // anchors.centerIn:       parent
-            anchors.bottom:             parent.bottom
-            anchors.bottomMargin:       parent.bottomMargin
-            anchors.horizontalCenter:   parent.horizontalCenter
+            id:                     _text
+            anchors {
+                bottom:             parent.bottom
+                bottomMargin:       parent.bottomMargin
+                horizontalCenter:   parent.horizontalCenter
+            }
+
+            width:                  backRect.width
+            wrapMode:               Text.WordWrap
+            horizontalAlignment:    Text.AlignHCenter
+            verticalAlignment:      Text.AlignVCenter
+
             antialiasing:           true
             text:                   control.text
             font.pointSize:         pointSize

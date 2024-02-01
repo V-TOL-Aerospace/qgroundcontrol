@@ -1,0 +1,29 @@
+Module Custom.Widgets
+
+CustomArtificialHorizon         1.0     CustomArtificialHorizon.qml
+CustomAttitudeWidget            1.0     CustomAttitudeWidget.qml
+CustomCompassBar                1.0     CustomCompassBar.qml
+CustomCompassRadial             1.0     CustomCompassRadial.qml
+CustomDropPanel                 1.0     CustomDropPanel.qml
+CustomFlightDisplayViewVideo    1.0     CustomFlightDisplayViewVideo.qml
+CustomFlightModeButton          1.0     CustomFlightModeButton.qml
+CustomFlightModeSelectDropPanel 1.0     CustomFlightModeSelectDropPanel.qml
+CustomFlyViewVideoPFD           1.0     CustomFlyViewVideoPFD.qml
+CustomIconButton                1.0     CustomIconButton.qml
+CustomMavAddInfoDropPanel       1.0     CustomMavAddInfoDropPanel.qml
+CustomMavMessageWidget          1.0     CustomMavMessageWidget.qml
+CustomMavStatusBatteryDropPanel 1.0     CustomMavStatusBatteryDropPanel.qml
+CustomMavStatusIndicator        1.0     CustomMavStatusIndicator.qml
+CustomMavStatusButton           1.0     CustomMavStatusButton.qml
+CustomMavStatusGPSButton        1.0     CustomMavStatusGPSButton.qml
+CustomMavStatusGPSDropPanel     1.0     CustomMavStatusGPSDropPanel.qml
+CustomMavStatusSensorsDropPanel 1.0     CustomMavStatusSensorsDropPanel.qml
+CustomQGCPipOverlay             1.0     CustomQGCPipOverlay.qml
+CustomOnOffSwitch               1.0     CustomOnOffSwitch.qml
+CustomQGCPitchIndicator         1.0     CustomQGCPitchIndicator.qml
+CustomQuickButton               1.0     CustomQuickButton.qml
+CustomSignalStrength            1.0     CustomSignalStrength.qml
+CustomToolBarButton             1.0     CustomToolBarButton.qml
+CustomToolStrip                 1.0     CustomToolStrip.qml
+CustomToolStripHoverButton      1.0     CustomToolStripHoverButton.qml
+CustomVehicleButton             1.0     CustomVehicleButton.qml

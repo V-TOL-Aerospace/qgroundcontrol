@@ -23,30 +23,30 @@ DEFINES += APP_VERSION_STR=\"\\\"$$CUSTOM_QGC_VERSION\\\"\"
 message(Custom QGC Version: $${CUSTOM_QGC_VERSION})
 
 # Build a single flight stack by disabling APM support
-MAVLINK_CONF = common
-CONFIG  += QGC_DISABLE_APM_MAVLINK
-CONFIG  += QGC_DISABLE_APM_PLUGIN QGC_DISABLE_APM_PLUGIN_FACTORY
+# MAVLINK_CONF = common
+# CONFIG  += QGC_DISABLE_APM_MAVLINK
+# CONFIG  += QGC_DISABLE_APM_PLUGIN QGC_DISABLE_APM_PLUGIN_FACTORY
 
 # We implement our own PX4 plugin factory
-CONFIG  += QGC_DISABLE_PX4_PLUGIN_FACTORY
+# CONFIG  += QGC_DISABLE_PX4_PLUGIN_FACTORY
 
 # Branding
 
 DEFINES += CUSTOMHEADER=\"\\\"CustomPlugin.h\\\"\"
 DEFINES += CUSTOMCLASS=CustomPlugin
 
-TARGET   = CustomQGroundControl
-DEFINES += QGC_APPLICATION_NAME='"\\\"Custom QGroundControl\\\""'
+TARGET   = NeuronGCS
+DEFINES += QGC_APPLICATION_NAME='"\\\"Neuron GCS v4\\\""'
 
 DEFINES += QGC_ORG_NAME=\"\\\"qgroundcontrol.org\\\"\"
 DEFINES += QGC_ORG_DOMAIN=\"\\\"org.qgroundcontrol\\\"\"
 
-QGC_APP_NAME        = "Custom QGroundControl"
-QGC_BINARY_NAME     = "CustomQGroundControl"
-QGC_ORG_NAME        = "Custom"
-QGC_ORG_DOMAIN      = "org.custom"
-QGC_ANDROID_PACKAGE = "org.custom.qgroundcontrol"
-QGC_APP_DESCRIPTION = "Custom QGroundControl"
+QGC_APP_NAME        = "Neuron GCS v4"
+QGC_BINARY_NAME     = "NeuronGCS"
+QGC_ORG_NAME        = "V-TOL Aerospace Pty Limited"
+QGC_ORG_DOMAIN      = ""
+QGC_ANDROID_PACKAGE = "org.custom.neurongcs"
+QGC_APP_DESCRIPTION = "Neuron GCS v4 - A Custom UI Overlay for QGroundControl"
 QGC_APP_COPYRIGHT   = "Copyright (C) 2020 QGroundControl Development Team. All rights reserved."
 
 # Our own, custom resources
@@ -83,3 +83,14 @@ SOURCES += \
     $$PWD/src/FirmwarePlugin/CustomFirmwarePlugin.cc \
     $$PWD/src/FirmwarePlugin/CustomFirmwarePluginFactory.cc \
 
+#-------------------------------------------------------------------------------------
+# Adding CustomToolStripAction
+
+INCLUDEPATH += \
+    $$PWD/res/Widgets
+
+HEADERS+= \
+    $$PWD/res/Widgets/CustomToolStripAction.h
+
+SOURCES += \
+    $$PWD/res/Widgets/CustomToolStripAction.cc

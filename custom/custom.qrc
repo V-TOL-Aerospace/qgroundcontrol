@@ -1,9 +1,15 @@
 <RCC>
-    <qresource prefix="custom/img">
+    <qresource prefix="/custom/img">
         <file alias="altitude.svg">res/Images/altitude.svg</file>
         <file alias="attitude_crosshair.svg">res/Images/attitude_crosshair.svg</file>
+        <file alias="attitude_crosshair_v2.svg">res/Images/attitude_crosshair_v2.svg</file>
+        <file alias="attitude_crosshair_v3.svg">res/Images/attitude_crosshair_v3.svg</file>
         <file alias="attitude_dial.svg">res/Images/attitude_dial.svg</file>
         <file alias="attitude_pointer.svg">res/Images/attitude_pointer.svg</file>
+        <file alias="battery-25.svg">res/Images/battery-25.svg</file>
+        <file alias="battery-50.svg">res/Images/battery-50.svg</file>
+        <file alias="battery-75.svg">res/Images/battery-75.svg</file>
+        <file alias="battery-full.svg">res/Images/battery-full.svg</file>
         <file alias="chronometer.svg">res/Images/chronometer.svg</file>
         <file alias="compass_needle.svg">res/Images/compass_needle.svg</file>
         <file alias="compass_pointer.svg">res/Images/compass_pointer.svg</file>
@@ -11,24 +17,50 @@
         <file alias="horizontal_speed.svg">res/Images/horizontal_speed.svg</file>
         <file alias="microSD.svg">res/Images/microSD.svg</file>
         <file alias="odometer.svg">res/Images/odometer.svg</file>
+        <file alias="pipResize_BottomRight.svg">res/Images/pipResize_BottomRight.svg</file>
+        <file alias="vector_crosshair_v1.svg">res/Images/vector_crosshair_v1.svg</file>
         <file alias="vertical_speed.svg">res/Images/vertical_speed.svg</file>
         <file alias="CustomAppIcon.png">res/Images/CustomAppIcon.png</file>
     </qresource>
     <qresource prefix="/qmlimages">
-	<file alias="PaperPlane.svg">res/Images/CustomVehicleIcon.svg</file>
-    </qresource>
-    <qresource prefix="Custom/Widgets">
-        <file alias="Custom/Widgets/CustomArtificialHorizon.qml">res/Custom/Widgets/CustomArtificialHorizon.qml</file>
-        <file alias="Custom/Widgets/CustomAttitudeWidget.qml">res/Custom/Widgets/CustomAttitudeWidget.qml</file>
-        <file alias="Custom/Widgets/CustomIconButton.qml">res/Custom/Widgets/CustomIconButton.qml</file>
-        <file alias="Custom/Widgets/CustomOnOffSwitch.qml">res/Custom/Widgets/CustomOnOffSwitch.qml</file>
-        <file alias="Custom/Widgets/CustomQuickButton.qml">res/Custom/Widgets/CustomQuickButton.qml</file>
-        <file alias="Custom/Widgets/CustomSignalStrength.qml">res/Custom/Widgets/CustomSignalStrength.qml</file>
-        <file alias="Custom/Widgets/CustomToolBarButton.qml">res/Custom/Widgets/CustomToolBarButton.qml</file>
-        <file alias="Custom/Widgets/CustomVehicleButton.qml">res/Custom/Widgets/CustomVehicleButton.qml</file>
-        <file alias="Custom/Widgets/qmldir">res/Custom/Widgets/qmldir</file>
+        <file alias="PaperPlane.svg">res/Images/CustomVehicleIcon.svg</file>
     </qresource>
     <qresource prefix="/qml">
-        <file alias="QGroundControl/FlightDisplay/FlyViewCustomLayer.qml">res/CustomFlyViewOverlay.qml</file>
+        <file alias="Custom/Widgets/CustomArtificialHorizon.qml">res/Widgets/CustomArtificialHorizon.qml</file>
+        <file alias="Custom/Widgets/CustomAttitudeWidget.qml">res/Widgets/CustomAttitudeWidget.qml</file>
+        <file alias="Custom/Widgets/CustomCompassBar.qml">res/Widgets/CustomCompassBar.qml</file>
+        <file alias="Custom/Widgets/CustomCompassRadial.qml">res/Widgets/CustomCompassRadial.qml</file>
+        <file alias="Custom/Widgets/CustomDropPanel.qml">res/Widgets/CustomDropPanel.qml</file>
+        <file alias="Custom/Widgets/CustomFlightDisplayViewVideo.qml">res/Widgets/CustomFlightDisplayViewVideo.qml</file>
+        <file alias="Custom/Widgets/CustomFlightModeButton.qml">res/Widgets/CustomFlightModeButton.qml</file>
+        <file alias="Custom/Widgets/CustomFlightModeSelectDropPanel.qml">res/Widgets/CustomFlightModeSelectDropPanel.qml</file>
+        <file alias="Custom/Widgets/CustomFlyViewVideoPFD.qml">res/Widgets/CustomFlyViewVideoPFD.qml</file>
+        <file alias="Custom/Widgets/CustomIconButton.qml">res/Widgets/CustomIconButton.qml</file>
+        <file alias="Custom/Widgets/CustomMavAddInfoDropPanel.qml">res/Widgets/CustomMavAddInfoDropPanel.qml</file>
+        <file alias="Custom/Widgets/CustomMavMessageWidget.qml">res/Widgets/CustomMavMessageWidget.qml</file>
+        <file alias="Custom/Widgets/CustomMavStatusBatteryDropPanel.qml">res/Widgets/CustomMavStatusBatteryDropPanel.qml</file>
+        <file alias="Custom/Widgets/CustomMavStatusButton.qml">res/Widgets/CustomMavStatusButton.qml</file>
+        <file alias="Custom/Widgets/CustomMavStatusGPSButton.qml">res/Widgets/CustomMavStatusGPSButton.qml</file>
+        <file alias="Custom/Widgets/CustomMavStatusGPSDropPanel.qml">res/Widgets/CustomMavStatusGPSDropPanel.qml</file>
+        <file alias="Custom/Widgets/CustomMavStatusIndicator.qml">res/Widgets/CustomMavStatusIndicator.qml</file>
+        <file alias="Custom/Widgets/CustomMavStatusSensorsDropPanel.qml">res/Widgets/CustomMavStatusSensorsDropPanel.qml</file>
+        <file alias="Custom/Widgets/CustomOnOffSwitch.qml">res/Widgets/CustomOnOffSwitch.qml</file>
+        <file alias="Custom/Widgets/CustomQGCPipOverlay.qml">res/Widgets/CustomQGCPipOverlay.qml</file>
+        <file alias="Custom/Widgets/CustomQGCPitchIndicator.qml">res/Widgets/CustomQGCPitchIndicator.qml</file>
+        <file alias="Custom/Widgets/CustomQuickButton.qml">res/Widgets/CustomQuickButton.qml</file>
+        <file alias="Custom/Widgets/CustomSignalStrength.qml">res/Widgets/CustomSignalStrength.qml</file>
+        <file alias="Custom/Widgets/CustomToolBarButton.qml">res/Widgets/CustomToolBarButton.qml</file>
+        <file alias="Custom/Widgets/CustomToolStrip.qml">res/Widgets/CustomToolStrip.qml</file>
+        <file alias="Custom/Widgets/CustomToolStripAction.cc">res/Widgets/CustomToolStripAction.cc</file>
+        <file alias="Custom/Widgets/CustomToolStripAction.h">res/Widgets/CustomToolStripAction.h</file>
+        <file alias="Custom/Widgets/CustomToolStripHoverButton.qml">res/Widgets/CustomToolStripHoverButton.qml</file>
+        <file alias="Custom/Widgets/CustomVehicleButton.qml">res/Widgets/CustomVehicleButton.qml</file>
+        <file alias="Custom/Widgets/qmldir">res/Widgets/qmldir</file>
+    </qresource>
+    <qresource prefix="/qml">
+        <file alias="MainRootWindow.qml">res/ui/CustomMainRootWindow.qml</file>
+        <file alias="QGroundControl/FlightDisplay/FlyViewCustomLayer.qml">res/DisplayViews/CustomFlyViewOverlay.qml</file>
+        <file alias="QGroundControl/FlightDisplay/FlyView.qml">res/DisplayViews/CustomFlyView.qml</file>
+        <file alias="PlanView.qml">res/DisplayViews/CustomPlanView.qml</file>
     </qresource>
 </RCC>

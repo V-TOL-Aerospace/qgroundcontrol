@@ -59,7 +59,6 @@
 		<file alias="LinkSettings.qml">../src/ui/preferences/LinkSettings.qml</file>
 		<file alias="LogDownloadPage.qml">../src/AnalyzeView/LogDownloadPage.qml</file>
 		<file alias="LogReplaySettings.qml">../src/ui/preferences/LogReplaySettings.qml</file>
-		<file alias="MainRootWindow.qml">../src/ui/MainRootWindow.qml</file>
 		<file alias="MavlinkConsolePage.qml">../src/AnalyzeView/MavlinkConsolePage.qml</file>
 		<file alias="MAVLinkInspectorPage.qml">../src/AnalyzeView/MAVLinkInspectorPage.qml</file>
 		<file alias="MavlinkSettings.qml">../src/ui/preferences/MavlinkSettings.qml</file>
@@ -75,7 +74,6 @@
 		<file alias="OfflineMap.qml">../src/QtLocationPlugin/QMLControl/OfflineMap.qml</file>
 		<file alias="PlanToolBar.qml">../src/PlanView/PlanToolBar.qml</file>
 		<file alias="PlanToolBarIndicators.qml">../src/PlanView/PlanToolBarIndicators.qml</file>
-		<file alias="PlanView.qml">../src/PlanView/PlanView.qml</file>
 		<file alias="PreFlightCheckList.qml">../src/FlightDisplay/PreFlightCheckList.qml</file>
 		<file alias="PX4FlowSensor.qml">../src/VehicleSetup/PX4FlowSensor.qml</file>
 		<file alias="QGCInstrumentWidget.qml">../src/FlightMap/Widgets/QGCInstrumentWidget.qml</file>
@@ -206,7 +204,6 @@
 		<file alias="QGroundControl/FactControls/qmldir">../src/QmlControls/QGroundControl/FactControls/qmldir</file>
 		<file alias="QGroundControl/FlightDisplay/FlightDisplayViewVideo.qml">../src/FlightDisplay/FlightDisplayViewVideo.qml</file>
 		<file alias="QGroundControl/FlightDisplay/FlightDisplayViewWidgets.qml">../src/FlightDisplay/FlightDisplayViewWidgets.qml</file>
-		<file alias="QGroundControl/FlightDisplay/FlyView.qml">../src/FlightDisplay/FlyView.qml</file>
 		<file alias="QGroundControl/FlightDisplay/FlyViewInstrumentPanel.qml">../src/FlightDisplay/FlyViewInstrumentPanel.qml</file>
 		<file alias="QGroundControl/FlightDisplay/FlyViewMap.qml">../src/FlightDisplay/FlyViewMap.qml</file>
 		<file alias="QGroundControl/FlightDisplay/FlyViewMissionCompleteDialog.qml">../src/FlightDisplay/FlyViewMissionCompleteDialog.qml</file>
@@ -263,7 +260,6 @@
 		<file alias="QGroundControl/FlightMap/QGCAttitudeHUD.qml">../src/FlightMap/Widgets/QGCAttitudeHUD.qml</file>
 		<file alias="QGroundControl/FlightMap/QGCAttitudeWidget.qml">../src/FlightMap/Widgets/QGCAttitudeWidget.qml</file>
 		<file alias="QGroundControl/FlightMap/QGCCompassWidget.qml">../src/FlightMap/Widgets/QGCCompassWidget.qml</file>
-		<file alias="QGroundControl/FlightMap/QGCPitchIndicator.qml">../src/FlightMap/Widgets/QGCPitchIndicator.qml</file>
 		<file alias="QGroundControl/FlightMap/QGCVideoBackground.qml">../src/FlightMap/QGCVideoBackground.qml</file>
 		<file alias="QGroundControl/FlightMap/qmldir">../src/QmlControls/QGroundControl/FlightMap/qmldir</file>
 		<file alias="QGroundControl/FlightMap/VehicleMapItem.qml">../src/FlightMap/MapItems/VehicleMapItem.qml</file>
