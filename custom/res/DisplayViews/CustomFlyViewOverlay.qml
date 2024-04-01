@@ -199,10 +199,10 @@ Item {
                     enabled:        true
                     onTriggered:    _pipOverlay._setPipIsExpanded(!_pipOverlay._isExpanded)
                 },
-                ToolStripAction {
-                    text:           qsTr(" ")
-                    enabled:        false
-                },
+                // ToolStripAction {
+                //     text:           qsTr(" ")
+                //     enabled:        false
+                // },
                 // ToolStripAction {
                 //     text:               qsTr("Extra Info")
                 //     enabled:            _activeVehicle
@@ -236,6 +236,15 @@ Item {
                     enabled:            _activeVehicle
                     dropPanelComponent: statusSenorsDropPanel
                     buttonColor:        getSensorsStatusColor()
+                },
+                ToolStripAction {
+                    text:               qsTr("Analyze")
+                    iconSource:         "/qmlimages/Analyze.svg"
+                    onTriggered: {
+                        if (!mainWindow.preventViewSwitch()) {
+                            mainWindow.showAnalyzeTool()
+                        } 
+                    } 
                 },
                 ToolStripAction {
                     text:               qsTr("Vehicle")
