@@ -562,26 +562,32 @@ Item {
                         enabled:        false
                     },
                     ToolStripAction {
-                        text:           qsTr(" ")
-                        enabled:        false
-                    },                ToolStripAction {
-                    text:           qsTr("Vehicle")
-                    iconSource:     "/qmlimages/Gears.svg"
-                    onTriggered: {
-                        if (!mainWindow.preventViewSwitch()) {
-                            mainWindow.showSetupTool()
+                        text:               qsTr("Analyze")
+                        iconSource:         "/qmlimages/Analyze.svg"
+                        onTriggered: {
+                            if (!mainWindow.preventViewSwitch()) {
+                                mainWindow.showAnalyzeTool()
+                            } 
                         } 
-                    } 
-                },
-                ToolStripAction {                
-                    text:           qsTr("App")
-                    iconSource:     "/res/gear-white.svg"
-                    onTriggered: {
-                        if (!mainWindow.preventViewSwitch()) {
-                            mainWindow.showSettingsTool()
-                        }
-                    } 
-                }
+                    },
+                    ToolStripAction {
+                        text:           qsTr("Vehicle")
+                        iconSource:     "/qmlimages/Gears.svg"
+                        onTriggered: {
+                            if (!mainWindow.preventViewSwitch()) {
+                                mainWindow.showSetupTool()
+                            } 
+                        } 
+                    },
+                    ToolStripAction {                
+                        text:           qsTr("App")
+                        iconSource:     "/res/gear-white.svg"
+                        onTriggered: {
+                            if (!mainWindow.preventViewSwitch()) {
+                                mainWindow.showSettingsTool()
+                            }
+                        } 
+                    }
                     // ToolStripAction {
                     //     text:       qsTr("Takeoff")
                     //     iconSource: "/res/takeoff.svg"
