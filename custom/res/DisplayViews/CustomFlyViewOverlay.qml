@@ -58,6 +58,7 @@ Item {
     property real   _tabWidth:              (Window.width < 1000) ? (Window.width * 0.05) : (Window.width * 0.04)// ScreenTools.defaultFontPixelWidth * 12      
     property int    _unhealthySensors:      _activeVehicle ? _activeVehicle.sensorsUnhealthyBits : 1
     property bool   _communicationLost:     _activeVehicle ? _activeVehicle.vehicleLinkManager.communicationLost : false
+    property bool   _communicationState:    _activeVehicle && !_communicationLost
 
     property string statusNormal:           "Normal" // CustomMavStatusIndicator.statusNormal 
     property string statusError:            "Error"// CustomMavStatusIndicator.statusError 
@@ -115,35 +116,35 @@ Item {
             id: rightSide_toolStripActionList
             model: [
                 CustomToolStripAction {
-                    text:           _activeVehicle ? qsTr("Connected"):qsTr("Disconn")
-                    iconSource:     _activeVehicle ? "/qmlimages/Connect.svg" : "/qmlimages/Disconnect.svg"
+                    text:           _communicationState ? qsTr("Connected"):qsTr("Disconn")
+                    iconSource:     _communicationState ? "/qmlimages/Connect.svg" : "/qmlimages/Disconnect.svg"
                     enabled:        _activeVehicle
                     iconTrueColor:  true
-                    buttonColor:    _activeVehicle ? statusHealthyColorHEX : qgcPal.toolbarBackground
+                    buttonColor:    getConnectionStateColor() //_communicationState ? statusHealthyColorHEX : qgcPal.toolbarBackground
                 },
                 CustomToolStripAction {
                     text:           _activeVehicle ? (_activeVehicle.armed ? qsTr("Armed") : qsTr("Disarmed")) : qsTr("Disarmed")
                     iconSource:     _activeVehicle ? (_activeVehicle.armed ? "/qmlimages/Armed.svg" : "/qmlimages/Disarmed.svg") : "/qmlimages/Disarmed.svg"
                     onTriggered:    _activeVehicle.armed ? _guidedController.confirmAction(_guidedController.actionDisarm, 1) : _guidedController.confirmAction(_guidedController.actionArm, 1)
-                    enabled:        _activeVehicle
+                    enabled:        _communicationState
                     iconTrueColor:  true
                 },
                 ToolStripAction {
                     text:               _activeVehicle ? _activeVehicle.flightMode : qsTr("N/A") 
-                    enabled:            _activeVehicle
+                    enabled:            _communicationState
                     iconSource:         "/qmlimages/FlightModesComponentIcon.png"
                     dropPanelComponent: flightModeSelectDropPanel
                 },
                 ToolStripAction {
                     text:           qsTr("Set Takeoff")
                     iconSource:     "/res/takeoff.svg"
-                    enabled:        _activeVehicle ? (_activeVehicle.armed ? false:true): false
+                    enabled:        _communicationState ? (_activeVehicle.armed ? false:true): false
                     onTriggered:    _activeVehicle.setCurrentMissionSequence(1)
                 },
                 ToolStripAction {
                     text:           qsTr("RTL")
                     iconSource:     "/res/rtl.svg"
-                    enabled:        _activeVehicle ? (_activeVehicle.armed ? true:false): false
+                    enabled:        _communicationState ? (_activeVehicle.armed ? true:false): false
                     onTriggered:    _guidedController.confirmAction(_guidedController.actionRTL, 1)
                 },
                 ToolStripAction {
@@ -153,13 +154,13 @@ Item {
                 },
                 ToolStripAction {
                     text:               qsTr("Extra Info")
-                    enabled:            _activeVehicle
+                    enabled:            _communicationState
                     iconSource:         "/InstrumentValueIcons/align-justified.svg"
                     dropPanelComponent: additionalInfoDropPanel
                 },
                 CustomToolStripAction {
                     text:               qsTr("Battery")
-                    enabled:            _activeVehicle && _batteryGroup
+                    enabled:            _communicationState && _batteryGroup
                     iconSource:         getBatteryIcon()
                     buttonColor:        getBatteryColor()
                     dropPanelComponent: statusBatteryDropPanel
@@ -202,19 +203,6 @@ Item {
                 // ToolStripAction {
                 //     text:           qsTr(" ")
                 //     enabled:        false
-                // },
-                // ToolStripAction {
-                //     text:               qsTr("Extra Info")
-                //     enabled:            _activeVehicle
-                //     iconSource:         "/InstrumentValueIcons/align-justified.svg"
-                //     dropPanelComponent: additionalInfoDropPanel
-                // },
-                // CustomToolStripAction {
-                //     text:               qsTr("Battery")
-                //     enabled:            _activeVehicle && _batteryGroup
-                //     iconSource:         getBatteryIcon()
-                //     buttonColor:        getBatteryColor()
-                //     dropPanelComponent: statusBatteryDropPanel
                 // },
                 CustomToolStripAction {
                     text:               (_activeVehicle && _activeVehicle.gps.count.value >= 0) ? qsTr("GPS Status") : qsTr("NO GPS")
@@ -468,20 +456,22 @@ Item {
     // function from messageIndicator.qml for use in Side ToolStrip
     function getMessageColor() {
         if (_activeVehicle) {
+            if (_communicationLost)
+                return qgcPal.toolbarBackground;
             if (_activeVehicle.messageTypeNone)
-                return statusHealthyColorHEX // qgcPal.toolbarBackground // qgcPal.colorGrey
+                return statusHealthyColorHEX; // qgcPal.toolbarBackground // qgcPal.colorGrey
             if (_activeVehicle.messageTypeNormal)
                 return qgcPal.colorBlue;
             if (_activeVehicle.messageTypeWarning)
-                return statusWarningColorHEX // qgcPal.colorOrange;
+                return statusWarningColorHEX; // qgcPal.colorOrange;
             if (_activeVehicle.messageTypeError)
-                return statusCriticalColorHEX // qgcPal.colorRed;
+                return statusCriticalColorHEX; // qgcPal.colorRed;
             // Cannot be so make make it obnoxious to show error
             console.warn("MessageIndicator.qml:getMessageColor Invalid vehicle message type", _activeVehicle.messageTypeNone)
             return "purple";
         }
         //-- It can only get here when closing (vehicle gone while window active)
-        return qgcPal.toolbarBackground // qgcPal.colorGrey
+        return qgcPal.toolbarBackground; // qgcPal.colorGrey
     }
 
     Component {
@@ -537,6 +527,9 @@ Item {
 
     function getGPSStatusColor() {
         if (_activeVehicle) {
+            if (_communicationLost) {
+                return qgcPal.toolbarBackground;
+            }
             if (_unhealthySensors & Vehicle.SysStatusSensorGPS) {
                 return statusCriticalColorHEX;
             }
@@ -558,6 +551,9 @@ Item {
 
     function getSensorsStatusColor() {
         if (_activeVehicle) {
+            if (_communicationLost) {
+                return qgcPal.toolbarBackground;
+            }
             if (_activeVehicle.allSensorsHealthy) {
                 return statusHealthyColorHEX;
             }
@@ -583,14 +579,17 @@ Item {
 
     function getBatteryColor() {
         if(_activeVehicle) {
+            if(_communicationLost) {
+                return qgcPal.toolbarBackground;
+            }
             if(_batPercentRemaining > 75) {
-                return qgcPal.colorGreen;
+                return statusHealthyColorHEX;//qgcPal.colorGreen;
             }
             if(_batPercentRemaining > 50) {
-                return qgcPal.colorOrange;
+                return statusWarningColorHEX;//qgcPal.colorOrange;
             }
             if(_batPercentRemaining > 0.1) {
-                return qgcPal.colorRed;
+                return statusCriticalColorHEX;//qgcPal.colorRed;
             }
         }
         return  qgcPal.toolbarBackground;//qgcPal.colorGrey
@@ -621,5 +620,19 @@ Item {
         CustomMavAddInfoDropPanel {
             activeVehicle: _activeVehicle
         }
+    }
+
+    //-------------------------------------------------------------------------
+    // CONNECTION STATUS COMPONENT
+    function getConnectionStateColor() {
+        if (_activeVehicle) {
+            if (_communicationLost) {
+                return statusCriticalColorHEX;
+            }
+            else {
+                return statusHealthyColorHEX;
+            }
+        }
+        return qgcPal.toolbarBackground;
     }
 }
