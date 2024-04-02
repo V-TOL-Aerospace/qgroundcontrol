@@ -118,9 +118,9 @@ Item {
                 CustomToolStripAction {
                     text:           _communicationState ? qsTr("Connected"):qsTr("Disconn")
                     iconSource:     _communicationState ? "/qmlimages/Connect.svg" : "/qmlimages/Disconnect.svg"
-                    enabled:        _communicationState
+                    enabled:        _activeVehicle
                     iconTrueColor:  true
-                    buttonColor:    _communicationState ? statusHealthyColorHEX : qgcPal.toolbarBackground
+                    buttonColor:    getConnectionStateColor() //_communicationState ? statusHealthyColorHEX : qgcPal.toolbarBackground
                 },
                 CustomToolStripAction {
                     text:           _activeVehicle ? (_activeVehicle.armed ? qsTr("Armed") : qsTr("Disarmed")) : qsTr("Disarmed")
@@ -456,20 +456,22 @@ Item {
     // function from messageIndicator.qml for use in Side ToolStrip
     function getMessageColor() {
         if (_activeVehicle) {
+            if (_communicationLost)
+                return qgcPal.toolbarBackground;
             if (_activeVehicle.messageTypeNone)
-                return statusHealthyColorHEX // qgcPal.toolbarBackground // qgcPal.colorGrey
+                return statusHealthyColorHEX; // qgcPal.toolbarBackground // qgcPal.colorGrey
             if (_activeVehicle.messageTypeNormal)
                 return qgcPal.colorBlue;
             if (_activeVehicle.messageTypeWarning)
-                return statusWarningColorHEX // qgcPal.colorOrange;
+                return statusWarningColorHEX; // qgcPal.colorOrange;
             if (_activeVehicle.messageTypeError)
-                return statusCriticalColorHEX // qgcPal.colorRed;
+                return statusCriticalColorHEX; // qgcPal.colorRed;
             // Cannot be so make make it obnoxious to show error
             console.warn("MessageIndicator.qml:getMessageColor Invalid vehicle message type", _activeVehicle.messageTypeNone)
             return "purple";
         }
         //-- It can only get here when closing (vehicle gone while window active)
-        return qgcPal.toolbarBackground // qgcPal.colorGrey
+        return qgcPal.toolbarBackground; // qgcPal.colorGrey
     }
 
     Component {
@@ -525,6 +527,9 @@ Item {
 
     function getGPSStatusColor() {
         if (_activeVehicle) {
+            if (_communicationLost) {
+                return qgcPal.toolbarBackground;
+            }
             if (_unhealthySensors & Vehicle.SysStatusSensorGPS) {
                 return statusCriticalColorHEX;
             }
@@ -546,6 +551,9 @@ Item {
 
     function getSensorsStatusColor() {
         if (_activeVehicle) {
+            if (_communicationLost) {
+                return qgcPal.toolbarBackground;
+            }
             if (_activeVehicle.allSensorsHealthy) {
                 return statusHealthyColorHEX;
             }
@@ -571,14 +579,17 @@ Item {
 
     function getBatteryColor() {
         if(_activeVehicle) {
+            if(_communicationLost) {
+                return qgcPal.toolbarBackground;
+            }
             if(_batPercentRemaining > 75) {
-                return qgcPal.colorGreen;
+                return statusHealthyColorHEX;//qgcPal.colorGreen;
             }
             if(_batPercentRemaining > 50) {
-                return qgcPal.colorOrange;
+                return statusWarningColorHEX;//qgcPal.colorOrange;
             }
             if(_batPercentRemaining > 0.1) {
-                return qgcPal.colorRed;
+                return statusCriticalColorHEX;//qgcPal.colorRed;
             }
         }
         return  qgcPal.toolbarBackground;//qgcPal.colorGrey
@@ -609,5 +620,19 @@ Item {
         CustomMavAddInfoDropPanel {
             activeVehicle: _activeVehicle
         }
+    }
+
+    //-------------------------------------------------------------------------
+    // CONNECTION STATUS COMPONENT
+    function getConnectionStateColor() {
+        if (_activeVehicle) {
+            if (_communicationLost) {
+                return statusCriticalColorHEX;
+            }
+            else {
+                return statusHealthyColorHEX;
+            }
+        }
+        return qgcPal.toolbarBackground;
     }
 }
