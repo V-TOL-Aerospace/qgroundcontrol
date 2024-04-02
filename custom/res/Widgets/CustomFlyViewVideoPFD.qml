@@ -19,12 +19,15 @@ Item {
     id:         _root
     visible:    QGroundControl.videoManager.hasVideo
 
-    property Item pipState:         videoPipState
-    property bool showPFD:          true
-    property bool showBackground:   true
+    property Item   pipState:         videoPipState
+    property bool   showPFD:          true
+    property bool   showBackground:   true
 
-    property real _rollAngle:       _activeVehicle ? _activeVehicle.roll.rawValue  : 0
-    property real _pitchAngle:      _activeVehicle ? _activeVehicle.pitch.rawValue : 0
+    property real   _rollAngle:       _activeVehicle ? _activeVehicle.roll.rawValue  : 0
+    property real   _pitchAngle:      _activeVehicle ? _activeVehicle.pitch.rawValue : 0
+
+    property bool   _communicationLost:     _activeVehicle ? _activeVehicle.vehicleLinkManager.communicationLost : false
+    property bool   _communicationState:    _activeVehicle && !_communicationLost
 
     QGCPipState {
         id:         videoPipState
@@ -61,10 +64,10 @@ Item {
     CustomArtificialHorizon {
         rollAngle:          _rollAngle
         pitchAngle:         _pitchAngle
-        skyColor1:          _activeVehicle ? "#0a2e50" : qgcPal.windowShade
-        skyColor2:          _activeVehicle ? "#2f85d4" : qgcPal.windowShade
-        groundColor1:       _activeVehicle ? "#897459" : qgcPal.windowShadeDark
-        groundColor2:       _activeVehicle ? "#4b3820" : qgcPal.windowShadeDark
+        skyColor1:          _communicationState ? "#0a2e50" : qgcPal.windowShade
+        skyColor2:          _communicationState ? "#2f85d4" : qgcPal.windowShade
+        groundColor1:       _communicationState ? "#897459" : qgcPal.windowShadeDark
+        groundColor2:       _communicationState ? "#4b3820" : qgcPal.windowShadeDark
         anchors.fill:       parent
         visible:            QGroundControl.videoManager.isGStreamer && showBackground && showPFD
     }

@@ -15,22 +15,25 @@ import Custom.Widgets 1.0
 Item {
     id: root
 
-    property bool showPitch:        true
-    property var  vehicle:          null
-    property real size_width
-    property real size_height
-    property real size:             size_width
-    property bool showHeading:      true
-    property bool showBackground:   true
+    property bool   showPitch:        true
+    property var    vehicle:          null
+    property real   size_width
+    property real   size_height
+    property real   size:             size_width
+    property bool   showHeading:      true
+    property bool   showBackground:   true
 
-    property real _rollAngle:       vehicle ? vehicle.roll.rawValue  : 0
-    property real _pitchAngle:      vehicle ? vehicle.pitch.rawValue : 0
+    property bool   _communicationLost:     vehicle ? vehicle.vehicleLinkManager.communicationLost : false
+    property bool   _communicationState:    vehicle && !_communicationLost
+
+    property real   _rollAngle:     vehicle ? vehicle.roll.rawValue  : 0
+    property real   _pitchAngle:    vehicle ? vehicle.pitch.rawValue : 0
     property string _flightMode:    vehicle ? vehicle.flightMode : qsTr("N/A")
     property string _currentIndex:  vehicle ? (vehicle.missionItemIndex.rawValue == 1 ? qsTr("T/O") : qsTr("WP ") + vehicle.missionItemIndex.rawValue): qsTr("N/A")
 
-    property real _altitudeRelative:    vehicle ? vehicle.altitudeRelative.rawValue : 0
-    property real _airSpeed:            vehicle ? vehicle.airSpeed.rawValue : 0
-    property real _climbRate:           vehicle ? ((vehicle.climbRate.rawValue < 0.1 && vehicle.climbRate.rawValue > -0.1) ? 0 : vehicle.climbRate.rawValue) : 0
+    property real   _altitudeRelative:    vehicle ? vehicle.altitudeRelative.rawValue : 0
+    property real   _airSpeed:            vehicle ? vehicle.airSpeed.rawValue : 0
+    property real   _climbRate:           vehicle ? ((vehicle.climbRate.rawValue < 0.1 && vehicle.climbRate.rawValue > -0.1) ? 0 : vehicle.climbRate.rawValue) : 0
 
     property string _altitudeRelative_with_unit:    vehicle ? _altitudeRelative.toFixed(0) + ' ' + QGroundControl.unitsConversion.appSettingsVerticalDistanceUnitsString : "0 " + QGroundControl.unitsConversion.appSettingsVerticalDistanceUnitsString
     property string _airspeed_string_with_unit:     vehicle ? _airSpeed.toFixed(0) + ' ' + QGroundControl.unitsConversion.appSettingsSpeedUnitsString : "0 " + QGroundControl.unitsConversion.appSettingsSpeedUnitsString
@@ -81,10 +84,10 @@ Item {
         CustomArtificialHorizon {
             rollAngle:          _rollAngle
             pitchAngle:         _pitchAngle
-            skyColor1:          vehicle ? "#0a2e50" : qgcPal.windowShade
-            skyColor2:          vehicle ? "#2f85d4" : qgcPal.windowShade
-            groundColor1:       vehicle ? "#897459" : qgcPal.windowShadeDark
-            groundColor2:       vehicle ? "#4b3820" : qgcPal.windowShadeDark
+            skyColor1:          _communicationState ? "#0a2e50" : qgcPal.windowShade
+            skyColor2:          _communicationState ? "#2f85d4" : qgcPal.windowShade
+            groundColor1:       _communicationState ? "#897459" : qgcPal.windowShadeDark
+            groundColor2:       _communicationState ? "#4b3820" : qgcPal.windowShadeDark
             anchors.fill:       parent
             visible:            showBackground
         }
