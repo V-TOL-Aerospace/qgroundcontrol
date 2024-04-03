@@ -519,7 +519,13 @@ void LinkManager::_updateAutoConnectLinks(void)
             _nmeaSocket.close();
             _nmeaSocket.bind(QHostAddress::AnyIPv4, _autoConnectSettings->nmeaUdpPort()->rawValue().toUInt());
             _toolbox->qgcPositionManager()->setNmeaSourceDevice(&_nmeaSocket);
+            _toolbox->qgcPositionManager()->setTrustGPSHeading(_autoConnectSettings->nmeaTrustHeading()->cookedValue().toBool());
         }
+
+        if(_autoConnectSettings->nmeaTrustHeading()->cookedValue().toBool() != _toolbox->qgcPositionManager()->trustGPSHeading()) {
+            _toolbox->qgcPositionManager()->setTrustGPSHeading(_autoConnectSettings->nmeaTrustHeading()->cookedValue().toBool());
+        }
+
         //close serial port
         if (_nmeaPort) {
             _nmeaPort->close();
@@ -580,6 +586,7 @@ void LinkManager::_updateAutoConnectLinks(void)
                 qCDebug(LinkManagerLog) << "Configuring nmea baudrate" << _nmeaBaud;
                 // This will stop polling old device if previously set
                 _toolbox->qgcPositionManager()->setNmeaSourceDevice(newPort);
+                _toolbox->qgcPositionManager()->setTrustGPSHeading(_autoConnectSettings->nmeaTrustHeading()->cookedValue().toBool());
                 if (_nmeaPort) {
                     delete _nmeaPort;
                 }
@@ -925,9 +932,9 @@ void LinkManager::_createDynamicForwardLink(const char* linkName, QString hostNa
 {
     UDPConfiguration* udpConfig = new UDPConfiguration(linkName);
     udpConfig->setDynamic(true);
-    
+
     udpConfig->addHost(hostName);
-    
+
     SharedLinkConfigurationPtr config = addConfiguration(udpConfig);
     createConnectedLink(config);
 

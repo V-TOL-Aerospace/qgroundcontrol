@@ -89,6 +89,13 @@
     "shortDesc": "Udp port to receive NMEA streams",
     "type":             "uint32",
     "default":     14401
+},
+{
+    "name":             "nmeaTrustHeading",
+    "shortDesc": "Extract heading from NMEA messages",
+    "longDesc":  "Extract heading from NMEA messages, this will extract heading from $RMC track",
+    "type":             "bool",
+    "default":     false
 }
 ]
 }
