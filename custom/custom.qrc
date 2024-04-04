@@ -65,6 +65,6 @@
         <file alias="PlanView.qml">res/DisplayViews/CustomPlanView.qml</file>
     </qresource>
     <qresource prefix="/json">
-        <file alias="AutoConnect.SettingsGroup.json">res/ui/CustomAutoConnect.SettingsGroup.json</file>
+        <file alias="AutoConnect.SettingsGroup.json">src/Settings/CustomAutoConnect.SettingsGroup.json</file>
     </qresource>
 </RCC>

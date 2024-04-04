@@ -98,10 +98,10 @@ SOURCES += \
 #-------------------------------------------------------------------------------------
 # Adding CustomAutoConnectSettings
 INCLUDEPATH += \
-    $$PWD/res/ui
+    $$PWD/src/Settings
 
 HEADERS+= \
-    $$PWD/res/ui/CustomAutoConnectSettings.h
+    $$PWD/src/Settings/CustomAutoConnectSettings.h
 
 SOURCES += \
-    $$PWD/res/ui/CustomAutoConnectSettings.cc
+    $$PWD/src/Settings/CustomAutoConnectSettings.cc
