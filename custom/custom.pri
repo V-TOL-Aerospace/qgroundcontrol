@@ -96,12 +96,15 @@ SOURCES += \
     $$PWD/res/Widgets/CustomToolStripAction.cc
 
 #-------------------------------------------------------------------------------------
-# Adding CustomAutoConnectSettings
+# Adding CustomAutoConnectSettings & CustomLinkManager
 INCLUDEPATH += \
     $$PWD/src/Settings
+    $$PWD/src/comm
 
 HEADERS+= \
     $$PWD/src/Settings/CustomAutoConnectSettings.h
+    $$PWD/src/comm/CustomLinkManager.h
 
 SOURCES += \
     $$PWD/src/Settings/CustomAutoConnectSettings.cc
+    $$PWD/src/comm/CustomLinkManager.cc
