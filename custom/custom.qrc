@@ -58,6 +58,7 @@
         <file alias="Custom/Widgets/qmldir">res/Widgets/qmldir</file>
     </qresource>
     <qresource prefix="/qml">
+	    <file alias="GeneralSettings.qml">res/ui/CustomGeneralSettings.qml</file>
         <file alias="MainRootWindow.qml">res/ui/CustomMainRootWindow.qml</file>
         <file alias="QGroundControl/FlightDisplay/FlyViewCustomLayer.qml">res/DisplayViews/CustomFlyViewOverlay.qml</file>
         <file alias="QGroundControl/FlightDisplay/FlyView.qml">res/DisplayViews/CustomFlyView.qml</file>
