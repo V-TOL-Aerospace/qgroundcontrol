@@ -94,3 +94,14 @@ HEADERS+= \
 
 SOURCES += \
     $$PWD/res/Widgets/CustomToolStripAction.cc
+
+#-------------------------------------------------------------------------------------
+# Adding CustomAutoConnectSettings
+INCLUDEPATH += \
+    $$PWD/res/ui
+
+HEADERS+= \
+    $$PWD/res/ui/CustomAutoConnectSettings.h
+
+SOURCES += \
+    $$PWD/res/ui/CustomAutoConnectSettings.cc

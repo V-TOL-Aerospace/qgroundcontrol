@@ -64,4 +64,7 @@
         <file alias="QGroundControl/FlightDisplay/FlyView.qml">res/DisplayViews/CustomFlyView.qml</file>
         <file alias="PlanView.qml">res/DisplayViews/CustomPlanView.qml</file>
     </qresource>
+    <qresource prefix="/json">
+        <file alias="AutoConnect.SettingsGroup.json">res/ui/CustomAutoConnect.SettingsGroup.json</file>
+    </qresource>
 </RCC>
