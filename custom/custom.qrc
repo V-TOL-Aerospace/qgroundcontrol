@@ -4,6 +4,7 @@
         <file alias="attitude_crosshair.svg">res/Images/attitude_crosshair.svg</file>
         <file alias="attitude_crosshair_v2.svg">res/Images/attitude_crosshair_v2.svg</file>
         <file alias="attitude_crosshair_v3.svg">res/Images/attitude_crosshair_v3.svg</file>
+        <file alias="attitude_crosshair_v4.svg">res/Images/attitude_crosshair_v4.svg</file>
         <file alias="attitude_dial.svg">res/Images/attitude_dial.svg</file>
         <file alias="attitude_pointer.svg">res/Images/attitude_pointer.svg</file>
         <file alias="battery-25.svg">res/Images/battery-25.svg</file>
@@ -59,8 +60,9 @@
     </qresource>
     <qresource prefix="/qml">
         <file alias="MainRootWindow.qml">res/ui/CustomMainRootWindow.qml</file>
+        <file alias="PlanView.qml">res/DisplayViews/CustomPlanView.qml</file>
         <file alias="QGroundControl/FlightDisplay/FlyViewCustomLayer.qml">res/DisplayViews/CustomFlyViewOverlay.qml</file>
         <file alias="QGroundControl/FlightDisplay/FlyView.qml">res/DisplayViews/CustomFlyView.qml</file>
-        <file alias="PlanView.qml">res/DisplayViews/CustomPlanView.qml</file>
+        <file alias="QGroundControl/FlightMap/PhotoVideoControl.qml">res/Widgets/CustomPhotoVideoControl.qml</file>
     </qresource>
 </RCC>

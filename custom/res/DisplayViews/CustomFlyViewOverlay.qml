@@ -635,4 +635,68 @@ Item {
         }
         return qgcPal.toolbarBackground;
     }
+
+    //-------------------------------------------------------------------------
+    // PHOTO VIDEO CONTROL COMPONENT
+    // Component {
+    //     id: photoVideoControlPanel
+    //     CustomPhotoVideoControlPanel {
+    //         activeVehicle: _activeVehicle
+    //     }
+    // }
+
+    property real   _rightPanelWidth:       ScreenTools.defaultFontPixelWidth * 30
+    Row {
+        id:                 multiVehiclePanelSelector
+        anchors.margins:    _toolsMargin
+        anchors.top:        parent.top
+        anchors.right:      parent.right
+        width:              _rightPanelWidth
+        spacing:            ScreenTools.defaultFontPixelWidth
+        visible:            QGroundControl.multiVehicleManager.vehicles.count > 1 && QGroundControl.corePlugin.options.flyView.showMultiVehicleList
+
+        property bool showSingleVehiclePanel:  !visible || singleVehicleRadio.checked
+
+        QGCMapPalette { id: mapPal; lightColors: true }
+
+        QGCRadioButton {
+            id:             singleVehicleRadio
+            text:           qsTr("Single")
+            checked:        true
+            textColor:      mapPal.text
+        }
+
+        QGCRadioButton {
+            text:           qsTr("Multi-Vehicle")
+            textColor:      mapPal.text
+        }
+    }
+
+    PhotoVideoControl {
+        id:                     photoVideoControl
+        anchors.margins:        _toolsMargin
+        anchors.right:          rightSide_toolStrip.left
+        width:                  _rightPanelWidth
+        state:                  _verticalCenter ? "verticalCenter" : "topAnchor"
+        visible:                _pipOverlay._isExpanded
+        states: [
+            State {
+                name: "verticalCenter"
+                AnchorChanges {
+                    target:                 photoVideoControl
+                    anchors.top:            undefined
+                    anchors.verticalCenter: _root.verticalCenter
+                }
+            },
+            State {
+                name: "topAnchor"
+                AnchorChanges {
+                    target:                 photoVideoControl
+                    anchors.verticalCenter: undefined
+                    anchors.top:            instrumentPanel.bottom
+                }
+            }
+        ]
+        property bool _verticalCenter: !QGroundControl.settingsManager.flyViewSettings.alternateInstrumentPanel.rawValue
+    }
 }
