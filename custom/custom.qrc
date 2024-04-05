@@ -59,8 +59,9 @@
     </qresource>
     <qresource prefix="/qml">
         <file alias="MainRootWindow.qml">res/ui/CustomMainRootWindow.qml</file>
+        <file alias="PlanView.qml">res/DisplayViews/CustomPlanView.qml</file>
         <file alias="QGroundControl/FlightDisplay/FlyViewCustomLayer.qml">res/DisplayViews/CustomFlyViewOverlay.qml</file>
         <file alias="QGroundControl/FlightDisplay/FlyView.qml">res/DisplayViews/CustomFlyView.qml</file>
-        <file alias="PlanView.qml">res/DisplayViews/CustomPlanView.qml</file>
+        <file alias="QGroundControl/FlightMap/PhotoVideoControl.qml">res/Widgets/CustomPhotoVideoControl.qml</file>
     </qresource>
 </RCC>
