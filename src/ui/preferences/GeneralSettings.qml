@@ -921,6 +921,16 @@ Rectangle {
                                     Layout.preferredWidth:  _valueFieldWidth
                                     fact:                   QGroundControl.settingsManager.autoConnectSettings.nmeaUdpPort
                                 }
+
+                                QGCLabel {
+                                    text:       qsTr("Trust NMEA Heading")
+                                    visible:    true
+                                }
+                                FactCheckBox {
+                                    visible:                true
+                                    Layout.preferredWidth:  _valueFieldWidth
+                                    fact:                   QGroundControl.settingsManager.autoConnectSettings.nmeaTrustHeading
+                                }
                             }
                         }
                     }

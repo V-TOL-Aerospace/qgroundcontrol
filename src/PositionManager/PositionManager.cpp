@@ -135,7 +135,7 @@ void QGCPositionManager::_positionUpdated(const QGeoPositionInfo &update)
     // random heading to be shown on the fly view. So until we can get a true compass based heading or some smarted heading quality
     // information which takes into account the speed of movement we normally don't set a heading. We do use the heading though
     // if the plugin overrides the position source. In that case we assume that it hopefully know what it is doing.
-    if (_usingPluginSource && newGCSHeading != _gcsHeading) {
+    if ((_usingPluginSource || _trustGPSHeading) && newGCSHeading != _gcsHeading) {
         _gcsHeading = newGCSHeading;
         emit gcsHeadingChanged(_gcsHeading);
     }
@@ -199,4 +199,13 @@ void QGCPositionManager::setPositionSource(QGCPositionManager::QGCPositionSource
 void QGCPositionManager::_error(QGeoPositionInfoSource::Error positioningError)
 {
     qWarning() << "QGCPositionManager error" << positioningError;
+}
+
+void QGCPositionManager::setTrustGPSHeading(const bool trust) {
+    _trustGPSHeading = trust;
+
+    if(!_trustGPSHeading) {
+        _gcsHeading = qQNaN();
+        emit gcsHeadingChanged(_gcsHeading);
+    }
 }

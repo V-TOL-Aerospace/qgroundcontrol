@@ -44,6 +44,7 @@ public:
         ForceVideoDecoderVAAPI,
         ForceVideoDecoderDirectX3D,
         ForceVideoDecoderVideoToolbox,
+        ForceVideoDecoderRPiV4L2,
     };
     Q_ENUM(VideoDecoderOptions)
 

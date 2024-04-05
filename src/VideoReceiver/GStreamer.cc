@@ -156,6 +156,9 @@ GStreamer::blacklist(VideoSettings::VideoDecoderOptions option)
         case VideoSettings::ForceVideoDecoderVideoToolbox:
             changeRank("vtdec", GST_RANK_PRIMARY + 1);
             break;
+        case VideoSettings::ForceVideoDecoderRPiV4L2:
+            changeRank("v4l2h264dec", GST_RANK_PRIMARY + 1);
+            break;
         default:
             qCWarning(GStreamerLog) << "Can't handle decode option:" << option;
     }
