@@ -87,7 +87,7 @@
     <message>
         <extracomment>.QGC.MetaData.Facts[forceVideoDecoder].enumStrings, </extracomment>
         <location filename="../src/Settings/Video.SettingsGroup.json"/>
-        <source>Default,Force software decoder,Force NVIDIA decoder,Force VA-API decoder,Force DirectX3D 11 decoder,Force VideoToolbox decoder</source>
+        <source>Default,Force software decoder,Force NVIDIA decoder,Force VA-API decoder,Force DirectX3D 11 decoder,Force VideoToolbox decoder,Force RPi V4L2 decoder</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

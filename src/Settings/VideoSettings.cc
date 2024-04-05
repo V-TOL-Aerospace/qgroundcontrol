@@ -86,16 +86,19 @@ DECLARE_SETTINGGROUP(Video, "Video")
 #ifdef Q_OS_WIN
         VideoDecoderOptions::ForceVideoDecoderVAAPI,
         VideoDecoderOptions::ForceVideoDecoderVideoToolbox,
+        VideoDecoderOptions::ForceVideoDecoderRPiV4L2,
 #endif
 #ifdef Q_OS_MAC
         VideoDecoderOptions::ForceVideoDecoderDirectX3D,
         VideoDecoderOptions::ForceVideoDecoderVAAPI,
+        VideoDecoderOptions::ForceVideoDecoderRPiV4L2,
 #endif
 #ifdef Q_OS_ANDROID
         VideoDecoderOptions::ForceVideoDecoderDirectX3D,
         VideoDecoderOptions::ForceVideoDecoderVideoToolbox,
         VideoDecoderOptions::ForceVideoDecoderVAAPI,
         VideoDecoderOptions::ForceVideoDecoderNVIDIA,
+        VideoDecoderOptions::ForceVideoDecoderRPiV4L2,
 #endif
     };
 
