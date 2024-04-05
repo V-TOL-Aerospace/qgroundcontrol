@@ -71,7 +71,7 @@ Item {
 
     property var _borderColor:          qgcPal.text
     property var _borderWidth:          isPFDSize400 ? ScreenTools.defaultFontPointSize    * width * 0.000375    : 0.5
-    property var _labelBackgroundColor: qgcPal.toolbarBackground
+    property var _labelBackgroundColor: Qt.rgba(qgcPal.toolbarBackground.r, qgcPal.toolbarBackground.g, qgcPal.toolbarBackground.b, 0.5) // qgcPal.toolbarBackground
 
     Item {
         id:             instrument
@@ -139,7 +139,7 @@ Item {
         //-- Cross Hair
         Image {
             id:                 crossHair
-            source:             "/custom/img/attitude_crosshair_v3.svg"
+            source:             "/custom/img/attitude_crosshair_v4.svg"
             mipmap:             true
             width:              size * 0.75
             sourceSize.width:   width
