@@ -18,9 +18,9 @@ ColumnLayout {
     property bool _useShortListModes:   true
 
     property var _flightModesFixedWingShortList: [
-        "Manual",
-        "Stabilize",
-        "FBW A",
+        // "Manual",
+        // "Stabilize",
+        // "FBW A",
         "FBW B",
         "Cruise",
         "Auto"
@@ -28,8 +28,8 @@ ColumnLayout {
 
     property var _flightModesCopterShortList: [
         "Loiter",
-        "Alt Hold",
-        "Stabilize",
+        // "Altitude Hold",
+        // "Stabilize",
         "Auto"
     ]
     
