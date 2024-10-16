@@ -18,9 +18,14 @@ ColumnLayout {
     property var    _batteryGroup:              activeVehicle && activeVehicle.batteries.count ? activeVehicle.batteries.get(0) : undefined
     property var    _batteryValue:              _batteryGroup ? _batteryGroup.percentRemaining.value : 0
     property var    _batteryPercentRemaining:   isNaN(_batteryValue) ? 0 : _batteryValue
+
     property var    _batteryVoltageValue:       _batteryGroup.voltage.rawValue 
     property var    _batteryVoltage:            _batteryGroup.voltage.valueString 
     property var    _batteryVoltageString:      _batteryVoltage + qsTr(" ") + _batteryGroup.voltage.units
+
+    property var    _batteryCurrentValue:       _batteryGroup.current.rawValue
+    property var    _batteryCurrent:            _batteryGroup.current.valueString
+    property var    _batteryCurrentString:      _batteryCurrent + qsTr(" ") + _batteryGroup.current.units
 
     Rectangle {
         id:             batteryInfoWindow
@@ -107,7 +112,7 @@ ColumnLayout {
                 }
 
                 QGCLabel { text: qsTr("Battery Current (A): ") }
-                QGCLabel { text: qsTr("") }
+                QGCLabel { text: qsTr(_batteryCurrentString) }
                 Rectangle {
                     id:     batteryInfoRect_Current
                     width:  height
