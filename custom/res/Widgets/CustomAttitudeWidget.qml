@@ -46,6 +46,17 @@ Item {
     property var    _flightTime:        vehicle ?  vehicle.flightTime.rawValue : 0
     property string _flightTimeStr:     secondsToHHMMSS(_flightTime)
 
+    property var    _batteryGroup:              vehicle && vehicle.batteries.count ? vehicle.batteries.get(0) : undefined
+
+    property var    _batteryVoltageValue:       _batteryGroup.voltage.rawValue 
+    property var    _batteryVoltage:            _batteryGroup.voltage.valueString 
+    property var    _batteryVoltageString:      _batteryVoltage + qsTr(" ") + _batteryGroup.voltage.units
+
+    property var    _batteryCurrentValue:       _batteryGroup.current.rawValue
+    property var    _batteryCurrent:            _batteryGroup.current.valueString
+    property var    _batteryCurrentString:      _batteryCurrent + qsTr(" ") + _batteryGroup.current.units
+
+
     function secondsToHHMMSS(timeS) {
         var sec_num = parseInt(timeS, 10);
         var hours   = Math.floor(sec_num / 3600);
@@ -60,14 +71,17 @@ Item {
     width:  size_width
     height: size_height
 
-    property bool isPFDSize400:     root.width > 400
+    property bool isPFDSize400:     true //root.width > 400
     property var dynamicFontSize:   isPFDSize400 ? ScreenTools.defaultFontPointSize     * 1.5   : ScreenTools.defaultFontPointSize // TODO: IF STATEMENT FOR IF root.size is of certain size
     property var dynamicFontWidth:  isPFDSize400 ? ScreenTools.defaultFontPixelWidth    * 15    : ScreenTools.defaultFontPixelWidth * 6
     property var dynamicFontHeight: isPFDSize400 ? ScreenTools.defaultFontPixelHeight   * 1.5   : ScreenTools.defaultFontPixelHeight
 
-    property var scalingFontSize:   isPFDSize400 ? ScreenTools.defaultFontPointSize    * width * 0.00375    : ScreenTools.defaultFontPointSize
-    property var scalingFontWidth:  isPFDSize400 ? ScreenTools.defaultFontPixelWidth   * width * 0.035      : ScreenTools.defaultFontPixelWidth * 6
-    property var scalingFontHeight: isPFDSize400 ? ScreenTools.defaultFontPixelHeight  * width * 0.00375    : ScreenTools.defaultFontPixelHeight
+    property var scalingFontHeightLabel:    isPFDSize400 ? ScreenTools.defaultFontPixelHeight  * width * 0.001    : ScreenTools.defaultFontPixelHeight
+    property var scalingFontWidthLabel:     isPFDSize400 ? ScreenTools.defaultFontPixelWidth   * width * 0.015      : ScreenTools.defaultFontPixelWidth * 6
+
+    property var scalingFontSize:           scalingFontHeightLabel //isPFDSize400 ? ScreenTools.defaultFontPointSize    * width * 0.00375    : ScreenTools.defaultFontPointSize
+    property var scalingFontWidth:          scalingFontWidthLabel //isPFDSize400 ? ScreenTools.defaultFontPixelWidth   * width * 0.035      : ScreenTools.defaultFontPixelWidth * 6
+    property var scalingFontHeight:         scalingFontHeightLabel * 1.5  //isPFDSize400 ? ScreenTools.defaultFontPixelHeight  * width * 0.00375    : ScreenTools.defaultFontPixelHeight
 
     property var _borderColor:          qgcPal.text
     property var _borderWidth:          isPFDSize400 ? ScreenTools.defaultFontPointSize    * width * 0.000375    : 0.5
@@ -200,7 +214,7 @@ Item {
                 }
                 text:                   _altitudeRelative_string
                 color:                  qgcPal.text
-                font.pointSize:         scalingFontSize
+                font.pixelSize:         scalingFontHeightLabel //scalingFontSize
             }
         }        
         //----------------------------------------------------
@@ -227,7 +241,7 @@ Item {
                 }
                 text:                   _climbRate_string
                 color:                  qgcPal.text
-                font.pointSize:         scalingFontSize
+                font.pixelSize:         scalingFontHeightLabel //font.pointSize:         scalingFontSize
             }
         }
         //----------------------------------------------------
@@ -345,7 +359,7 @@ Item {
                 }
                 text:                   _airSpeed_string
                 color:                  qgcPal.text
-                font.pointSize:         scalingFontSize
+                font.pixelSize:         scalingFontHeightLabel //font.pointSize:         scalingFontSize
             }
         }
         //----------------------------------------------------
@@ -371,7 +385,7 @@ Item {
                 }
                 text: _flightMode
                 color: qgcPal.text
-                font.pointSize:         scalingFontSize
+                font.pixelSize:         scalingFontHeightLabel //font.pointSize:         scalingFontSize
             }
         }
         //----------------------------------------------------
@@ -397,7 +411,7 @@ Item {
                 }
                 text:                   _currentIndex
                 color:                  qgcPal.text
-                font.pointSize:         scalingFontSize
+                font.pixelSize:         scalingFontHeightLabel //font.pointSize:         scalingFontSize
             }
         }
         //----------------------------------------------------
@@ -453,7 +467,7 @@ Item {
                 color:                      qgcPal.text
                 visible:                    showHeading
                 // font.pointSize:             ScreenTools.smallFontPointSize
-                font.pointSize:             scalingFontSize
+                font.pixelSize:          scalingFontHeightLabel //font.pointSize:             scalingFontSize
             }
         }
         //----------------------------------------------------
@@ -475,16 +489,17 @@ Item {
                 anchors.verticalCenter:     parent.verticalCenter
                 text:                       _flightTimeStr
                 color:                      qgcPal.text
-                font.pointSize:             scalingFontSize
+                font.pixelSize:             scalingFontSize
             }
         }
         QGCLabel {
+            id:                         flightTime_info_label
             anchors.bottom:             currentWaypoint_info_rectangle.top
             anchors.bottomMargin:       _toolsMargin
             anchors.left:               currentWaypoint_info_rectangle.left
             text:                       qsTr("Δt: ") + _flightTimeStr
             color:                      qgcPal.text
-            font.pointSize:             scalingFontSize
+            font.pixelSize:             scalingFontSize
         }
         //----------------------------------------------------
         //-- INDICATED FLIGHT DISTANCE
@@ -505,7 +520,7 @@ Item {
                 anchors.verticalCenter:     parent.verticalCenter
                 text:                       vehicle ? vehicle.flightDistance.rawValue.toFixed(0) + " " + QGroundControl.unitsConversion.appSettingsVerticalDistanceUnitsString : "0" + " " + QGroundControl.unitsConversion.appSettingsVerticalDistanceUnitsString
                 color:                      qgcPal.text
-                font.pointSize:             scalingFontSize
+                font.pixelSize:             scalingFontSize
             }
         }
         //----------------------------------------------------
@@ -527,8 +542,51 @@ Item {
                 anchors.verticalCenter:     parent.verticalCenter
                 text:                       vehicle ? vehicle.distanceToHome.rawValue.toFixed(0) + " " + QGroundControl.unitsConversion.appSettingsVerticalDistanceUnitsString : "0" + " " + QGroundControl.unitsConversion.appSettingsVerticalDistanceUnitsString
                 color:                      qgcPal.text
-                font.pointSize:             scalingFontSize
+                font.pixelSize:             scalingFontSize
             }
+        }
+        //----------------------------------------------------
+        //-- INDICATED GPS STATUS
+        Rectangle {
+            id:                         gpsStatus_info_rectangle
+            anchors.top:                parent.top
+            anchors.topMargin:          _toolsMargin
+            anchors.horizontalCenter:   airspeed_info_rectangle.horizontalCenter            
+            color:                      _labelBackgroundColor
+            height:                     scalingFontHeight   
+            width:                      scalingFontWidth // ScreenTools.defaultFontPixelWidth * 5
+            border.color:               _borderColor
+            border.width:               _borderWidth
+            visible:                    true
+
+            QGCLabel {
+                anchors.horizontalCenter:   parent.horizontalCenter
+                anchors.verticalCenter:     parent.verticalCenter
+                text:                       vehicle ? vehicle.gps.lock.enumStringValue : qsTr("GPS: N/A")
+                color:                      qgcPal.text
+                font.pixelSize:             scalingFontSize
+            }
+        }
+        //----------------------------------------------------
+        //-- INDICATED BATTERY CURRENT
+        QGCLabel {
+            id:                         flightBatteryAmps_info_label
+            anchors.bottom:             flightTime_info_label.top
+            anchors.bottomMargin:       _toolsMargin
+            anchors.left:               currentWaypoint_info_rectangle.left
+            text:                       qsTr("BATT (A): ") + _batteryCurrentString
+            color:                      qgcPal.text
+            font.pixelSize:             scalingFontSize
+        }
+        //----------------------------------------------------
+        //-- INDICATED BATTERY VOLTAGE
+        QGCLabel {
+            anchors.bottom:             flightBatteryAmps_info_label.top
+            anchors.bottomMargin:       _toolsMargin
+            anchors.left:               currentWaypoint_info_rectangle.left
+            text:                       qsTr("BATT (V): ") + _batteryVoltageString
+            color:                      qgcPal.text
+            font.pixelSize:             scalingFontSize
         }
     }
 

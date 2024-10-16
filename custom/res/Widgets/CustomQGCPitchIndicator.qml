@@ -60,7 +60,7 @@ Rectangle {
                         anchors.verticalCenter: parent.verticalCenter
                         smooth: true
                         font.family: ScreenTools.demiboldFontFamily
-                        font.pointSize: _fontSize
+                        font.pixelSize: _fontSize
                         text: _pitch
                         color: "white"
                         visible: (_pitch != 0) && ((_pitch % 10) === 0)
@@ -71,7 +71,7 @@ Rectangle {
                         anchors.verticalCenter: parent.verticalCenter
                         smooth: true
                         font.family: ScreenTools.demiboldFontFamily
-                        font.pointSize: _fontSize
+                        font.pixelSize: _fontSize
                         text: _pitch
                         color: "white"
                         visible: (_pitch != 0) && ((_pitch % 10) === 0)
