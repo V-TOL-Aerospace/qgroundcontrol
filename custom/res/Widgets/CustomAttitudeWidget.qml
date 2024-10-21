@@ -48,13 +48,13 @@ Item {
 
     property var    _batteryGroup:              vehicle && vehicle.batteries.count ? vehicle.batteries.get(0) : undefined
 
-    property var    _batteryVoltageValue:       _batteryGroup.voltage.rawValue 
-    property var    _batteryVoltage:            _batteryGroup.voltage.valueString 
-    property var    _batteryVoltageString:      _batteryVoltage + qsTr(" ") + _batteryGroup.voltage.units
+    property var    _batteryVoltageValue:       _batteryGroup ? _batteryGroup.voltage.rawValue : undefined
+    property var    _batteryVoltage:            _batteryGroup ? _batteryGroup.voltage.valueString : undefined
+    property var    _batteryVoltageString:      _batteryGroup ? _batteryVoltage + qsTr(" ") + _batteryGroup.voltage.units : qsTr("N/A")
 
-    property var    _batteryCurrentValue:       _batteryGroup.current.rawValue
-    property var    _batteryCurrent:            _batteryGroup.current.valueString
-    property var    _batteryCurrentString:      _batteryCurrent + qsTr(" ") + _batteryGroup.current.units
+    property var    _batteryCurrentValue:       _batteryGroup ? _batteryGroup.current.rawValue : undefined
+    property var    _batteryCurrent:            _batteryGroup ? _batteryGroup.current.valueString : undefined
+    property var    _batteryCurrentString:      _batteryGroup ? _batteryCurrent + qsTr(" ") + _batteryGroup.current.units : qsTr("N/A")
 
 
     function secondsToHHMMSS(timeS) {
