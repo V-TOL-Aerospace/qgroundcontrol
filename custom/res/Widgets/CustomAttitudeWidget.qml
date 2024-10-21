@@ -562,10 +562,20 @@ Item {
             QGCLabel {
                 anchors.horizontalCenter:   parent.horizontalCenter
                 anchors.verticalCenter:     parent.verticalCenter
-                text:                       vehicle ? vehicle.gps.lock.enumStringValue : qsTr("GPS: N/A")
+                text:                       vehicle ? qsTr("GPS: ") + vehicle.gps.lock.enumStringValue : qsTr("GPS: N/A")
                 color:                      qgcPal.text
                 font.pixelSize:             scalingFontSize
             }
+        }
+        //----------------------------------------------------
+        //-- INDICATED GPS COUNT
+        QGCLabel {
+            anchors.left:               gpsStatus_info_rectangle.left
+            anchors.top:                gpsStatus_info_rectangle.bottom
+            anchors.topMargin:          _toolsMargin
+            text:                       vehicle ? qsTr("GPS Count: ") + vehicle.gps.count.value : qsTr("GPS Count: N/A")
+            color:                      qgcPal.text
+            font.pixelSize:             scalingFontSize
         }
         //----------------------------------------------------
         //-- INDICATED BATTERY CURRENT
