@@ -83,6 +83,8 @@ Item {
     readonly property var leftSide_toolStrip_margin:        leftSide_toolStrip.width
     readonly property var rightSide_toolStrip_margin:       rightSide_toolStrip.width
 
+    property bool   _showMavMessagePanel:   false
+
     function secondsToHHMMSS(timeS) {
         var sec_num = parseInt(timeS, 10);
         var hours   = Math.floor(sec_num / 3600);
@@ -215,8 +217,11 @@ Item {
                     text:               qsTr("Messages")
                     iconSource:         "/qmlimages/Megaphone.svg"
                     enabled:            _activeVehicle
-                    dropPanelComponent: messageDropPanel
+                    // dropPanelComponent: messageDropPanel
                     buttonColor:        getMessageColor()
+                    onTriggered:    {
+                        _showMavMessagePanel = !_showMavMessagePanel
+                    }
                 },
                 CustomToolStripAction {
                     text:               qsTr("Sensors")
@@ -490,20 +495,19 @@ Item {
         }
     }
 
-    //-------------------------------------------------------------------------
-    // MAV MESSAGE INDICATOR (LEGACY LAYOUT FROM NEURON V3
-    // function from messageIndicator.qml for use in Side ToolStrip
     CustomMavMessageWidget {
-        property real height_gps_info:       Window.height - compassBar.height - attitudeIndicator.height - gps_info_window.height - _toolsMargin
-        property real height_no_gps_info:    Window.height - compassBar.height - attitudeIndicator.height - _toolsMargin
-        visible:                false
+        // property real height_gps_info:       Window.height - compassBar.height - attitudeIndicator.height - gps_info_window.height - _toolsMargin
+        // property real height_no_gps_info:    Window.height - compassBar.height - attitudeIndicator.height - _toolsMargin
+        visible:                _showMavMessagePanel
 
-        id:                     static_messageWindow
+        id:                     staticPanel_mavMessage
         width:                  flightControlRectangle.width
-        height:                 (gps_info_window.visible ? height_gps_info : height_no_gps_info) - 1
+        height:                 parent.height * 0.25 // (gps_info_window.visible ? height_gps_info : height_no_gps_info) - 1
         anchors {
-            top:                gps_info_window.visible ? gps_info_window.bottom : gps_info_window.top
-            horizontalCenter:   flightControlRectangle.horizontalCenter
+            bottom:             parent.bottom
+            left:               leftSide_toolStrip.right
+            right:              rightSide_toolStrip.left
+            horizontalCenter:   parent.horizontalCenter
         }
     }
 

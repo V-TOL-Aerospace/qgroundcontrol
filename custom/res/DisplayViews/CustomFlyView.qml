@@ -91,7 +91,7 @@ Item {
     FlyViewCustomLayer {
         id:                     customOverlay
         anchors.fill:           parent //widgetLayer
-        z:                      _fullItemZorder + 2
+        z:                      QGroundControl.zOrderTopMost //_fullItemZorder + 2
         parentToolInsets:       parent //widgetLayer.totalToolInsets
         mapControl:             _mapControl
         visible:                !QGroundControl.videoManager.fullScreen
