@@ -127,7 +127,7 @@ Item {
                 CustomToolStripAction {
                     text:           _activeVehicle ? (_activeVehicle.armed ? qsTr("Armed") : qsTr("Disarmed")) : qsTr("Disarmed")
                     iconSource:     _activeVehicle ? (_activeVehicle.armed ? "/qmlimages/Armed.svg" : "/qmlimages/Disarmed.svg") : "/qmlimages/Disarmed.svg"
-                    onTriggered:    _activeVehicle.armed ? _guidedController.confirmAction(_guidedController.actionDisarm, 1) : _guidedController.confirmAction(_guidedController.actionArm, 1)
+                    onTriggered:    _activeVehicle.armed ? (_activeVehicle.flying ? _guidedController.confirmAction(_guidedController.actionEmergencyStop, 1) : _activeVehicle.armed = false) : _guidedController.confirmAction(_guidedController.actionArm, 1)
                     enabled:        _communicationState
                     iconTrueColor:  true
                 },
@@ -508,6 +508,7 @@ Item {
             left:               leftSide_toolStrip.right
             right:              rightSide_toolStrip.left
             horizontalCenter:   parent.horizontalCenter
+            bottomMargin:       _toolsMargin
         }
     }
 
