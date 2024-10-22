@@ -547,31 +547,20 @@ Item {
         }
         //----------------------------------------------------
         //-- INDICATED GPS STATUS
-        Rectangle {
-            id:                         gpsStatus_info_rectangle
-            anchors.top:                parent.top
-            anchors.topMargin:          _toolsMargin
-            anchors.horizontalCenter:   airspeed_info_rectangle.horizontalCenter            
-            color:                      _labelBackgroundColor
-            height:                     scalingFontHeight   
-            width:                      scalingFontWidth // ScreenTools.defaultFontPixelWidth * 5
-            border.color:               _borderColor
-            border.width:               _borderWidth
-            visible:                    true
-
             QGCLabel {
-                anchors.horizontalCenter:   parent.horizontalCenter
-                anchors.verticalCenter:     parent.verticalCenter
+                id:                         gpsStatus_info_label
+                anchors.top:                parent.top
+                anchors.left:               airspeed_info_rectangle.left
+                anchors.topMargin:          _toolsMargin
                 text:                       vehicle ? qsTr("GPS: ") + vehicle.gps.lock.enumStringValue : qsTr("GPS: N/A")
                 color:                      qgcPal.text
                 font.pixelSize:             scalingFontSize
             }
-        }
         //----------------------------------------------------
         //-- INDICATED GPS COUNT
         QGCLabel {
-            anchors.left:               gpsStatus_info_rectangle.left
-            anchors.top:                gpsStatus_info_rectangle.bottom
+            anchors.left:               gpsStatus_info_label.left
+            anchors.top:                gpsStatus_info_label.bottom
             anchors.topMargin:          _toolsMargin
             text:                       vehicle ? qsTr("GPS Count: ") + vehicle.gps.count.value : qsTr("GPS Count: N/A")
             color:                      qgcPal.text

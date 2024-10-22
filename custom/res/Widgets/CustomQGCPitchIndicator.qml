@@ -36,6 +36,9 @@ Rectangle {
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.verticalCenter:   parent.verticalCenter
     clip: true
+
+    property real angularScale: (pitchAngle - _reticleHeight*3) * root.height / 45
+
     Item {
         height: parent.height
         width:  parent.width
@@ -82,7 +85,7 @@ Rectangle {
         }
         transform: [ 
             Translate {
-                y: (pitchAngle * _reticleSlot / 5) - (_reticleSlot / 2)
+                y: angularScale//(pitchAngle * _reticleSlot / 5) - (_reticleSlot / 2)
             }
         ]
     }
